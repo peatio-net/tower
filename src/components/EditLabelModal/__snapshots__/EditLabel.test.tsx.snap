@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditLabel test should render 1`] = `
+<EditLabelModal
+  classes={
+    Object {
+      "menu": "EditLabelModal-menu-3",
+      "paper": "EditLabelModal-paper-1",
+      "textField": "EditLabelModal-textField-2",
+    }
+  }
+  editLabel={[Function]}
+  handleChangeLabelName={[Function]}
+  handleChangeLabelScope={[Function]}
+  handleChangeLabelValue={[Function]}
+  modalClose={[Function]}
+  name=""
+  open={false}
+  scope=""
+  value=""
+/>
+`;

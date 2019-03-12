@@ -4,20 +4,20 @@ import * as React from 'react';
 import { Navbar } from '../';
 
 const styles = (theme: Theme) => createStyles({
-  root: {
-    display: 'flex',
-  },
-  toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
-    ...theme.mixins.toolbar,
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing.unit * 3,
-  },
+    root: {
+        display: 'flex',
+    },
+    toolbar: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        padding: '0 8px',
+        ...theme.mixins.toolbar,
+    },
+    content: {
+        flexGrow: 1,
+        padding: theme.spacing.unit * 3,
+    },
 });
 
 interface Props extends WithStyles<typeof styles> {

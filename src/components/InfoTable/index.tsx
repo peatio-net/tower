@@ -24,7 +24,6 @@ interface InfoTableProps {
     data: any;
     page: number;
     rowsPerPage: number;
-
     handleChangePage: (page: number) => void;
     hidePagination?: boolean;
 }
