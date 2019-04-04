@@ -2,6 +2,7 @@ import {
     GET_CURRENT_USER_DATA,
     GET_CURRENT_USER_FETCH,
     GET_DATA_BY_FILTER_FETCH,
+    GET_USERS_BY_LABELS_FETCH,
     GET_USERS_FETCH,
     GET_USERS_SUCCESS,
 } from '../../constants';
@@ -38,6 +39,11 @@ export const usersReducer = (state = initialUsersState, action: UsersAction) => 
               usersTotal: action.payload.total,
           };
       case GET_DATA_BY_FILTER_FETCH:
+          return {
+              ...state,
+              loading: true,
+          };
+      case GET_USERS_BY_LABELS_FETCH:
           return {
               ...state,
               loading: true,

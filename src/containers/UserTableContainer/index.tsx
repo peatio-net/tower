@@ -1,9 +1,11 @@
+import { History } from 'history';
 import * as React from 'react';
 import {
     connect,
     MapDispatchToPropsFunction,
     MapStateToProps,
 } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import {
     tablePageLimit,
 } from '../../api/config';
@@ -16,6 +18,7 @@ import {
     AppState,
     getDataByFilter,
     getUsers,
+    getUsersByLabel,
     selectUsers,
     selectUsersTotal,
     UserInterface,
@@ -36,10 +39,19 @@ interface ReduxProps {
 interface DispatchProps {
     getUsers: typeof getUsers;
     getDataByFilter: typeof getDataByFilter;
+    getUsersByLabel: typeof getUsersByLabel;
 }
 
-type Props = ReduxProps & DispatchProps;
+interface RouterProps {
+    history: History;
+    location: {
+        hash: string;
+    };
+}
 
+type Props = ReduxProps & DispatchProps & RouterProps;
+
+// tslint:disable
 class DashboardUserTable extends React.Component<Props, UserTableState> {
     constructor(props: Props) {
         super(props);
@@ -58,6 +70,7 @@ class DashboardUserTable extends React.Component<Props, UserTableState> {
         { key: 'level', alignRight: true, label: 'Level' },
         { key: 'role', alignRight: true, label: 'Role' },
         { key: 'uid', alignRight: true, label: 'UID' },
+        { key: 'state', alignRight: true, label: 'State'},
     ];
 
     private dropdownValues = [
@@ -89,9 +102,17 @@ class DashboardUserTable extends React.Component<Props, UserTableState> {
             label: 'State',
             value: 'state',
         },
+        {
+            label: 'Documents',
+            value: 'documents',
+        },
     ];
 
     public componentDidMount() {
+        console.log(this.props.location);
+        if (this.props.location.hash) {
+            this.getRequestFromRouterProps(this.props.location.hash);
+        }
         if (!this.props.users.length) {
             this.props.getUsers({
                 limit: this.state.rowsPerPage,
@@ -150,16 +171,26 @@ class DashboardUserTable extends React.Component<Props, UserTableState> {
     private handleChangePage = (page: number) => {
         const { searchValue, searchPoint } = this.state;
         this.setState({ page });
-        if (searchPoint.value === 'all') {
-            this.props.getUsers({ limit: tablePageLimit(), page: page + 1});
-        } else {
-          const requestObject = {
-              field: searchPoint.value,
-              value: searchValue.toLowerCase(),
-              page: page + 1,
-              limit: tablePageLimit(),
-          };
-          this.props.getDataByFilter(requestObject);
+        switch (searchPoint.value) {
+            case 'all':
+                this.props.getUsers({ limit: tablePageLimit(), page: page + 1});
+                break;
+            case 'documents':
+                this.props.getUsersByLabel({
+                    key: 'document',
+                    value: searchValue.toLowerCase(),
+                    limit: tablePageLimit(),
+                    page: page + 1,
+                });
+                break;
+            default:
+                const requestObject = {
+                    field: searchPoint.value,
+                    value: searchValue.toLowerCase(),
+                    page: page + 1,
+                    limit: tablePageLimit(),
+                };
+                this.props.getDataByFilter(requestObject);
         }
     };
 
@@ -169,20 +200,67 @@ class DashboardUserTable extends React.Component<Props, UserTableState> {
             e.preventDefault();
         }
         const { searchValue, searchPoint } = this.state;
-        if (searchPoint.value === 'all') {
-            this.props.getUsers({ limit: tablePageLimit(), page: 1});
-        } else {
-            const requestObject = {
-                field: searchPoint.value,
-                value: searchValue.toLowerCase(),
-                page: 1,
-                limit: tablePageLimit(),
-            };
-            this.props.getDataByFilter(requestObject);
+        switch (searchPoint.value) {
+            case 'all':
+                this.props.getUsers({ limit: tablePageLimit(), page: 1});
+                this.props.history.push('#all');
+                break;
+            case 'documents':
+                this.props.getUsersByLabel({
+                    key: 'document',
+                    value: searchValue.toLowerCase(),
+                    limit: tablePageLimit(),
+                    page: 1,
+                });
+
+                let hash = `#${searchPoint.value}=${searchValue.toLowerCase()}`;
+                this.props.history.push(hash);
+                break;
+            default:
+                const requestObject = {
+                    field: searchPoint.value,
+                    value: searchValue.toLowerCase(),
+                    page: 1,
+                    limit: tablePageLimit(),
+                };
+                this.props.getDataByFilter(requestObject);
+                hash = `#${searchPoint.value}=${searchValue.toLowerCase()}`;
+                this.props.history.push(hash);
         }
+
         this.setState({
             page: 0,
         });
+    };
+
+    private getRequestFromRouterProps = (search: string) => {
+        const props = search.split('#')[1].split('=');
+        const key = props[0];
+        const value = props[1];
+
+        switch (key) {
+            case 'all':
+                this.props.getUsers({ limit: tablePageLimit(), page: 1});
+                break;
+            case 'documents':
+                this.props.getUsersByLabel({
+                    key: 'document',
+                    value: value.toLowerCase(),
+                    limit: tablePageLimit(),
+                    page: 1,
+                });
+                break;
+            default:
+                const requestObject = {
+                    field: key.toLowerCase(),
+                    value: value.toLowerCase(),
+                    page: 1,
+                    limit: tablePageLimit(),
+                };
+                this.props.getDataByFilter(requestObject);
+        }
+        this.handleChangeSearchPoint(key);
+        this.handleChangeSearchValue(value);
     };
 }
 
@@ -192,10 +270,11 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, AppState> =
         total: selectUsersTotal(state),
     });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
-    dispatch => ({
-        getUsers: payload => dispatch(getUsers(payload)),
-        getDataByFilter: payload => dispatch(getDataByFilter(payload)),
-    });
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
+    getUsers: payload => dispatch(getUsers(payload)),
+    getDataByFilter: payload => dispatch(getDataByFilter(payload)),
+    getUsersByLabel: payload => dispatch(getUsersByLabel(payload)),
+});
 
-export const UsersTableContainer = connect(mapStateToProps, mapDispatchToProps)(DashboardUserTable);
+// tslint:disable-next-line:no-any
+export const UsersTableContainer = connect(mapStateToProps, mapDispatchToProps)(withRouter(DashboardUserTable as any));

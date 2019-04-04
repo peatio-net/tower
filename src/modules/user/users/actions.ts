@@ -2,6 +2,7 @@ import {
     GET_CURRENT_USER_DATA,
     GET_CURRENT_USER_FETCH,
     GET_DATA_BY_FILTER_FETCH,
+    GET_USERS_BY_LABELS_FETCH,
     GET_USERS_FETCH,
     GET_USERS_SUCCESS,
 } from '../../constants';
@@ -53,11 +54,22 @@ export interface GetDataByFilterFetch {
     };
 }
 
+export interface GetUsersByLabelFetch {
+    type: typeof GET_USERS_BY_LABELS_FETCH;
+    payload: {
+        key: string;
+        value: string;
+        page?: number;
+        limit?: number;
+    };
+}
+
 export type UsersAction = GetUsersFetch
     | GetUsersSuccess
     | GetCurrentUserFetch
     | GetCurrentUserData
-    | GetDataByFilterFetch;
+    | GetDataByFilterFetch
+    | GetUsersByLabelFetch;
 
 export const getUsers = (payload: GetUsersFetch['payload']): GetUsersFetch => ({
     type: GET_USERS_FETCH,
@@ -80,5 +92,10 @@ export const getCurrentUserData = (payload: GetCurrentUserData['payload']): GetC
 
 export const getDataByFilter = (payload: GetDataByFilterFetch['payload']): GetDataByFilterFetch => ({
     type: GET_DATA_BY_FILTER_FETCH,
+    payload,
+});
+
+export const getUsersByLabel = (payload: GetUsersByLabelFetch['payload']): GetUsersByLabelFetch => ({
+    type: GET_USERS_BY_LABELS_FETCH,
     payload,
 });

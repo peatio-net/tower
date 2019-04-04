@@ -69,4 +69,16 @@ describe('Users reducer', () => {
         };
         expect(usersReducer(initialUsersState, actions.getCurrentUserData(fakeUser))).toEqual(expectedState);
     });
+
+    it('should handle GET_USERS_BY_LABELS_FETCH', () => {
+        const expectedState = {
+            ...initialUsersState,
+            loading: true,
+        };
+        const payload = {
+            key: '',
+            value: '',
+        };
+        expect(usersReducer(initialUsersState, actions.getUsersByLabel(payload))).toEqual(expectedState);
+    });
 });

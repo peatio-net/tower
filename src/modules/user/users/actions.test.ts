@@ -55,4 +55,13 @@ describe('Users actions', () => {
         const expectedAction = { type: 'GET_DATA_BY_FILTER_FETCH', payload };
         expect(actions.getDataByFilter(payload)).toEqual(expectedAction);
     });
+
+    it('should check getUsersByLabel action creator', () => {
+        const payload = {
+            key: '',
+            value: '',
+        };
+        const expectedAction = { type: 'GET_USERS_BY_LABELS_FETCH', payload };
+        expect(actions.getUsersByLabel(payload)).toEqual(expectedAction);
+    });
 });
