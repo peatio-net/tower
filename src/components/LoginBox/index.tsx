@@ -95,7 +95,7 @@ class LoginComponent extends React.Component<Props> {
                         />
                     </FormControl>) : null}
                     <Button
-                        type="button"
+                        type="submit"
                         onClick={this.signIn}
                         fullWidth={true}
                         variant="contained"
@@ -123,7 +123,11 @@ class LoginComponent extends React.Component<Props> {
         this.props.handleOTPCode(e);
     };
 
-    private signIn = () => {
+    // tslint:disable-next-line:no-any
+    private signIn = (e?: any) => {
+        if (e) {
+            e.preventDefault();
+        }
         this.props.handleSignIn();
     };
 }
