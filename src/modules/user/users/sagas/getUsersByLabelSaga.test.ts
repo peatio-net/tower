@@ -55,7 +55,7 @@ describe('GetUsersByLabel saga', () => {
     const fakeHeaders = { total: 1 };
 
     const mockGetUsersDataByLabel = () => {
-        mockAxios.onGet(`/admin/users/labels/search?key=email&value=verified&page=1&limit=1`).reply(200, fakeUserResponce, fakeHeaders);
+        mockAxios.onGet(`/admin/users/labels?key=email&value=verified&page=1&limit=1`).reply(200, fakeUserResponce, fakeHeaders);
     };
 
     const expectedActionsFetch = [

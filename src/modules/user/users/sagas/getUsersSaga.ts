@@ -34,7 +34,7 @@ export function* getUsersSagaLabelsSearch(action: GetUsersByLabelFetch) {
     try {
         const page = action.payload.page ? action.payload.page : 1;
         const limit = action.payload.limit ? action.payload.limit : 100;
-        const users = yield call(API.get(), `/admin/users/labels/search?key=${action.payload.key}&value=${action.payload.value}&page=${page}&limit=${limit}`);
+        const users = yield call(API.get(), `/admin/users/labels?key=${action.payload.key}&value=${action.payload.value}&page=${page}&limit=${limit}`);
         yield put(getUsersData({users: users.data, total: users.headers.total}));
     } catch (error) {
         yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
