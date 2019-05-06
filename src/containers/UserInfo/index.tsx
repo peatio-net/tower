@@ -65,7 +65,7 @@ class UserInfoScreen extends React.Component<Props, UserInfoState> {
             openEditLabelModal: false,
             nameLabel: '',
             valueLabel: '',
-            scopeLabel: 'public',
+            scopeLabel: 'private',
             page: 0,
             rowsPerPage: 15,
             showMore: false,
