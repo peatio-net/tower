@@ -27,6 +27,7 @@
     "moment-timezone": "^0.5.23",
     "node-sass": "^4.11.0",
     "react": "^16.6.3",
+    "react-app-rewired": "^1.6.2",
     "react-dom": "^16.6.3",
     "react-redux": "^6.0.0",
     "react-router": "^4.3.1",
@@ -39,11 +40,13 @@
     "redux-saga": "^0.16.2",
     "ts-jest": "24.0.0",
     "typescript": "^3.3.3333",
-    "ua-parser-js": "^0.7.19"
+    "ua-parser-js": "^0.7.19",
+    "webpack": "^3.11.0",
+    "webpack-obfuscator": "^0.18.0"
   },
   "scripts": {
-    "start": "react-scripts-ts start",
-    "build": "react-scripts-ts build",
+    "start": "react-app-rewired start --scripts-version react-scripts-ts start",
+    "build": "react-app-rewired build --scripts-version react-scripts-ts build",
     "test": "jest",
     "eject": "react-scripts eject",
     "lint": "tsc --noEmit && tslint --project ."

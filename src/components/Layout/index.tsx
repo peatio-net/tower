@@ -3,12 +3,15 @@ import { Theme, withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import * as React from 'react';
 import { Navbar } from '../';
+import {Footer} from '../Footer';
 
 const drawerWidth = 240;
 
 const styles = (theme: Theme) => createStyles({
     root: {
         display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100vh',
     },
     toolbar: {
         display: 'flex',
@@ -66,6 +69,7 @@ class LayoutComponent extends React.Component<Props, object> {
                     <div className={classes.toolbar} />
                     {children}
                 </main>
+                <Footer/>
             </div>
         );
     }

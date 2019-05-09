@@ -13,6 +13,7 @@ import {
     MapStateToProps,
 } from 'react-redux';
 import { LoginBox } from '../../components';
+import {Footer} from '../../components/Footer';
 import {
     AppState,
     login,
@@ -20,6 +21,11 @@ import {
 } from '../../modules';
 
 const styles = (theme: Theme) => createStyles({
+    root: {
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100vh',
+    },
     main: {
         width: 'auto',
         display: 'block',
@@ -30,6 +36,7 @@ const styles = (theme: Theme) => createStyles({
             marginLeft: 'auto',
             marginRight: 'auto',
         },
+        flexGrow: 1,
     },
     paper: {
         marginTop: theme.spacing.unit * 8,
@@ -77,20 +84,23 @@ class LoginScreen extends React.Component<Props, LoginState> {
         const require2FA = this.props.require2fa;
 
         return (
-            <main className={classes.main}>
-                <CssBaseline />
-                <Paper className={classes.paper}>
-                    <LoginBox
-                        email={email}
-                        password={password}
-                        handleChangeEmail={this.handleChangeEmailValue}
-                        handleChangePassword={this.handleChangePasswordValue}
-                        handleOTPCode={this.handleChangeOTPCodeValue}
-                        handleSignIn={this.signIn}
-                        require2FA={require2FA}
-                    />
-                </Paper>
-            </main>
+            <div className={classes.root}>
+                <main className={classes.main}>
+                    <CssBaseline />
+                    <Paper className={classes.paper}>
+                        <LoginBox
+                            email={email}
+                            password={password}
+                            handleChangeEmail={this.handleChangeEmailValue}
+                            handleChangePassword={this.handleChangePasswordValue}
+                            handleOTPCode={this.handleChangeOTPCodeValue}
+                            handleSignIn={this.signIn}
+                            require2FA={require2FA}
+                        />
+                    </Paper>
+                </main>
+                <Footer/>
+            </div>
         );
     }
 
