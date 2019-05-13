@@ -7,6 +7,7 @@ const defaultProps = {
     open: false,
     handleDrawerOpen: jest.fn(),
     handleDrawerClose: jest.fn(),
+    loggedIn: false,
 };
 
 describe('Navbar test', () => {

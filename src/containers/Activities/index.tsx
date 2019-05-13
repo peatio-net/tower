@@ -11,17 +11,11 @@ import {
     connect,
     MapDispatchToPropsFunction,
 } from 'react-redux';
-import {
-    tablePageLimit,
-} from '../../api/config';
-import {
-    InfoTable,
-    Layout,
-} from '../../components';
+import { tablePageLimit } from '../../api/config';
+import { InfoTable } from '../../components';
 import {
     AppState,
     getUserActivity,
-    logout,
     selectTotalNumber,
     selectUserActivity,
     selectUserActivityCurrentPage,
@@ -69,7 +63,6 @@ interface ReduxProps {
 
 interface DispatchProps {
     getUserActivity: typeof getUserActivity;
-    logout: typeof logout;
 }
 
 interface State {
@@ -111,15 +104,13 @@ class ActivitiesScreen extends React.Component<Props, State> {
             classes,
         } = this.props;
         return (
-            <Layout logout={this.userLogout}>
-                <Paper>
-                    <Typography variant="h6" gutterBottom={true} className={classes.title}>
-                        User Activities
-                    </Typography>
-                    {userActivity[0] && this.renderContent()}
-                    {!userActivity.length && !loading && <Typography variant="caption" align="center" className={classes.emptyTable}>There is no data to show</Typography>}
-                </Paper>
-            </Layout>
+            <Paper>
+                <Typography variant="h6" gutterBottom={true} className={classes.title}>
+                    User Activities
+                </Typography>
+                {userActivity[0] && this.renderContent()}
+                {!userActivity.length && !loading && <Typography variant="caption" align="center" className={classes.emptyTable}>There is no data to show</Typography>}
+            </Paper>
         );
     }
 
@@ -153,7 +144,6 @@ class ActivitiesScreen extends React.Component<Props, State> {
         this.handleGetUserActivity(this.state.currentLimit, page);
     };
 
-    // tslint:disable-next-line:no-any
     private handleChangeRowsPerPage = (rows: number) => {
         this.setState({
             currentLimit: rows,
@@ -165,10 +155,6 @@ class ActivitiesScreen extends React.Component<Props, State> {
     private handleGetUserActivity = (limit: number, page: number) => {
         this.props.getUserActivity({ limit, page });
     }
-
-    private userLogout = () => {
-        this.props.logout();
-    };
 }
 
 const mapStateToProps = (state: AppState): ReduxProps => ({
@@ -181,7 +167,6 @@ const mapStateToProps = (state: AppState): ReduxProps => ({
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         getUserActivity: params => dispatch(getUserActivity(params)),
-        logout: () => dispatch(logout()),
 });
 
 export const Activities = withStyles(styles, { withTheme: true })(connect(mapStateToProps, mapDispatchToProps)(ActivitiesScreen));

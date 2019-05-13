@@ -43,6 +43,7 @@ interface Props extends WithStyles<typeof styles> {
     theme: Theme;
     children: React.ReactNode;
     logout: () => void;
+    loggedIn: boolean;
 }
 
 class LayoutComponent extends React.Component<Props, object> {
@@ -54,12 +55,14 @@ class LayoutComponent extends React.Component<Props, object> {
         const {
             classes,
             children,
+            loggedIn,
         } = this.props;
 
         return (
             <div className={classes.root}>
                 <CssBaseline />
                 <Navbar
+                    loggedIn={loggedIn}
                     logout={this.handleLogout}
                     open={this.state.open}
                     handleDrawerOpen={this.handleDrawerOpen}

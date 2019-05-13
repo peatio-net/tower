@@ -5,6 +5,7 @@ import { Layout } from './';
 const defaultProps = {
     children: <div>Children</div>,
     logout: jest.fn(),
+    loggedIn: false,
 };
 
 describe('Layout test', () => {

@@ -6,7 +6,6 @@ import {
 } from 'react-redux';
 import { RouteProps } from 'react-router';
 import {
-    Layout,
     UserData,
 } from '../../components';
 import {
@@ -18,7 +17,6 @@ import {
     deleteLabel,
     editLabel,
     getUserData,
-    logout,
     selectUserData,
 } from '../../modules';
 
@@ -35,7 +33,6 @@ interface DispatchProps {
     changeUserOTP: typeof changeUserOTP;
     deleteLabel: typeof deleteLabel;
     getUserData: typeof getUserData;
-    logout: typeof logout;
 }
 
 interface OwnProps {
@@ -96,7 +93,7 @@ class UserInfoScreen extends React.Component<Props, UserInfoState> {
         } = this.state;
 
         return (
-            <Layout logout={this.userLogout}>
+            <React.Fragment>
                 {this.props.userData
                     ? (
                         <UserData
@@ -127,7 +124,7 @@ class UserInfoScreen extends React.Component<Props, UserInfoState> {
                         />
                     ) : 'Loading'
                 }
-            </Layout>
+            </React.Fragment>
         );
     }
 
@@ -152,8 +149,6 @@ class UserInfoScreen extends React.Component<Props, UserInfoState> {
             scopeLabel: scope,
         });
     };
-
-    private userLogout = () => this.props.logout();
 
     private deleteLabel = (uid: string, key: string, scope: string) => {
         this.props.deleteLabel({uid: uid, key: key, scope: scope});
@@ -257,7 +252,6 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         changeUserOTP: payload => dispatch(changeUserOTP(payload)),
         deleteLabel:payload => dispatch(deleteLabel(payload)),
         getUserData: payload => dispatch(getUserData(payload)),
-        logout: () => dispatch(logout()),
     });
 
 export const UserInfo = connect(mapStateToProps, mapDispatchToProps)(UserInfoScreen);

@@ -1,21 +1,34 @@
-import {createStyles, Paper, Theme, withStyles, WithStyles} from '@material-ui/core';
+import {
+    createStyles,
+    Paper,
+    Theme,
+    withStyles,
+    WithStyles,
+} from '@material-ui/core';
 import * as React from 'react';
 import {
-    connect, MapDispatchToPropsFunction,
+    connect,
+    MapDispatchToPropsFunction,
 } from 'react-redux';
-import {CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts';
 import {
-    Layout,
-} from '../../components';
-import {metricsToChartData} from '../../helpers/metricsToChartData';
+    CartesianGrid,
+    Legend,
+    Line,
+    LineChart,
+    ResponsiveContainer,
+    Tooltip,
+    XAxis,
+    YAxis,
+} from 'recharts';
+import { metricsToChartData } from '../../helpers/metricsToChartData';
+import { AppState } from '../../modules';
 import {
-    AppState,
-    logout,
-} from '../../modules';
-import {Metrics, metricsFetch, selectMetrics} from '../../modules/metrics';
+    Metrics,
+    metricsFetch,
+    selectMetrics,
+} from '../../modules/metrics';
 
 interface DispatchProps {
-    logout: typeof logout;
     fetchMetrics: typeof metricsFetch;
 }
 
@@ -91,7 +104,7 @@ class DashboardScreen extends React.Component<Props, object> {
         const data = metricsToChartData(metrics);
 
         return (
-            <Layout logout={this.userLogout}>
+            <React.Fragment>
                 <div className={classes.main}>
                     <Paper className={classes.paper}>
                         <div className={classes.heading}>New Signup</div>
@@ -132,13 +145,9 @@ class DashboardScreen extends React.Component<Props, object> {
                         </LineChart>
                     </ResponsiveContainer>
                 </Paper>
-            </Layout>
+            </React.Fragment>
         );
     }
-
-    private userLogout = () => {
-        this.props.logout();
-    };
 }
 
 const mapStateToProps = (state: AppState): ReduxProps => ({
@@ -147,7 +156,6 @@ const mapStateToProps = (state: AppState): ReduxProps => ({
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
     fetchMetrics: () => dispatch(metricsFetch()),
-    logout: () => dispatch(logout()),
 });
 
 export const Dashboard = withStyles(styles, {withTheme: true})(connect(mapStateToProps, mapDispatchToProps)(DashboardScreen));

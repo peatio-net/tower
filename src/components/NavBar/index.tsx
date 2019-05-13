@@ -19,13 +19,14 @@ import {
     AccessTime,
     ChevronLeft,
     ChevronRight,
-    Home,
+    Dashboard,
     Menu,
     People,
     TrendingUp,
 } from '@material-ui/icons';
 import classNames from 'classnames';
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { icons } from './icons';
 
 const drawerWidth = 256;
@@ -103,6 +104,12 @@ const styles = (theme: Theme) => createStyles({
             backgroundColor: 'rgba(48, 156, 234, 0.1)',
         },
     },
+    link: {
+        textDecoration: 'none',
+    },
+    navbarHidden: {
+        display: 'none',
+    },
 });
 
 interface Props extends WithStyles<typeof styles> {
@@ -111,18 +118,19 @@ interface Props extends WithStyles<typeof styles> {
     open: boolean;
     handleDrawerOpen: () => void;
     handleDrawerClose: () => void;
+    loggedIn: boolean;
 }
 
 class NavBar extends React.Component<Props> {
 
     public render() {
-        const { classes } = this.props;
+        const { classes, loggedIn } = this.props;
 
         return (
             <div>
                 <AppBar
-                    position="fixed"
-                    className={classes.appBar}
+                  position="fixed"
+                  className={classNames(classes.appBar, {[classes.navbarHidden]: !loggedIn})}
                 >
                     <Toolbar>
                         <IconButton
@@ -133,15 +141,7 @@ class NavBar extends React.Component<Props> {
                         >
                             <Menu />
                         </IconButton>
-                        <IconButton
-                            color="inherit"
-                            href="/tower"
-                        >
-                            <Home />
-                        </IconButton>
-                        <Typography variant="h6" color="inherit" className={classes.grow} onClick={this.goToDashboard}>
-                            Control Tower
-                        </Typography>
+                        <Typography variant="h6" color="inherit" className={classes.grow} />
                         <Button color="inherit" onClick={this.handleLogout}>
                             Logout
                         </Button>
@@ -163,26 +163,22 @@ class NavBar extends React.Component<Props> {
                     </div>
                     <Divider />
                     <List>
-                        <ListItem className={classes.listItem} button={true} key="dashboard">
-                            <ListItemIcon>
-                                {icons('dashboard')}
-                            </ListItemIcon>
-                            <ListItemText
-                                disableTypography={true}
-                                primary={<Typography variant="body2">Dashboard</Typography>}
-                            />
+                        <Link to="/" className={classes.link}>
+                            <ListItem button={true} key="dashboard">
+                                <ListItemIcon>
+                                    <Dashboard />
+                                </ListItemIcon>
+                                <ListItemText primary="Dashboard" />
                             </ListItem>
+                        </Link>
                     </List>
                     <Divider />
                     <List>
-                        <ListItem className={classes.listItem} button={true} key="user-directory">
+                        <ListItem button={true} key="user-directory">
                             <ListItemIcon><People /></ListItemIcon>
-                            <ListItemText
-                                disableTypography={true}
-                                primary={<Typography variant="body2">User directory</Typography>}
-                            />
+                            <ListItemText primary="User directory" />
                         </ListItem>
-                        <ListItem className={classes.listItem} button={true} key="pending=review">
+                        <ListItem button={true} key="pending=review">
                             <ListItemIcon><AccessTime /></ListItemIcon>
                             <ListItemText
                                 disableTypography={true}
@@ -226,15 +222,12 @@ class NavBar extends React.Component<Props> {
                                 primary={<Typography variant="body2">Orderbooks</Typography>}
                             />
                         </ListItem>
-                        <ListItem className={classes.listItem} button={true} key="withdrawal">
-                            <ListItemIcon>
-                                {icons('withdrawal')}
-                            </ListItemIcon>
-                            <ListItemText
-                                disableTypography={true}
-                                primary={<Typography variant="body2">Withdrawal requests</Typography>}
-                            />
-                        </ListItem>
+                        <Link to="/withdraws" className={classes.link}>
+                            <ListItem button={true} key="withdrawRequests">
+                                <ListItemIcon>{icons('withdrawal')}</ListItemIcon>
+                                <ListItemText primary="Withdraw requests" />
+                            </ListItem>
+                        </Link>
                     </List>
                 </Drawer>
             </div>
@@ -251,10 +244,6 @@ class NavBar extends React.Component<Props> {
 
     private handleLogout = () => {
         this.props.logout();
-    };
-
-    private goToDashboard = () => {
-        window.location.replace('/tower');
     };
 }
 

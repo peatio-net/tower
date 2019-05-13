@@ -51,7 +51,6 @@ interface RouterProps {
 
 type Props = ReduxProps & DispatchProps & RouterProps;
 
-// tslint:disable
 class DashboardUserTable extends React.Component<Props, UserTableState> {
     constructor(props: Props) {
         super(props);
@@ -111,7 +110,6 @@ class DashboardUserTable extends React.Component<Props, UserTableState> {
     ];
 
     public componentDidMount() {
-        console.log(this.props.location);
         if (this.props.location.hash) {
             this.getRequestFromRouterProps(this.props.location.hash);
         }
@@ -194,7 +192,7 @@ class DashboardUserTable extends React.Component<Props, UserTableState> {
                     value: searchValue.toLowerCase(),
                     page: page + 1,
                     limit: rowsPerPage,
-                    extended: true
+                    extended: true,
                 };
                 this.props.getDataByFilter(requestObject);
         }

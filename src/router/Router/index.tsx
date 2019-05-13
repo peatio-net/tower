@@ -11,6 +11,7 @@ import {
     Login,
     UserDirectory,
     UserInfo,
+    WithdrawList,
 } from '../../containers';
 
 // tslint:disable-next-line
@@ -21,13 +22,15 @@ const PrivateRoute: React.SFC<any> = ({ component: CustomComponent, isLogged, ..
 class Router extends React.Component {
     public render() {
         const isCurrentSession = Cookies.get('session');
+
         return (
             <Switch>
                 <PrivateRoute isLogged={isCurrentSession} exact={true} path="/activities" component={Activities} />
                 <PrivateRoute isLogged={isCurrentSession} exact={true} path="/users" component={UserDirectory} />
                 <PrivateRoute isLogged={isCurrentSession} exact={true} path="/" component={Dashboard}/>
+                <PrivateRoute isLogged={isCurrentSession} exact={true} path="/withdraws" component={WithdrawList}/>
                 <Route exact={true} path="/login" component={Login}/>
-                <PrivateRoute isLogged={isCurrentSession} path="/users/:uid" component={UserInfo} />
+                <PrivateRoute isLogged={isCurrentSession} path="/users/:uid" component={UserInfo}/>
                 <Route path="**" render={() => <Redirect to="/"/>}/>
             </Switch>
         );
