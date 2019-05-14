@@ -10,6 +10,7 @@ exports[`Layout test should render 1`] = `
       "toolbar": "LayoutComponent-toolbar-2",
     }
   }
+  loggedIn={false}
   logout={[Function]}
   theme={
     Object {

@@ -11,6 +11,7 @@ import {
     Login,
     UserDirectory,
     UserInfo,
+    WithdrawInfo,
     WithdrawList,
 } from '../../containers';
 
@@ -28,9 +29,10 @@ class Router extends React.Component {
                 <PrivateRoute isLogged={isCurrentSession} exact={true} path="/activities" component={Activities} />
                 <PrivateRoute isLogged={isCurrentSession} exact={true} path="/users" component={UserDirectory} />
                 <PrivateRoute isLogged={isCurrentSession} exact={true} path="/" component={Dashboard}/>
-                <PrivateRoute isLogged={isCurrentSession} exact={true} path="/withdraws" component={WithdrawList}/>
-                <Route exact={true} path="/login" component={Login}/>
                 <PrivateRoute isLogged={isCurrentSession} path="/users/:uid" component={UserInfo}/>
+                <PrivateRoute isLogged={isCurrentSession} exact={true} path="/withdraws" component={WithdrawList}/>
+                <PrivateRoute isLogged={isCurrentSession} exact={true} path="/withdraws/:id" component={WithdrawInfo} />
+                <Route exact={true} path="/login" component={Login}/>
                 <Route path="**" render={() => <Redirect to="/"/>}/>
             </Switch>
         );

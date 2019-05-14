@@ -29,7 +29,7 @@ export function* loginSaga(action: LoginFetch) {
         if (is2FAEnabled) {
             yield put(signInRequire2FA({ require2fa: true }));
         } else {
-            yield put(alertPush({message: [error.message], code: error.code, type: 'error'}));
+            yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
         }
     }
 }

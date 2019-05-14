@@ -33,12 +33,30 @@ import {
     usersReducer,
     UsersState,
 } from './user';
+import {
+    rootGetWithdrawInfoSaga,
+    withdrawsInfoReducer,
+    WithdrawsInfoState,
+} from './withdrawInfo';
+import {
+    rootGetWithdrawListSaga,
+    withdrawsListReducer,
+    WithdrawsListState,
+} from './withdrawList';
+import {
+    rootGetWithdrawUserHistorySaga,
+    withdrawsUserHistoryReducer,
+    WithdrawsUserHistoryState,
+} from './withdrawUserHistory';
 
 export * from './alert';
 export * from './auth';
 export * from './changeUser';
 export * from './label';
 export * from './user';
+export * from './withdrawList';
+export * from './withdrawInfo';
+export * from './withdrawUserHistory';
 
 export interface AppState {
     alert: AlertState;
@@ -51,6 +69,9 @@ export interface AppState {
         users: UsersState;
     };
     metrics: MetricsState;
+    withdrawList: WithdrawsListState;
+    withdrawInfo: WithdrawsInfoState;
+    withdrawUserHistory: WithdrawsUserHistoryState;
 }
 
 const usersDataReducer = combineReducers({
@@ -66,6 +87,9 @@ export const appReducer = combineReducers({
     userActivity: userActivityReducer,
     usersData: usersDataReducer,
     metrics: metricsReducer,
+    withdrawList: withdrawsListReducer,
+    withdrawInfo: withdrawsInfoReducer,
+    withdrawUserHistory: withdrawsUserHistoryReducer,
 });
 
 export function* rootSaga() {
@@ -78,5 +102,8 @@ export function* rootSaga() {
         call(rootUsersSaga),
         call(rootHandleAlertSaga),
         call(rootMetricsSaga),
+        call(rootGetWithdrawListSaga),
+        call(rootGetWithdrawInfoSaga),
+        call(rootGetWithdrawUserHistorySaga),
     ]);
 }

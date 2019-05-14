@@ -69,7 +69,7 @@ const buildRequest = (request: Request, configData: RequestOptions) => {
 export const defaultResponse: Partial<AxiosError['response']> = {
     status: 500,
     data: {
-        error: ['Server error'],
+        error: 'Server error',
     },
 };
 

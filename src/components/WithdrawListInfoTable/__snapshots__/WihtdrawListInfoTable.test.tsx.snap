@@ -1,30 +1,30 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Navbar test should render 1`] = `
-<NavBar
+exports[`WithdrawListInfoTable component should render 1`] = `
+<TableComponent
   classes={
     Object {
-      "appBar": "NavBar-appBar-2",
-      "appBarShift": "NavBar-appBarShift-3",
-      "content": "NavBar-content-9",
-      "contentShift": "NavBar-contentShift-10",
-      "drawer": "NavBar-drawer-6",
-      "drawerHeader": "NavBar-drawerHeader-8",
-      "drawerPaper": "NavBar-drawerPaper-7",
-      "grow": "NavBar-grow-11",
-      "hide": "NavBar-hide-5",
-      "link": "NavBar-link-13",
-      "listItem": "NavBar-listItem-12",
-      "menuButton": "NavBar-menuButton-4",
-      "navbarHidden": "NavBar-navbarHidden-14",
-      "root": "NavBar-root-1",
+      "email": "TableComponent-email-6",
+      "green": "TableComponent-green-11",
+      "headerItem": "TableComponent-headerItem-5",
+      "link": "TableComponent-link-7",
+      "red": "TableComponent-red-10",
+      "root": "TableComponent-root-1",
+      "table": "TableComponent-table-2",
+      "tableItem": "TableComponent-tableItem-8",
+      "tableItemStatus": "TableComponent-tableItemStatus-9",
+      "tableTitle": "TableComponent-tableTitle-3",
+      "tableWrapper": "TableComponent-tableWrapper-4",
+      "yellow": "TableComponent-yellow-12",
     }
   }
-  handleDrawerClose={[Function]}
-  handleDrawerOpen={[Function]}
-  loggedIn={false}
-  logout={[Function]}
-  open={false}
+  data={Array []}
+  dataLength={0}
+  handleChangePage={[Function]}
+  handleChangeRowsPerPage={[Function]}
+  page={0}
+  rows={Array []}
+  rowsPerPage={1}
   theme={
     Object {
       "breakpoints": Object {
