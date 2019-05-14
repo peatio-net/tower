@@ -1,13 +1,15 @@
 export interface Config {
     authUrl: string;
+    applogicUrl: string;
     tablePageLimit: number;
     msAlertDisplayTime: string;
 }
 
 export const defaultConfig: Config = {
+    applogicUrl: '',
     authUrl: '',
-    tablePageLimit: 100,
     msAlertDisplayTime: '5000',
+    tablePageLimit: 100,
 };
 
 export const Tower = {
@@ -23,6 +25,7 @@ declare global {
 window.env = window.env || defaultConfig;
 Tower.config = { ...window.env };
 
+export const applogicUrl = () => Tower.config.applogicUrl;
 export const authUrl = () => Tower.config.authUrl;
-export const tablePageLimit = () => Tower.config.tablePageLimit;
 export const msAlertDisplayTime = () => Tower.config.msAlertDisplayTime;
+export const tablePageLimit = () => Tower.config.tablePageLimit;

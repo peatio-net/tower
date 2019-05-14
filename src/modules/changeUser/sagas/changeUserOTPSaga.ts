@@ -4,11 +4,15 @@ import {
     ChangeUserOTPFetch,
     getUserData,
 } from '../../';
-import { API } from '../../../api';
+import { API, RequestOptions } from '../../../api';
+
+const requestOptions: RequestOptions = {
+    apiVersion: 'barong',
+};
 
 export function* changeUserOTPSaga(action: ChangeUserOTPFetch) {
     try {
-        yield call(API.put(), `/admin/users`, action.payload);
+        yield call(API.put(requestOptions), `/admin/users`, action.payload);
         yield put(getUserData({uid: action.payload.uid}));
     } catch (error) {
         yield put(alertPush({

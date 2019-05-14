@@ -1,42 +1,51 @@
 import { AxiosResponse } from 'axios';
-import { JsonBody, makeRequest } from './requestBuilder';
+import { JsonBody, makeRequest, RequestOptions } from './requestBuilder';
 
+export { RequestOptions } from './requestBuilder';
 export type RequestBody = JsonBody | FormData;
 
-export type RequestMethod = () =>
+export type RequestMethod = (config: RequestOptions) =>
     (url: string, body?: RequestBody) => Promise<AxiosResponse['data']>;
 
 export interface ApiWrapper {
     get: RequestMethod;
     post: RequestMethod;
+    patch: RequestMethod;
     put: RequestMethod;
     delete: RequestMethod;
 }
 
 export const API: ApiWrapper = {
-    get: () => async (url: string) =>
+    get: (config: RequestOptions) => async (url: string) =>
         makeRequest({
             method: 'get',
             url,
-        }),
+        }, config),
 
-    post: () => async (url: string, body?: JsonBody) =>
+    post: (config: RequestOptions) => async (url: string, body?: JsonBody) =>
         makeRequest({
             method: 'post',
             body,
             url,
-        }),
+        }, config),
 
-    put: () => async (url: string, body?: JsonBody) =>
+    patch: (config: RequestOptions) => async (url: string, body?: JsonBody) =>
+        makeRequest({
+            method: 'patch',
+            body,
+            url,
+        }, config),
+
+    put: (config: RequestOptions) => async (url: string, body?: JsonBody) =>
         makeRequest({
             method: 'put',
             body,
             url,
-        }),
+        }, config),
 
-    delete: () => async (url: string) =>
+    delete: (config: RequestOptions) => async (url: string) =>
         makeRequest({
             method: 'delete',
             url,
-        }),
+        }, config),
 };

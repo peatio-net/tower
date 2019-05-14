@@ -6,11 +6,15 @@ import {
     signInRequire2FA,
 } from '../';
 import { alertPush } from '../../';
-import { API } from '../../../api';
+import { API, RequestOptions } from '../../../api';
+
+const requestOptions: RequestOptions = {
+    apiVersion: 'barong',
+};
 
 export function* loginSaga(action: LoginFetch) {
     try {
-        const user = yield call(API.post(), '/identity/sessions', action.payload);
+        const user = yield call(API.post(requestOptions), '/identity/sessions', action.payload);
         if (user.data.role === 'admin') {
             yield put(loginData(user.data));
             document.cookie = 'session=true; path=/';
@@ -25,7 +29,7 @@ export function* loginSaga(action: LoginFetch) {
         if (is2FAEnabled) {
             yield put(signInRequire2FA({ require2fa: true }));
         } else {
-            yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
+            yield put(alertPush({message: [error.message], code: error.code, type: 'error'}));
         }
     }
 }

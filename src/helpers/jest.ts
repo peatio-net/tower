@@ -5,9 +5,10 @@ import configureMockStore from 'redux-mock-store';
 import { Config, Tower } from '../api/config';
 
 const mockConfig: Config = {
+    applogicUrl: '/api/v2/applogic',
     authUrl: '/api/v2/barong',
-    tablePageLimit: 50,
     msAlertDisplayTime: '3000',
+    tablePageLimit: 50,
 };
 
 export const setupMockStore = (appMiddleware: Middleware, log = false) => configureMockStore([appMiddleware]);

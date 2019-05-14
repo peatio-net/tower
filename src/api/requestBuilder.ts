@@ -3,7 +3,10 @@ import axios, {
     AxiosPromise,
     AxiosRequestConfig,
 } from 'axios';
-import { authUrl } from './config';
+import {
+    applogicUrl,
+    authUrl,
+} from './config';
 
 export type HTTPMethod =
     'get'
@@ -13,8 +16,12 @@ export type HTTPMethod =
     | 'patch';
 
 export interface JsonBody {
-    // tslint:disable-next-line:no-any
+    // tslint:disable-next-line no-any
     [key: string]: any;
+}
+
+export interface RequestOptions {
+    apiVersion: 'applogic' | 'barong';
 }
 
 export interface Request {
@@ -25,14 +32,18 @@ export interface Request {
 
 export interface ApiVariety {
     barong: string;
+    applogic: string;
 }
 
-const api: ApiVariety = {
-    barong: authUrl(),
-};
+const getAPI = () => ({
+    barong: `${authUrl()}`,
+    applogic: `${applogicUrl()}`,
+});
 
-const buildRequest = (request: Request) => {
+const buildRequest = (request: Request, configData: RequestOptions) => {
     const { body, method, url } = request;
+    const { apiVersion } = configData;
+    const api = getAPI();
 
     const contentType = body instanceof FormData
         ? 'multipart/form-data'
@@ -42,7 +53,7 @@ const buildRequest = (request: Request) => {
         'content-type': contentType,
     };
 
-    const apiUrl = api.barong;
+    const apiUrl = api[apiVersion];
 
     const requestConfig: AxiosRequestConfig = {
         baseURL: apiUrl,
@@ -58,21 +69,21 @@ const buildRequest = (request: Request) => {
 export const defaultResponse: Partial<AxiosError['response']> = {
     status: 500,
     data: {
-        errors: ['Server error'],
+        error: ['Server error'],
     },
 };
 
 export const formatError = (responseError: AxiosError) => {
     const response = responseError.response || defaultResponse;
-    const errors = response.data && response.data.errors;
+    const errors = response.data && (response.data.errors || [response.data.error]);
     return {
         code: response.status,
         message: errors,
     };
 };
 
-export const makeRequest = async (request: Request) => {
-    const requestConfig = buildRequest(request);
+export const makeRequest = async (request: Request, configData: RequestOptions) => {
+    const requestConfig = buildRequest(request, configData);
 
     return new Promise((resolve, reject) => {
         const axiosRequest: AxiosPromise = axios(requestConfig);

@@ -4,11 +4,15 @@ import {
     alertPush,
     getUserData,
 } from '../../';
-import { API } from '../../../api';
+import { API, RequestOptions } from '../../../api';
+
+const requestOptions: RequestOptions = {
+    apiVersion: 'barong',
+};
 
 export function* addUserLabelSaga(action: AddUserLabelFetch) {
     try {
-        yield call(API.post(), `/admin/users/labels`, action.payload);
+        yield call(API.post(requestOptions), `/admin/users/labels`, action.payload);
         yield put(getUserData({uid: action.payload.uid}));
     } catch (error) {
         yield put(alertPush({message: error.message, code: error.code, type: 'error'}));

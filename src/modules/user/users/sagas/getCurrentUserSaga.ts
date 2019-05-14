@@ -4,11 +4,15 @@ import {
     getCurrentUserData,
     GetCurrentUserFetch,
 } from '../../../';
-import { API } from '../../../../api';
+import { API, RequestOptions } from '../../../../api';
+
+const requestOptions: RequestOptions = {
+    apiVersion: 'barong',
+};
 
 export function* getCurrentUserSaga(action: GetCurrentUserFetch) {
     try {
-        const user = yield call(API.get(), '/resource/users/me');
+        const user = yield call(API.get(requestOptions), '/resource/users/me');
         yield put(getCurrentUserData(user.data));
     } catch (error) {
         yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
