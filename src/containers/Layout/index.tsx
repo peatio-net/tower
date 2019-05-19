@@ -1,9 +1,12 @@
-import { createStyles, CssBaseline, WithStyles } from '@material-ui/core';
+import {
+    createStyles,
+    CssBaseline,
+    WithStyles,
+} from '@material-ui/core';
 import { Theme, withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import * as React from 'react';
-import { Navbar } from '../';
-import {Footer} from '../Footer';
+import { Footer, Navbar } from '../../components';
 
 const drawerWidth = 240;
 

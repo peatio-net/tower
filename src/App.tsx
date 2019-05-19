@@ -5,14 +5,9 @@ import {
     MapDispatchToPropsFunction,
 } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import {
-    Layout,
-} from './components';
-import { Alerts } from './containers';
-import {GuardWrapper} from './containers/Guard';
-import {
-    logout,
-} from './modules';
+import { Alerts, Layout } from './containers';
+import { GuardWrapper } from './containers/Guard';
+import { logout } from './modules';
 import { AppRouter } from './router';
 
 interface DispatchProps {
