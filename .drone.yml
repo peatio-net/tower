@@ -12,6 +12,28 @@ steps:
   when:
     event: [push]
 
+- name: Stage with mock server
+  image: alpine/git
+  environment:
+    PRIVATE_KEY:
+      from_secret: mock_deploy_key_b64
+  commands:
+    - echo "$PRIVATE_KEY" | base64 -d > id_rsa
+    - chmod 0600 id_rsa
+    - cd build/
+    - echo "window.env={authUrl:'http://api-v2.mock.openware.work/api/v2/barong',tablePageLimit:50,msAlertDisplayTime:'5000'};" > env.js
+    - cat env.js
+    - cd /drone/src/
+    - cat build/env.js
+    - cd build
+    - mkdir tower
+    - mv static tower && mv env.js tower
+    - cd ..
+    - scp -r -i id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null build mock@mock.openware.work:/home/mock/builds/${DRONE_COMMIT_SHA:0:7}
+    - echo "http://${DRONE_COMMIT_SHA:0:7}.mock.openware.work/tower"
+  when:
+    event: [push]
+
 - name: Tag
   image: node:11
   environment:
