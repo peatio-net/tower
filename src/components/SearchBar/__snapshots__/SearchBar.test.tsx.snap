@@ -1,33 +1,37 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`WithdrawInfoTableComponent test should render 1`] = `
-<WithdrawInfoTable
-  classes={
+exports[`SearchBar test should render 1`] = `
+<SearchBarComponent
+  activeItem={
     Object {
-      "cardContent": "WithdrawInfoTable-cardContent-15",
-      "email": "WithdrawInfoTable-email-6",
-      "green": "WithdrawInfoTable-green-11",
-      "headerItem": "WithdrawInfoTable-headerItem-5",
-      "iconBackground": "WithdrawInfoTable-iconBackground-14",
-      "iconBackgroundNotActive": "WithdrawInfoTable-iconBackgroundNotActive-13",
-      "link": "WithdrawInfoTable-link-7",
-      "red": "WithdrawInfoTable-red-10",
-      "root": "WithdrawInfoTable-root-1",
-      "table": "WithdrawInfoTable-table-2",
-      "tableItem": "WithdrawInfoTable-tableItem-8",
-      "tableItemStatus": "WithdrawInfoTable-tableItemStatus-9",
-      "tableTitle": "WithdrawInfoTable-tableTitle-3",
-      "tableWrapper": "WithdrawInfoTable-tableWrapper-4",
-      "yellow": "WithdrawInfoTable-yellow-12",
+      "checked": false,
+      "label": "",
+      "value": "",
     }
   }
-  data={Array []}
-  dataLength={0}
-  handleChangePage={[Function]}
-  handleChangeRowsPerPage={[Function]}
-  page={0}
-  rows={Array []}
-  rowsPerPage={0}
+  classes={
+    Object {
+      "addMinusIcon": "SearchBarComponent-addMinusIcon-14",
+      "addMinusIconBlock": "SearchBarComponent-addMinusIconBlock-13",
+      "block": "SearchBarComponent-block-5",
+      "card": "SearchBarComponent-card-1",
+      "cardContent": "SearchBarComponent-cardContent-2",
+      "container": "SearchBarComponent-container-3",
+      "formControl": "SearchBarComponent-formControl-4",
+      "icon": "SearchBarComponent-icon-7",
+      "icons": "SearchBarComponent-icons-9",
+      "select": "SearchBarComponent-select-6",
+      "sideIconClear": "SearchBarComponent-sideIconClear-11",
+      "sideIconItem": "SearchBarComponent-sideIconItem-12",
+      "sideIconSearch": "SearchBarComponent-sideIconSearch-10",
+      "textField": "SearchBarComponent-textField-8",
+    }
+  }
+  handleChangeSearchValue={[Function]}
+  handleChangeSelect={[Function]}
+  index={0}
+  searchValue=""
+  selectedValues={Array []}
   theme={
     Object {
       "breakpoints": Object {

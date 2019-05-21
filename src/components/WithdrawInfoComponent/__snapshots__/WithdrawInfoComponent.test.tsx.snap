@@ -17,6 +17,7 @@ exports[`WithdrawInfoComponent test should render 1`] = `
       "blockItemInfo": "WithdrawInfo-blockItemInfo-9",
       "blockItemTitle": "WithdrawInfo-blockItemTitle-8",
       "buttonAccept": "WithdrawInfo-buttonAccept-13",
+      "buttonIcon": "WithdrawInfo-buttonIcon-18",
       "buttonReject": "WithdrawInfo-buttonReject-12",
       "divider": "WithdrawInfo-divider-17",
       "emailTitle": "WithdrawInfo-emailTitle-5",

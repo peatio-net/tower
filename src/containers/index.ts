@@ -8,3 +8,4 @@ export * from './UserDirectory';
 export * from './WithdrawListTableContainer';
 export * from './WithdrawInfoContainer';
 export * from './Layout';
+export * from './SearchBarContainer';

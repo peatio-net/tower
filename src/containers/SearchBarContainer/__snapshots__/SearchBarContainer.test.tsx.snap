@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchBarContainer test should render 1`] = `
+<Fragment>
+  <WithStyles(SearchBarComponent)
+    activeItem={
+      Object {
+        "checked": true,
+        "label": "",
+        "value": "",
+      }
+    }
+    handleAddItem={[Function]}
+    handleChangeSearchValue={[Function]}
+    handleChangeSelect={[Function]}
+    handleClear={[Function]}
+    handleSendRequest={[Function]}
+    index={0}
+    searchValue=""
+    selectedValues={
+      Array [
+        Object {
+          "checked": true,
+          "label": "",
+          "value": "",
+        },
+      ]
+    }
+  />
+</Fragment>
+`;

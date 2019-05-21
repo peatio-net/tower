@@ -10,3 +10,4 @@ export * from './UsersTable';
 export * from './WithdrawListInfoTable';
 export * from './WithdrawInfoComponent';
 export * from './WithdrawInfoTableComponent';
+export * from './SearchBar';

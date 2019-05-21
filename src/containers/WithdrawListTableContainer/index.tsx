@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux';
+import { SearchBarContainer, SearchBarRequestInterface } from '../';
 import { tablePageLimit } from '../../api/config';
 import { WithdrawListInfoTable } from '../../components';
 import {
@@ -12,6 +13,11 @@ import {
 interface WithdrawListTableContainerState {
     rowsPerPage: number;
     page: number;
+    activeSelectItem: {
+        value: string;
+        label: string;
+    };
+    searchValue: string;
 }
 
 interface ReduxProps {
@@ -24,33 +30,6 @@ interface DispatchProps {
 
 export type WithdrawListTableContainerProps = DispatchProps & ReduxProps;
 
-const data = [
-    {
-        uid: 'WID4567890AD',
-        email: 'admin@admin.fr',
-        date: '18-06-20 17:38:42',
-        amount: '2000',
-        currency: 'USD',
-        status: 'Pending',
-    },
-    {
-        uid: '1234567890AD',
-        email: 'admin@st.net',
-        date: '18-06-20 17:38:42',
-        amount: '2000',
-        currency: 'USD',
-        status: 'Canceled',
-    },
-    {
-        uid: '1234567890AD',
-        email: 'admin@admin.fr',
-        date: '18-06-20 17:38:42',
-        amount: '2000',
-        currency: 'USD',
-        status: 'Agreed',
-    },
-];
-
 class WithdrawListTableContainer extends React.Component<WithdrawListTableContainerProps, WithdrawListTableContainerState> {
     constructor(props: WithdrawListTableContainerProps) {
         super(props);
@@ -58,6 +37,8 @@ class WithdrawListTableContainer extends React.Component<WithdrawListTableContai
         this.state = {
             page: 0,
             rowsPerPage: tablePageLimit(),
+            activeSelectItem: this.selectedValues[0],
+            searchValue: '',
         };
     }
 
@@ -68,6 +49,39 @@ class WithdrawListTableContainer extends React.Component<WithdrawListTableContai
         { key: 'amount', alignRight: false, label: 'Amount' },
         { key: 'currency', alignRight: false, label: 'Currency' },
         { key: 'status', alignRight: true, label: 'Status'},
+    ];
+
+    private selectedValues = [
+        {
+            value: 'email',
+            label: 'Email',
+            checked: false,
+        },
+        {
+            value: 'uid',
+            label: 'UID',
+            checked: false,
+        },
+        {
+            value: 'date',
+            label: 'Date',
+            checked: false,
+        },
+        {
+            value: 'amount',
+            label: 'Amount',
+            checked: false,
+        },
+        {
+            value: 'currency',
+            label: 'Currency',
+            checked: false,
+        },
+        {
+            value: 'status',
+            label: 'Status',
+            checked: false,
+        },
     ];
 
     public componentDidMount() {
@@ -82,10 +96,14 @@ class WithdrawListTableContainer extends React.Component<WithdrawListTableContai
 
         return (
             <React.Fragment>
+                <SearchBarContainer
+                    selectedItems={this.selectedValues}
+                    handleSearchRequest={this.handleSearch}
+                />
                 <WithdrawListInfoTable
                     dataLength={this.props.withdrawList.length}
                     rows={this.tableRows}
-                    data={this.props.withdrawList.length ? this.props.withdrawList : data}
+                    data={this.props.withdrawList.length ? this.props.withdrawList : []}
                     page={page}
                     rowsPerPage={rowsPerPage}
                     handleChangePage={this.handleChangePage}
@@ -108,6 +126,10 @@ class WithdrawListTableContainer extends React.Component<WithdrawListTableContai
             rowsPerPage: Number(count),
         });
     };
+
+    private handleSearch = (data: SearchBarRequestInterface[]) => {
+        window.console.log(data);
+    }
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, AppState> = (state: AppState): ReduxProps => ({
