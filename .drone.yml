@@ -1,115 +1,59 @@
 kind: pipeline
-name: Tower
+name: "Push"
+
+concurrency:
+  limit: 2
 
 steps:
+  - name: "Test & Build"
+    image: node:10.11
+    commands:
+      - yarn
+      - yarn build
+      - yarn test
 
-- name: Test
-  image: node:11
-  commands:
-    - yarn
-    - yarn build
-    - yarn test
-  when:
-    event: [push]
+  - name: "Stage with mock server"
+    image: alpine/git
+    environment:
+      PRIVATE_KEY:
+        from_secret: mock_deploy_key_b64
+    commands:
+      - echo "$PRIVATE_KEY" | base64 -d > id_rsa
+      - chmod 0600 id_rsa
+      - cd build/
+      - echo "window.env={authUrl:'http://api-v2.mock.openware.work/api/v2/barong',tablePageLimit:50,msAlertDisplayTime:'5000'};" > env.js
+      - cat env.js
+      - cd /drone/src/
+      - cat build/env.js
+      - cd build
+      - mkdir tower
+      - mv static tower && mv env.js tower
+      - cd ..
+      - scp -r -i id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null build mock@mock.openware.work:/home/mock/builds/${DRONE_COMMIT_SHA:0:7}
+      - echo "http://${DRONE_COMMIT_SHA:0:7}.mock.openware.work/tower"
 
-- name: Stage with mock server
-  image: alpine/git
-  environment:
-    PRIVATE_KEY:
-      from_secret: mock_deploy_key_b64
-  commands:
-    - echo "$PRIVATE_KEY" | base64 -d > id_rsa
-    - chmod 0600 id_rsa
-    - cd build/
-    - echo "window.env={authUrl:'http://api-v2.mock.openware.work/api/v2/barong',tablePageLimit:50,msAlertDisplayTime:'5000'};" > env.js
-    - cat env.js
-    - cd /drone/src/
-    - cat build/env.js
-    - cd build
-    - mkdir tower
-    - mv static tower && mv env.js tower
-    - cd ..
-    - scp -r -i id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null build mock@mock.openware.work:/home/mock/builds/${DRONE_COMMIT_SHA:0:7}
-    - echo "http://${DRONE_COMMIT_SHA:0:7}.mock.openware.work/tower"
-  when:
-    event: [push]
+  - name: "Notify staging"
+    image: plugins/slack
+    settings:
+      webhook:
+        from_secret: baseapp_slack_webhook
+      channel:
+        from_secret: baseapp_slack_channel
+      template: >
+        {{#success build.status}}
+          [SUCCESS] (Base Application) Branch {{ build.branch }} by {{ build.author }} staging has succeeded!
+          Visit http://{{ truncate build.commit 7 }}.mock.openware.work to check it out!
+        {{else}}
+          [FAILURE] Branch {{ build.branch }} by {{ build.author }} staging has failed!
+        {{/success}}
+        Check the build info here: {{ build.link }}
+    when:
+      status: [success, failure]
 
-- name: Tag
-  image: node:11
-  environment:
-      GITHUB_API_KEY:
-        from_secret: rubykube_bot_creds
-  commands:
-    - git config --global user.name "kite-bot"
-    - git config --global user.email "support@rubykube.io"
-    - git remote add authenticated-origin https://kite-bot:$GITHUB_API_KEY@github.com/${DRONE_REPO}
-    - git fetch
-    - yarn config set version-git-message "[ci Skip] Bump %s"
-    - yarn config set version-tag-prefix ""
-    - yarn version --patch -y
-    - git push authenticated-origin master
-    - git push --tags authenticated-origin
-    - git describe --tags $(git rev-list --tags --max-count=1) > .tags
-  when:
-    branch: [master]
-    event: [push]
-
-- name: Push image by tag
-  image: plugins/docker
-  settings:
-    repo: rubykube/tower
-    username:
-      from_secret: kitebot_docker_username
-    password:
-      from_secret: kitebot_docker_password
-  when:
-    branch: [master]
-    event: [push]
-
-- name: Push image by git sha
-  image: plugins/docker
-  settings:
-    repo: rubykube/tower
-    username:
-      from_secret: kitebot_docker_username
-    password:
-      from_secret: kitebot_docker_password
-    tags:
-      - ${DRONE_BRANCH}-${DRONE_COMMIT_SHA:0:7}
-  when:
-    branch: [devel]
-    event: [push]
-
-- name: Deploy to microkube
-  image: rubykube/microkube:0.1.0
-  environment:
-    WEBHOOK_JWT_SECRET:
-      from_secret: devkube_webhook_secret
-    DEPLOY_HOST:
-      from_secret: deploy_host
-  commands:
-    - latest_image=rubykube/tower:$(cat .tags)
-    - cd /home/app
-    - bundle exec rake payload:send[tower,$latest_image,http://$DEPLOY_HOST:1337]
-  when:
-    branch: [master]
-    event: [push]
-
-- name: "Notify about redeployment on devkube"
-  image: plugins/slack
-  settings:
-    webhook:
-      from_secret: cryptobase_slack_webhook
-    channel:
-      from_secret: cryptobase_slack_channel
-    template: >
-      {{#success build.status}}
-        [SUCCESS] (Tower) New version has been published!!
-      {{else}}
-        [FAILURE] (Tower) Master branch build by {{ build.author }} has failed!
-      {{/success}}
-      Check the build info here: {{ build.link }}
-  when:
-    branch: [master]
-    status: [success, failure]
-    event: [push]
+trigger:
+  event:
+  - push
+  branch:
+    exclude:
+    - master
+    - obfuscated-*
