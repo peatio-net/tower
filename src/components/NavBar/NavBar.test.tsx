@@ -4,6 +4,9 @@ import { Navbar } from './';
 
 const defaultProps = {
     logout: jest.fn(),
+    open: false,
+    handleDrawerOpen: jest.fn(),
+    handleDrawerClose: jest.fn(),
 };
 
 describe('Navbar test', () => {

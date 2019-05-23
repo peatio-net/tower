@@ -1,7 +1,10 @@
 import { createStyles, CssBaseline, WithStyles } from '@material-ui/core';
 import { Theme, withStyles } from '@material-ui/core/styles';
+import classNames from 'classnames';
 import * as React from 'react';
 import { Navbar } from '../';
+
+const drawerWidth = 240;
 
 const styles = (theme: Theme) => createStyles({
     root: {
@@ -17,6 +20,19 @@ const styles = (theme: Theme) => createStyles({
     content: {
         flexGrow: 1,
         padding: theme.spacing.unit * 3,
+
+        transition: theme.transitions.create('margin', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+        }),
+        marginLeft: -drawerWidth,
+    },
+    contentShift: {
+        transition: theme.transitions.create('margin', {
+            easing: theme.transitions.easing.easeOut,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+        marginLeft: 0,
     },
 });
 
@@ -27,6 +43,10 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 class LayoutComponent extends React.Component<Props, object> {
+    public state = {
+        open: false,
+    };
+
     public render() {
         const {
             classes,
@@ -36,9 +56,13 @@ class LayoutComponent extends React.Component<Props, object> {
         return (
             <div className={classes.root}>
                 <CssBaseline />
-                <Navbar logout={this.handleLogout} />
-
-                <main className={classes.content}>
+                <Navbar
+                    logout={this.handleLogout}
+                    open={this.state.open}
+                    handleDrawerOpen={this.handleDrawerOpen}
+                    handleDrawerClose={this.handleDrawerClose}
+                />
+                <main className={classNames(classes.content, {[classes.contentShift]: this.state.open})}>
                     <div className={classes.toolbar} />
                     {children}
                 </main>
@@ -48,6 +72,13 @@ class LayoutComponent extends React.Component<Props, object> {
 
     private handleLogout = () => {
         this.props.logout();
+    };
+    private handleDrawerOpen = () => {
+        this.setState({ open: true });
+    };
+
+    private handleDrawerClose = () => {
+        this.setState({ open: false });
     };
 }
 

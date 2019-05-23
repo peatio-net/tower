@@ -5,6 +5,7 @@ exports[`Layout test should render 1`] = `
   classes={
     Object {
       "content": "LayoutComponent-content-3",
+      "contentShift": "LayoutComponent-contentShift-4",
       "root": "LayoutComponent-root-1",
       "toolbar": "LayoutComponent-toolbar-2",
     }

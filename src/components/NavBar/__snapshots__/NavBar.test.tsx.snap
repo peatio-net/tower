@@ -4,18 +4,24 @@ exports[`Navbar test should render 1`] = `
 <NavBar
   classes={
     Object {
-      "appBar": "NavBar-appBar-1",
-      "appBarShift": "NavBar-appBarShift-2",
-      "drawer": "NavBar-drawer-5",
-      "drawerClose": "NavBar-drawerClose-7",
-      "drawerOpen": "NavBar-drawerOpen-6",
-      "grow": "NavBar-grow-9",
-      "hide": "NavBar-hide-4",
-      "menuButton": "NavBar-menuButton-3",
-      "toolbar": "NavBar-toolbar-8",
+      "appBar": "NavBar-appBar-2",
+      "appBarShift": "NavBar-appBarShift-3",
+      "content": "NavBar-content-9",
+      "contentShift": "NavBar-contentShift-10",
+      "drawer": "NavBar-drawer-6",
+      "drawerHeader": "NavBar-drawerHeader-8",
+      "drawerPaper": "NavBar-drawerPaper-7",
+      "grow": "NavBar-grow-11",
+      "hide": "NavBar-hide-5",
+      "listItem": "NavBar-listItem-12",
+      "menuButton": "NavBar-menuButton-4",
+      "root": "NavBar-root-1",
     }
   }
+  handleDrawerClose={[Function]}
+  handleDrawerOpen={[Function]}
   logout={[Function]}
+  open={false}
   theme={
     Object {
       "breakpoints": Object {
