@@ -1,4 +1,4 @@
-import * as Cookies from 'js-cookie';
+// import * as Cookies from 'js-cookie';
 import * as React from 'react';
 import {
     Redirect,
@@ -15,25 +15,104 @@ import {
     WithdrawList,
 } from '../../containers';
 
-// tslint:disable-next-line
-const PrivateRoute: React.SFC<any> = ({ component: CustomComponent, isLogged, ...rest }) => {
-    return (<Route {...rest} render={props => (isLogged ? <CustomComponent {...props} /> : <Redirect to="/login" />)} />);
+const renderLoading = () => {
+    return (
+        <div>Loading...</div>
+    );
 };
 
-class Router extends React.Component {
+// tslint:disable-next-line
+const PrivateRoute: React.SFC<any> = ({ component: CustomComponent, loading, isLogged, ...rest }) => {
+    if (loading) {
+        return renderLoading();
+    }
+
+    const renderCustomerComponent = props => <CustomComponent {...props} />;
+
+    if (isLogged) {
+        return <Route {...rest} render={renderCustomerComponent} />;
+    }
+
+    return (
+        <Route {...rest}>
+            <Redirect to={'/tower/login'} />
+        </Route>
+    );
+};
+
+//tslint:disable-next-line no-any
+const PublicRoute: React.FunctionComponent<any> = ({ component: CustomComponent, loading, isLogged, ...rest }) => {
+    if (loading) {
+        return renderLoading();
+    }
+
+    if (isLogged) {
+        return <Route {...rest}><Redirect to={'/tower'} /></Route>;
+    }
+
+    const renderCustomerComponent = props => <CustomComponent {...props} />;
+    return <Route {...rest} render={renderCustomerComponent} />;
+};
+
+interface RouterProps {
+    isCurrentSession: boolean;
+    userLoading: boolean;
+}
+
+class Router extends React.Component<RouterProps> {
     public render() {
-        const isCurrentSession = Cookies.get('session');
+        const { isCurrentSession, userLoading } = this.props;
 
         return (
             <Switch>
-                <PrivateRoute isLogged={isCurrentSession} exact={true} path="/activities" component={Activities} />
-                <PrivateRoute isLogged={isCurrentSession} exact={true} path="/users" component={UserDirectory} />
-                <PrivateRoute isLogged={isCurrentSession} exact={true} path="/" component={Dashboard}/>
-                <PrivateRoute isLogged={isCurrentSession} path="/users/:uid" component={UserInfo}/>
-                <PrivateRoute isLogged={isCurrentSession} exact={true} path="/withdraws" component={WithdrawList}/>
-                <PrivateRoute isLogged={isCurrentSession} exact={true} path="/withdraws/:id" component={WithdrawInfo} />
-                <Route exact={true} path="/login" component={Login}/>
-                <Route path="**" render={() => <Redirect to="/"/>}/>
+                <PrivateRoute
+                    loading={userLoading}
+                    isLogged={isCurrentSession}
+                    exact={true}
+                    path="/users"
+                    component={UserDirectory}
+                />
+                <PrivateRoute
+                    loading={userLoading}
+                    isLogged={isCurrentSession}
+                    exact={true}
+                    path="/activities"
+                    component={Activities}
+                />
+                <PrivateRoute
+                    loading={userLoading}
+                    isLogged={isCurrentSession}
+                    exact={true}
+                    path="/tower"
+                    component={Dashboard}
+                />
+                <PrivateRoute
+                    loading={userLoading}
+                    isLogged={isCurrentSession}
+                    path="/tower/users/:uid"
+                    component={UserInfo}
+                />
+                <PrivateRoute
+                    loading={userLoading}
+                    isLogged={isCurrentSession}
+                    exact={true}
+                    path="/tower/withdraws"
+                    component={WithdrawList}
+                />
+                <PrivateRoute
+                    loading={userLoading}
+                    isLogged={isCurrentSession}
+                    path="/tower/withdraws/:id"
+                    component={WithdrawInfo}
+                />
+                <PublicRoute
+                    loading={userLoading}
+                    isLogged={isCurrentSession}
+                    exact={true}
+                    path="/tower/login"
+                    component={Login}
+                />
+                <Route path="**" render={() => <Redirect to="/tower/"/>}/>
             </Switch>
         );
     }

@@ -163,69 +163,94 @@ class NavBar extends React.Component<Props> {
                     </div>
                     <Divider />
                     <List>
-                        <Link to="/" className={classes.link}>
-                            <ListItem button={true} key="dashboard">
+                        <Link to="/tower" className={classes.link}>
+                            <ListItem className={classes.listItem} button={true} key="dashboard">
                                 <ListItemIcon>
                                     <Dashboard />
                                 </ListItemIcon>
-                                <ListItemText primary="Dashboard" />
+                                <ListItemText
+                                    disableTypography={true}
+                                    primary={<Typography variant="body2">Dashboard</Typography>}
+                                />
                             </ListItem>
                         </Link>
                     </List>
                     <Divider />
                     <List>
-                        <ListItem button={true} key="user-directory">
-                            <ListItemIcon><People /></ListItemIcon>
-                            <ListItemText primary="User directory" />
-                        </ListItem>
-                        <ListItem button={true} key="pending=review">
-                            <ListItemIcon><AccessTime /></ListItemIcon>
-                            <ListItemText
-                                disableTypography={true}
-                                primary={<Typography variant="body2">Pending documents</Typography>}
-                            />
-                        </ListItem>
-                        <ListItem className={classes.listItem} button={true} key="activities">
-                            <ListItemIcon><TrendingUp /></ListItemIcon>
-                            <ListItemText
-                                disableTypography={true}
-                                primary={<Typography variant="body2">User activities</Typography>}
-                            />
-                        </ListItem>
-                        <ListItem className={classes.listItem} button={true} key="admin">
-                            <ListItemIcon>
-                                {icons('admin')}
-                            </ListItemIcon>
-                            <ListItemText
-                                disableTypography={true}
-                                primary={<Typography variant="body2">Admin activities</Typography>}
-                            />
-                        </ListItem>
+                        <Link to="/tower" className={classes.link}>
+                            <ListItem className={classes.listItem} button={true} key="user-directory">
+                                <ListItemIcon>
+                                    <People />
+                                </ListItemIcon>
+                                <ListItemText
+                                    disableTypography={true}
+                                    primary={<Typography variant="body2">User directory</Typography>}
+                                />
+                            </ListItem>
+                        </Link>
+                        <Link to="/tower" className={classes.link}>
+                            <ListItem className={classes.listItem} button={true} key="pending=review">
+                                <ListItemIcon><AccessTime /></ListItemIcon>
+                                <ListItemText
+                                    disableTypography={true}
+                                    primary={<Typography variant="body2">Pending documents</Typography>}
+                                />
+                            </ListItem>
+                        </Link>
+                        <Link to="/tower" className={classes.link}>
+                            <ListItem className={classes.listItem} button={true} key="activities">
+                                <ListItemIcon><TrendingUp /></ListItemIcon>
+                                <ListItemText
+                                    disableTypography={true}
+                                    primary={<Typography variant="body2">User activities</Typography>}
+                                />
+                            </ListItem>
+                        </Link>
+                        <Link to="/tower" className={classes.link}>
+                            <ListItem className={classes.listItem} button={true} key="admin">
+                                <ListItemIcon>
+                                    {icons('admin')}
+                                </ListItemIcon>
+                                <ListItemText
+                                    disableTypography={true}
+                                    primary={<Typography variant="body2">Admin activities</Typography>}
+                                />
+                            </ListItem>
+                        </Link>
                     </List>
                     <Divider />
                     <List>
-                        <ListItem className={classes.listItem} button={true} key="orders">
-                            <ListItemIcon>
-                                {icons('orders')}
-                            </ListItemIcon>
-                            <ListItemText
-                                disableTypography={true}
-                                primary={<Typography variant="body2">Orders</Typography>}
-                            />
-                        </ListItem>
-                        <ListItem className={classes.listItem} button={true} key="orderbooks">
-                            <ListItemIcon>
-                                {icons('orderbooks')}
-                            </ListItemIcon>
-                            <ListItemText
-                                disableTypography={true}
-                                primary={<Typography variant="body2">Orderbooks</Typography>}
-                            />
-                        </ListItem>
-                        <Link to="/withdraws" className={classes.link}>
-                            <ListItem button={true} key="withdrawRequests">
-                                <ListItemIcon>{icons('withdrawal')}</ListItemIcon>
-                                <ListItemText primary="Withdraw requests" />
+                        <Link to="/tower" className={classes.link}>
+                            <ListItem className={classes.listItem} button={true} key="orders">
+                                <ListItemIcon>
+                                    {icons('orders')}
+                                </ListItemIcon>
+                                <ListItemText
+                                    disableTypography={true}
+                                    primary={<Typography variant="body2">Orders</Typography>}
+                                />
+                            </ListItem>
+                        </Link>
+                        <Link to="/tower" className={classes.link}>
+                            <ListItem className={classes.listItem} button={true} key="orderbooks">
+                                <ListItemIcon>
+                                    {icons('orderbooks')}
+                                </ListItemIcon>
+                                <ListItemText
+                                    disableTypography={true}
+                                    primary={<Typography variant="body2">Orderbooks</Typography>}
+                                />
+                            </ListItem>
+                        </Link>
+                        <Link to="/tower/withdraws" className={classes.link}>
+                            <ListItem className={classes.listItem} button={true} key="withdrawRequests">
+                                <ListItemIcon>
+                                    {icons('withdrawal')}
+                                </ListItemIcon>
+                                <ListItemText
+                                    disableTypography={true}
+                                    primary={<Typography variant="body2">Withdraw requests</Typography>}
+                                />
                             </ListItem>
                         </Link>
                     </List>

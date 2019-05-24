@@ -1,5 +1,6 @@
 import {
     GET_CURRENT_USER_DATA,
+    GET_CURRENT_USER_ERROR,
     GET_CURRENT_USER_FETCH,
     GET_DATA_BY_FILTER_FETCH,
     GET_USERS_BY_LABELS_FETCH,
@@ -59,6 +60,10 @@ export interface GetCurrentUserData {
     payload: UserInterface;
 }
 
+export interface GetCurrentUserError {
+    type: typeof GET_CURRENT_USER_ERROR;
+}
+
 export interface GetDataByFilterFetch {
     type: typeof GET_DATA_BY_FILTER_FETCH;
     payload: {
@@ -84,7 +89,8 @@ export type UsersAction = GetUsersFetch
     | GetCurrentUserFetch
     | GetCurrentUserData
     | GetDataByFilterFetch
-    | GetUsersByLabelFetch;
+    | GetUsersByLabelFetch
+    | GetCurrentUserError;
 
 export const getUsers = (payload: GetUsersFetch['payload']): GetUsersFetch => ({
     type: GET_USERS_FETCH,
@@ -103,6 +109,10 @@ export const getCurrentUser = (): GetCurrentUserFetch => ({
 export const getCurrentUserData = (payload: GetCurrentUserData['payload']): GetCurrentUserData => ({
     type: GET_CURRENT_USER_DATA,
     payload,
+});
+
+export const getCurrentUserError = (): GetCurrentUserError => ({
+    type: GET_CURRENT_USER_ERROR,
 });
 
 export const getDataByFilter = (payload: GetDataByFilterFetch['payload']): GetDataByFilterFetch => ({

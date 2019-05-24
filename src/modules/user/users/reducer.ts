@@ -1,5 +1,6 @@
 import {
     GET_CURRENT_USER_DATA,
+    GET_CURRENT_USER_ERROR,
     GET_CURRENT_USER_FETCH,
     GET_DATA_BY_FILTER_FETCH,
     GET_USERS_BY_LABELS_FETCH,
@@ -58,6 +59,12 @@ export const usersReducer = (state = initialUsersState, action: UsersAction) => 
               ...state,
               loadingCurrentUser: false,
               currentUser: action.payload,
+          };
+      case GET_CURRENT_USER_ERROR:
+          return {
+              ...state,
+              loadingCurrentUser: false,
+              currentUser: undefined,
           };
       default:
           return {

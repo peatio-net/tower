@@ -5,7 +5,7 @@ import {
     logout,
     signInRequire2FA,
 } from '../';
-import { alertPush } from '../../';
+import { alertPush, getCurrentUserData } from '../../';
 import { API, RequestOptions } from '../../../api';
 
 const requestOptions: RequestOptions = {
@@ -17,8 +17,7 @@ export function* loginSaga(action: LoginFetch) {
         const user = yield call(API.post(requestOptions), '/identity/sessions', action.payload);
         if (user.data.role === 'admin') {
             yield put(loginData(user.data));
-            document.cookie = 'session=true; path=/';
-            window.location.replace('/tower');
+            yield put(getCurrentUserData(user.data));
         } else {
             yield put(logout());
         }

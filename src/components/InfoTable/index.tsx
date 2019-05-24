@@ -131,8 +131,8 @@ class TableComponent extends React.Component<Props> {
                                                 return (
                                                     <TableCell key={index} component="td" align={row.alignRight ? 'right' : 'left'}>
                                                         <Typography variant="caption" gutterBottom={true} className={classes.content}>
-                                                            { row.key === 'email' ? (<Link to={`/users/${n.uid}`} className={classes.link}>{n.email}</Link>)
-                                                                : row.key === 'user_email' ? (<Link to={`/users/${n.user.uid}`} className={classes.link}>{n.user.email}</Link>)
+                                                            { row.key === 'email' ? (<Link to={`/tower/users/${n.uid}`} className={classes.link}>{n.email}</Link>)
+                                                                : row.key === 'user_email' ? (<Link to={`/tower/users/${n.user.uid}`} className={classes.link}>{n.user.email}</Link>)
                                                                 : row.key === 'otp' ? (convertToOtp(n.otp) === 'true' ? '2FA' : '-')
                                                                 : row.key === 'upload' ? (<a target="_blank" href={n.upload.url} className={classes.link}>Image</a>)
                                                                 : row.key === 'created_at' || row.key === 'validated_at' || row.key === 'updated_at' ? localeDate(n[row.key], 'fullDate')

@@ -181,7 +181,7 @@ class WithdrawInfoTable extends React.Component<Props> {
                         return (
                             <TableCell key={index} component="td" align={row.alignRight ? 'right' : 'left'}>
                                 {row.key === 'email' ? (<span className={classes.email}>{n.email}</span>)
-                                    : row.key === 'uid' ? (<Link to={`/withdraws/${n.uid}`} className={classes.link}>{n.uid}</Link>)
+                                    : row.key === 'uid' ? (<Link to={`/tower/withdraws/${n.uid}`} className={classes.link}>{n.uid}</Link>)
                                     : row.key === 'status' ? this.getStatusItem(n.status)
                                     : row.key === 'date' || row.key === 'amount' || row.key === 'currency' ? (<span className={classes.tableItem}>{n[row.key]}</span>) : n[row.key]}
                             </TableCell>
