@@ -3,6 +3,7 @@ import {
     convertToUTCTime,
     findPhone,
 } from './';
+import {metricsToChartData} from './metricsToChartData';
 
 // tslint:disable-next-line:no-any
 const defaults: any = {
@@ -48,5 +49,35 @@ describe('Helpers', () => {
                 validated_at: '2019-01-17T13:54:48.000Z',
             });
         expect(findPhone(defaults.phones).number).toEqual('123456789098');
+    });
+
+    it('converts metrics to chart data', () => {
+        const metrics = {
+            signups: {
+                '2019-05-24': 3,
+            },
+            sucessful_logins: {
+                '2019-05-23': 2,
+                '2019-05-24': 3,
+            },
+            failed_logins: {
+                '2019-05-22': 1,
+                '2019-05-23': 1,
+                '2019-05-24': 3,
+            },
+            pending_applications: 0,
+        };
+
+        const expected = [
+            {name: '18/05', signups: 0, sucessful_logins: 0, failed_logins: 0},
+            {name: '19/05', signups: 0, sucessful_logins: 0, failed_logins: 0},
+            {name: '20/05', signups: 0, sucessful_logins: 0, failed_logins: 0},
+            {name: '21/05', signups: 0, sucessful_logins: 0, failed_logins: 0},
+            {name: '22/05', signups: 0, sucessful_logins: 0, failed_logins: 1},
+            {name: '23/05', signups: 0, sucessful_logins: 2, failed_logins: 1},
+            {name: '24/05', signups: 3, sucessful_logins: 3, failed_logins: 3},
+        ];
+
+        expect(metricsToChartData(metrics, new Date('2019-05-24'))).toEqual(expected);
     });
 });

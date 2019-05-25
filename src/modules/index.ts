@@ -1,5 +1,5 @@
-import { combineReducers } from 'redux';
-import { all, call } from 'redux-saga/effects';
+import {combineReducers} from 'redux';
+import {all, call} from 'redux-saga/effects';
 import {
     alertReducer,
     AlertState,
@@ -20,6 +20,8 @@ import {
     LabelState,
     rootLabelSaga,
 } from './label';
+import {metricsReducer, MetricsState} from './metrics';
+import {rootMetricsSaga} from './metrics/sagas';
 import {
     rootGetUserDataSaga,
     rootUserActivitySaga,
@@ -48,6 +50,7 @@ export interface AppState {
         selectedUser: UserDataState;
         users: UsersState;
     };
+    metrics: MetricsState;
 }
 
 const usersDataReducer = combineReducers({
@@ -62,6 +65,7 @@ export const appReducer = combineReducers({
     userLabels: labelReducer,
     userActivity: userActivityReducer,
     usersData: usersDataReducer,
+    metrics: metricsReducer,
 });
 
 export function* rootSaga() {
@@ -73,5 +77,6 @@ export function* rootSaga() {
         call(rootUserActivitySaga),
         call(rootUsersSaga),
         call(rootHandleAlertSaga),
+        call(rootMetricsSaga),
     ]);
 }
