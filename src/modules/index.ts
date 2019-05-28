@@ -17,11 +17,15 @@ import {
 } from './changeUser';
 import {
     labelReducer,
-    LabelState,rootLabelSaga,
+    LabelState,
+    rootLabelSaga,
 } from './label';
 import {
     rootGetUserDataSaga,
+    rootUserActivitySaga,
     rootUsersSaga,
+    userActivityReducer,
+    UserActivityState,
     userDataReducer,
     UserDataState,
     usersReducer,
@@ -38,6 +42,7 @@ export interface AppState {
     alert: AlertState;
     auth: AuthState;
     changeUserState: ChangeUserState;
+    userActivity: UserActivityState;
     userLabels: LabelState;
     usersData: {
         selectedUser: UserDataState;
@@ -55,6 +60,7 @@ export const appReducer = combineReducers({
     auth: authReducer,
     changeUserState: changeUserReducer,
     userLabels: labelReducer,
+    userActivity: userActivityReducer,
     usersData: usersDataReducer,
 });
 
@@ -64,6 +70,7 @@ export function* rootSaga() {
         call(rootAuthSaga),
         call(rootChangeUserSaga),
         call(rootGetUserDataSaga),
+        call(rootUserActivitySaga),
         call(rootUsersSaga),
         call(rootHandleAlertSaga),
     ]);

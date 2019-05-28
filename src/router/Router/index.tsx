@@ -6,6 +6,7 @@ import {
     Switch,
 } from 'react-router-dom';
 import {
+    Activities,
     Dashboard,
     Login,
     UserInfo,
@@ -21,6 +22,7 @@ class Router extends React.Component {
         const isCurrentSession = Cookies.get('session');
         return (
             <Switch>
+                <PrivateRoute isLogged={isCurrentSession} exact={true} path="/activities" component={Activities} />
                 <PrivateRoute isLogged={isCurrentSession} exact={true} path="/" component={Dashboard}/>
                 <Route exact={true} path="/login" component={Login}/>
                 <PrivateRoute isLogged={isCurrentSession} path="/users/:uid" component={UserInfo} />

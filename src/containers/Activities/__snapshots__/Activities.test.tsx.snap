@@ -1,25 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`InfoTable test should render 1`] = `
-<TableComponent
+exports[`Activities test should render 1`] = `
+<Connect(ActivitiesScreen)
   classes={
     Object {
-      "active": "TableComponent-active-6",
-      "banned": "TableComponent-banned-7",
-      "headers": "TableComponent-headers-8",
-      "link": "TableComponent-link-4",
-      "root": "TableComponent-root-1",
-      "selectIcon": "TableComponent-selectIcon-5",
-      "table": "TableComponent-table-2",
-      "tableWrapper": "TableComponent-tableWrapper-3",
+      "emptyTable": "Connect-ActivitiesScreen--emptyTable-1",
+      "root": "Connect-ActivitiesScreen--root-2",
+      "selectIcon": "Connect-ActivitiesScreen--selectIcon-7",
+      "table": "Connect-ActivitiesScreen--table-3",
+      "tableRow": "Connect-ActivitiesScreen--tableRow-5",
+      "tableWrapper": "Connect-ActivitiesScreen--tableWrapper-4",
+      "title": "Connect-ActivitiesScreen--title-6",
     }
   }
-  data={Array []}
-  dataLength={0}
-  handleChangePage={[Function]}
-  page={1}
-  rows={Array []}
-  rowsPerPage={1}
   theme={
     Object {
       "breakpoints": Object {
