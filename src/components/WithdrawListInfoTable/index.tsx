@@ -40,62 +40,72 @@ const styles = (theme: Theme) => (createStyles({
     root: {
         width: '100%',
         marginTop: theme.spacing.unit * 3,
-        color: '#6e6e6e',
+        color: 'rgba(0, 0, 0, 0.87)',
         border: '',
+    },
+    card: {
+        padding: '16px 0',
     },
     table: {
         minWidth: 1020,
     },
     tableTitle: {
         flex: '0 0 auto',
-        color: '#6e6e6e',
+        color: '#rgba(0, 0, 0, 0.87)',
         fontStyle: 'normal',
         fontWeight: 500,
         fontSize: '20px',
         lineHeight: '20px',
+        paddingLeft: '24px',
     },
     tableWrapper: {
         overflowX: 'auto',
+        padding: '0 !important',
     },
     headerItem: {
-        color: 'rgba(0, 0, 0, 0.5)',
+        color: 'rgba(0, 0, 0, 0.87)',
         fontStyle: 'normal',
-        fontWeight: 'normal',
-        fontSize: '12px',
-        lineHeight: '12px',
+        fontWeight: 500,
+        fontSize: '14px',
+        lineHeight: '24px',
+        padding: 0,
+        paddingLeft: '24px',
     },
     email: {
         cursor: 'pointer',
-        color: '#3598d5',
-        fontSize: '16px',
+        color: '#309CEA',
+        fontSize: '12px',
+        lineHeight: '16px',
     },
     link: {
         cursor: 'pointer',
         textDecoration: 'none',
-        color: '#6e6e6e',
+        color: 'rgba(0, 0, 0, 0.87)',
         fontSize: '12px',
+        lineHeight: '16px',
     },
     tableItem: {
-      color: '#6e6e6e',
+      color: 'rgba(0, 0, 0, 0.87)',
       fontSize: '12px',
-      lineHeight: '48px',
+      lineHeight: '16px',
       fontStyle: 'normal',
       fontWeight: 'normal',
+      letterSpacing: '0.4px',
     },
     tableItemStatus: {
       fontSize: '12px',
-      lineHeight: '48px',
+      lineHeight: '16px',
       fontStyle: 'normal',
       fontWeight: 'normal',
     },
     red: {
-        color: '#dd503d',
+        color: '#E23328',
     },
     green: {
-        color: '#43a047',
+        color: '#00A41A',
     },
     yellow: {
-        color: '#d7a700',
+        color: '#E3B930',
     },
 }));
 
@@ -116,7 +126,7 @@ class TableComponent extends React.Component<Props> {
         return (
             <div className={classes.root}>
                 <Card>
-                    <CardContent>
+                    <CardContent className={classes.card}>
                         <div>
                             <Typography variant="h6" className={classes.tableTitle}>
                                 Withdraw List
@@ -169,7 +179,7 @@ class TableComponent extends React.Component<Props> {
                         return (
                             <TableCell key={index} component="td" align={row.alignRight ? 'right' : 'left'}>
                                 {row.key === 'email' ? (<span className={classes.email}>{n.email}</span>)
-                                    : row.key === 'uid' ? (<Link to={`/withdraws/${n.uid}`} className={classes.link}>{n.uid}</Link>)
+                                    : row.key === 'uid' ? (<Link to={`/tower/withdraws/${n.uid}`} className={classes.link}>{n.uid}</Link>)
                                     : row.key === 'status' ? this.getStatusItem(n.status)
                                     : row.key === 'date' || row.key === 'amount' || row.key === 'currency' ? (<span className={classes.tableItem}>{n[row.key]}</span>) : n[row.key]}
                             </TableCell>

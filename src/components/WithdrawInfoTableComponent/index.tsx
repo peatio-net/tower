@@ -40,7 +40,7 @@ const styles = (theme: Theme) => (createStyles({
     root: {
         width: '100%',
         marginTop: theme.spacing.unit * 3,
-        color: '#6e6e6e',
+        color: 'rgba(0, 0, 0, 0.87)',
         border: '',
     },
     table: {
@@ -50,9 +50,6 @@ const styles = (theme: Theme) => (createStyles({
         flex: '0 0 auto',
         color: 'rgba(0, 0, 0, 0.87)',
         fontStyle: 'normal',
-        fontWeight: 600,
-        fontSize: '20px',
-        lineHeight: '20px',
         paddingLeft: '24px',
     },
     tableWrapper: {
@@ -61,9 +58,10 @@ const styles = (theme: Theme) => (createStyles({
     headerItem: {
         color: 'rgba(0, 0, 0, 0.87)',
         fontStyle: 'normal',
-        fontWeight: 600,
+        fontWeight: 500,
         fontSize: '14px',
         lineHeight: '24px',
+        letterSpacing: 0.1,
     },
     email: {
         cursor: 'pointer',
@@ -79,9 +77,10 @@ const styles = (theme: Theme) => (createStyles({
     tableItem: {
       color: 'rgba(0, 0, 0, 0.87)',
       fontSize: '12px',
-      lineHeight: '48px',
+      lineHeight: '16px',
       fontStyle: 'normal',
       fontWeight: 'normal',
+      letterSpacing: 0.4,
     },
     tableItemStatus: {
       fontSize: '12px',

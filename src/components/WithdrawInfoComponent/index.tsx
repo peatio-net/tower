@@ -59,17 +59,20 @@ const styles = (theme: Theme) => (createStyles({
         width: '100%',
     },
     blockItemTitle: {
-        color: '#757575',
+        color: 'rgba(0, 0, 0, 0.87)',
         fontStyle: 'normal',
         fontWeight: 'normal',
         fontSize: '12px',
         paddingBottom: '8px',
+        opacity: 0.54,
+        letterSpacing: '0.4px',
     },
     blockItemInfo: {
         color: 'rgba(0, 0, 0, 0.87)',
         fontStyle: 'normal',
         fontWeight: 'normal',
         fontSize: '12px',
+        letterSpacing: '0.4px',
     },
     withdrawInfoBlockBodyItem: {
         padding: '12px 0',
@@ -79,30 +82,31 @@ const styles = (theme: Theme) => (createStyles({
         width: '100%',
     },
     buttonReject: {
-        background: '#dd503d',
+        background: '#E23328',
         color: '#fff',
         margin: theme.spacing.unit,
         fontWeight: 500,
         fontSize: '14px',
     },
     buttonAccept: {
-        background: '#30adf3',
+        background: '#309CEA',
         color: '#fff',
         margin: theme.spacing.unit,
         fontWeight: 500,
         fontSize: '14px',
+        letterSpacing: '0.75px',
     },
     red: {
-        color: '#dd503d',
+        color: '#E23328',
     },
     green: {
-        color: '#43a047',
+        color: '#00A41A',
     },
     yellow: {
-        color: '#d7a700',
+        color: '#E3B930',
     },
     divider: {
-        margin: '0 !important',
+        margin: '12px 0',
     },
     buttonIcon: {
         paddingLeft: '4px',
