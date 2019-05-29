@@ -9,6 +9,7 @@ import {
     Activities,
     Dashboard,
     Login,
+    UserDirectory,
     UserInfo,
 } from '../../containers';
 
@@ -23,6 +24,7 @@ class Router extends React.Component {
         return (
             <Switch>
                 <PrivateRoute isLogged={isCurrentSession} exact={true} path="/activities" component={Activities} />
+                <PrivateRoute isLogged={isCurrentSession} exact={true} path="/users" component={UserDirectory} />
                 <PrivateRoute isLogged={isCurrentSession} exact={true} path="/" component={Dashboard}/>
                 <Route exact={true} path="/login" component={Login}/>
                 <PrivateRoute isLogged={isCurrentSession} path="/users/:uid" component={UserInfo} />

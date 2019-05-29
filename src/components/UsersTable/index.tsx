@@ -15,9 +15,6 @@ import {
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import {
-    convertToOtp,
-    getUserBrowser,
-    getUserOS,
     localeDate,
 } from '../../helpers';
 
@@ -132,14 +129,10 @@ class TableComponent extends React.Component<Props> {
                                                     <TableCell key={index} component="td" align={row.alignRight ? 'right' : 'left'}>
                                                         <Typography variant="caption" gutterBottom={true} className={classes.content}>
                                                             { row.key === 'email' ? (<Link to={`/users/${n.uid}`} className={classes.link}>{n.email}</Link>)
-                                                                : row.key === 'user_email' ? (<Link to={`/users/${n.user.uid}`} className={classes.link}>{n.user.email}</Link>)
-                                                                : row.key === 'otp' ? (convertToOtp(n.otp) === 'true' ? '2FA' : '-')
-                                                                : row.key === 'upload' ? (<a target="_blank" href={n.upload.url} className={classes.link}>Image</a>)
-                                                                : row.key === 'created_at' || row.key === 'validated_at' || row.key === 'updated_at' ? localeDate(n[row.key], 'fullDate')
-                                                                : row.key === 'browser' ? getUserBrowser(n.user_agent) || '-'
-                                                                : row.key === 'os' ? getUserOS(n.user_agent) || '-'
-                                                                : row.key === 'result' || row.key === 'state' ? this.getColored(n[row.key])
-                                                                : row.key === 'user_role' ? n.user.role
+                                                                : row.key === 'created_at' || row.key === 'validated_at' || row.key === 'updated_at' ? localeDate(n[row.key], 'shortDate')
+                                                                : row.key === 'state' ? this.getColored(n[row.key])
+                                                                : row.key === 'name' ? n.profile && `${n.profile.first_name} ${n.profile.last_name}`
+                                                                : row.key === 'country' ? n.profile && n.profile.country
                                                                 : n[row.key]}
                                                             </Typography>
                                                     </TableCell>
@@ -204,10 +197,10 @@ class TableComponent extends React.Component<Props> {
 
     private getColored = (state: string) => {
         const { classes } = this.props;
-        return state === 'active' || state === 'succeed' ?
+        return state === 'active' ?
             <span className={classes.active}>{state}</span>
             : <span className={classes.banned}>{state}</span>;
     };
 }
 
-export const InfoTable = withStyles(styles, { withTheme: true })(TableComponent);
+export const UsersTable = withStyles(styles, { withTheme: true })(TableComponent);

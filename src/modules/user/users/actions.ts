@@ -7,6 +7,19 @@ import {
     GET_USERS_SUCCESS,
 } from '../../constants';
 
+export interface UserProfile {
+    uid: string;
+    firstName: string;
+    lastName: string;
+    dob: string;
+    address: string;
+    postcode: string;
+    city: string;
+    country: string;
+    created_at?: string;
+    updated_at?: string;
+}
+
 export interface UserInterface {
     created_at?: string;
     email: string;
@@ -17,6 +30,7 @@ export interface UserInterface {
     state: string;
     uid: string;
     updated_at?: string;
+    profile?: UserProfile;
 }
 
 export interface GetUsersFetch {
@@ -24,6 +38,7 @@ export interface GetUsersFetch {
     payload: {
         page?: number;
         limit?: number;
+        extended?: boolean;
     };
 }
 

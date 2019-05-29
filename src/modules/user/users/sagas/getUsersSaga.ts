@@ -12,7 +12,8 @@ export function* getUsersSaga(action: GetUsersFetch) {
     try {
         const page = action.payload.page ? action.payload.page : 1;
         const limit = action.payload.limit ? action.payload.limit : 100;
-        const users = yield call(API.get(), `/admin/users?page=${page}&limit=${limit}`);
+        const extended = action.payload.extended ? `&extended=${action.payload.extended}` : '';
+        const users = yield call(API.get(), `/admin/users?page=${page}&limit=${limit}${extended}`);
         yield put(getUsersData({users: users.data, total: users.headers.total}));
     } catch (error) {
         yield put(alertPush({message: error.message, code: error.code, type: 'error'}));

@@ -36,6 +36,7 @@ describe('GetUsersData saga', () => {
     const fakeCredentials = {
         page: 1,
         limit: 10,
+        extended: true,
     };
 
     const fakeUserResponce = [{
@@ -48,12 +49,24 @@ describe('GetUsersData saga', () => {
         state: '',
         uid: '123',
         updated_at: '',
+        profile: {
+            uid: '123',
+            firstName: '',
+            lastName: '',
+            dob: '',
+            address: '',
+            postcode: '',
+            city: '',
+            country: '',
+            created_at: '',
+            updated_at: '',
+        },
     }];
 
     const fakeHeaders = { total: 1 };
 
     const mockGetUsersData = () => {
-        mockAxios.onGet(`/admin/users?page=1&limit=10`).reply(200, fakeUserResponce, fakeHeaders);
+        mockAxios.onGet(`/admin/users?page=1&limit=10&extended=true`).reply(200, fakeUserResponce, fakeHeaders);
     };
 
     const expectedActionsFetch = [

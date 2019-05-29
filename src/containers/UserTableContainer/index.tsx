@@ -11,8 +11,8 @@ import {
 } from '../../api/config';
 import {
     DataItemInterface,
-    InfoTable,
     SearchHeader,
+    UsersTable,
 } from '../../components';
 import {
     AppState,
@@ -65,11 +65,13 @@ class DashboardUserTable extends React.Component<Props, UserTableState> {
     }
 
     private usersRows = [
+        { key: 'uid', alignRight: false, label: 'UID' },
         { key: 'email', alignRight: false, label: 'Email' },
-        { key: 'otp', alignRight: true, label: 'Authorization method' },
+        { key: 'role', alignRight: false, label: 'Role' },
+        { key: 'name', alignRight: false, label: 'Name'},
+        { key: 'country', alignRight: false, label: 'Country' },
         { key: 'level', alignRight: true, label: 'Level' },
-        { key: 'role', alignRight: true, label: 'Role' },
-        { key: 'uid', alignRight: true, label: 'UID' },
+        { key: 'created_at', alignRight: true, label: 'Created' },
         { key: 'state', alignRight: true, label: 'State'},
     ];
 
@@ -117,12 +119,13 @@ class DashboardUserTable extends React.Component<Props, UserTableState> {
             this.props.getUsers({
                 limit: this.state.rowsPerPage,
                 page: this.state.page + 1,
+                extended: true,
             });
         }
     }
 
     public render() {
-        const { users, total } = this.props;
+        const { total, users } = this.props;
         const {
             page,
             rowsPerPage,
@@ -140,13 +143,15 @@ class DashboardUserTable extends React.Component<Props, UserTableState> {
                     handleChangeSearchPoint={this.handleChangeSearchPoint}
                     handleSearch={this.handleSearch}
                 />
-                <InfoTable
+                <UsersTable
                     dataLength={total}
                     rows={this.usersRows}
                     data={users}
                     page={page}
                     rowsPerPage={rowsPerPage}
                     handleChangePage={this.handleChangePage}
+                    handleChangeRowsPerPage={this.handleChangeRowsPerPage}
+                    label={'User Directory'}
                 />
             </React.Fragment>
         );
@@ -169,17 +174,17 @@ class DashboardUserTable extends React.Component<Props, UserTableState> {
     };
 
     private handleChangePage = (page: number) => {
-        const { searchValue, searchPoint } = this.state;
+        const { searchValue, searchPoint, rowsPerPage } = this.state;
         this.setState({ page });
         switch (searchPoint.value) {
             case 'all':
-                this.props.getUsers({ limit: tablePageLimit(), page: page + 1});
+                this.props.getUsers({ limit: rowsPerPage, page: page + 1, extended: true });
                 break;
             case 'documents':
                 this.props.getUsersByLabel({
                     key: 'document',
                     value: searchValue.toLowerCase(),
-                    limit: tablePageLimit(),
+                    limit: rowsPerPage,
                     page: page + 1,
                 });
                 break;
@@ -188,11 +193,17 @@ class DashboardUserTable extends React.Component<Props, UserTableState> {
                     field: searchPoint.value,
                     value: searchValue.toLowerCase(),
                     page: page + 1,
-                    limit: tablePageLimit(),
+                    limit: rowsPerPage,
+                    extended: true
                 };
                 this.props.getDataByFilter(requestObject);
         }
     };
+
+    private handleChangeRowsPerPage = (rows: number) => {
+        this.setState({rowsPerPage: rows, page: 0});
+        this.props.getUsers({limit: rows, page: 0, extended: true});
+    }
 
     // tslint:disable-next-line:no-any
     private handleSearch = (e?: any) => {
@@ -202,7 +213,7 @@ class DashboardUserTable extends React.Component<Props, UserTableState> {
         const { searchValue, searchPoint } = this.state;
         switch (searchPoint.value) {
             case 'all':
-                this.props.getUsers({ limit: tablePageLimit(), page: 1});
+                this.props.getUsers({ limit: tablePageLimit(), page: 1, extended: true});
                 this.props.history.push('#all');
                 break;
             case 'documents':
@@ -240,7 +251,7 @@ class DashboardUserTable extends React.Component<Props, UserTableState> {
 
         switch (key) {
             case 'all':
-                this.props.getUsers({ limit: tablePageLimit(), page: 1});
+                this.props.getUsers({ limit: tablePageLimit(), page: 1, extended: true });
                 break;
             case 'documents':
                 this.props.getUsersByLabel({

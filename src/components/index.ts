@@ -6,3 +6,4 @@ export * from './LoginBox';
 export * from './NavBar';
 export * from './SearchHeader';
 export * from './UserData';
+export * from './UsersTable';

@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
-import { InfoTable } from './';
+import { UsersTable } from '.';
 
 const defaultProps = {
     dataLength: 0,
@@ -14,7 +14,7 @@ const defaultProps = {
 
 describe('InfoTable test', () => {
     it('should render', () => {
-        const wrapper = shallow(<InfoTable {...defaultProps} />);
+        const wrapper = shallow(<UsersTable {...defaultProps} />);
         expect(wrapper).toMatchSnapshot();
         expect(wrapper).toBeDefined();
     });
