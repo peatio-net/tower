@@ -1,6 +1,7 @@
 import { call, put } from 'redux-saga/effects';
 import { alertPush } from '../../../';
 import { API, RequestOptions } from '../../../../api';
+import { buildQueryString } from '../../../../helpers';
 import {
     GetDataByFilterFetch,
     GetUsersByLabelFetch,
@@ -14,10 +15,8 @@ const requestOptions: RequestOptions = {
 
 export function* getUsersSaga(action: GetUsersFetch) {
     try {
-        const page = action.payload.page ? action.payload.page : 1;
-        const limit = action.payload.limit ? action.payload.limit : 100;
-        const extended = action.payload.extended ? `&extended=${action.payload.extended}` : '';
-        const users = yield call(API.get(requestOptions), `/admin/users?page=${page}&limit=${limit}${extended}`);
+        const params = buildQueryString(action.payload);
+        const users = yield call(API.get(requestOptions), `/admin/users?${params}`);
         yield put(getUsersData({users: users.data, total: users.headers.total}));
     } catch (error) {
         yield put(alertPush({message: error.message, code: error.code, type: 'error'}));

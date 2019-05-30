@@ -6,11 +6,10 @@ exports[`Activities test should render 1`] = `
     Object {
       "emptyTable": "Connect-withRouter-ActivitiesScreen---emptyTable-1",
       "root": "Connect-withRouter-ActivitiesScreen---root-2",
-      "selectIcon": "Connect-withRouter-ActivitiesScreen---selectIcon-7",
+      "selectIcon": "Connect-withRouter-ActivitiesScreen---selectIcon-6",
       "table": "Connect-withRouter-ActivitiesScreen---table-3",
       "tableRow": "Connect-withRouter-ActivitiesScreen---tableRow-5",
       "tableWrapper": "Connect-withRouter-ActivitiesScreen---tableWrapper-4",
-      "title": "Connect-withRouter-ActivitiesScreen---title-6",
     }
   }
   theme={

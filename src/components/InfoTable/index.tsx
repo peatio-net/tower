@@ -67,7 +67,7 @@ const styles = (theme: Theme) => (createStyles({
     },
     label: {
         letterSpacing: '0.15px',
-        padding: '25px',
+        padding: '16px',
         paddingBottom: '0px',
         fontWeight: 600,
     },

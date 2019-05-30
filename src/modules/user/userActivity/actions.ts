@@ -7,6 +7,11 @@ interface UserActivityFetchPayload {
     page: number;
     limit: number;
     uid?: string;
+    action?: string;
+    topic?: string;
+    email?: string;
+    created_from?: number;
+    created_to?: number;
 }
 
 export interface UserActivitySuccessPayload {

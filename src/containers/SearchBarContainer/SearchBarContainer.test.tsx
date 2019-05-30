@@ -5,6 +5,7 @@ import { SearchBarContainer, SearchBarWrapperProps } from './';
 const defaultProps: SearchBarWrapperProps = {
     selectedItems: [],
     handleSearchRequest: jest.fn(),
+    handleClearSearchRequest: jest.fn(),
 };
 
 describe('SearchBarContainer test', () => {

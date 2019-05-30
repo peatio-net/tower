@@ -99,6 +99,7 @@ class WithdrawListTableContainer extends React.Component<WithdrawListTableContai
                 <SearchBarContainer
                     selectedItems={this.selectedValues}
                     handleSearchRequest={this.handleSearch}
+                    handleClearSearchRequest={this.handleClearSearchRequest}
                 />
                 <WithdrawInfoTableComponent
                     dataLength={this.props.withdrawList.length}
@@ -130,6 +131,10 @@ class WithdrawListTableContainer extends React.Component<WithdrawListTableContai
 
     private handleSearch = (data: SearchBarRequestInterface[]) => {
         window.console.log(data);
+    }
+
+    private handleClearSearchRequest = () => {
+        this.props.getWithdrawsList();
     }
 }
 

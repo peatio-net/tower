@@ -6,14 +6,14 @@ import {
     MapStateToProps,
 } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { SearchBarContainer, SearchBarRequestInterface } from '../';
 import {
     tablePageLimit,
 } from '../../api/config';
 import {
-    DataItemInterface,
-    SearchHeader,
     UsersTable,
 } from '../../components';
+import { convertToObj } from '../../helpers';
 import {
     AppState,
     getDataByFilter,
@@ -27,8 +27,12 @@ import {
 interface UserTableState {
     page: number;
     rowsPerPage: number;
-    searchPoint: DataItemInterface;
     searchValue: string;
+    activeSelectItem: {
+        value: string;
+        label: string;
+    };
+    data: SearchBarRequestInterface[];
 }
 
 interface ReduxProps {
@@ -59,8 +63,12 @@ class DashboardUserTable extends React.Component<Props, UserTableState> {
         this.state = {
             page: 0,
             rowsPerPage: tablePageLimit(),
-            searchPoint: this.dropdownValues[0],
             searchValue: '',
+            activeSelectItem: this.dropdownValues[0],
+            data: [{
+                property: '',
+                value: '',
+            }],
         };
     }
 
@@ -77,42 +85,50 @@ class DashboardUserTable extends React.Component<Props, UserTableState> {
 
     private dropdownValues = [
         {
-            label: 'All Users',
-            value: 'all',
+            label: 'UID',
+            value: 'uid',
+            checked: false,
         },
         {
             label: 'Email',
             value: 'email',
-        },
-        {
-            label: 'Authorization method',
-            value: 'otp',
-        },
-        {
-            label: 'Level',
-            value: 'level',
+            checked: false,
         },
         {
             label: 'Role',
             value: 'role',
+            checked: false,
         },
         {
-            label: 'UID',
-            value: 'uid',
+            label: 'First name',
+            value: 'first_name',
+            checked: false,
+        },
+        {
+            label: 'Last name',
+            value: 'last_name',
+            checked: false,
+        },
+        {
+            label: 'Country',
+            value: 'country',
+            checked: false,
+        },
+        {
+            label: 'Level',
+            value: 'level',
+            checked: false,
         },
         {
             label: 'State',
             value: 'state',
-        },
-        {
-            label: 'Documents',
-            value: 'documents',
+            checked: false,
         },
     ];
 
     public componentDidMount() {
         if (this.props.location.hash) {
-            this.getRequestFromRouterProps(this.props.location.hash);
+            this.props.getUsers({ page: this.state.page + 1, limit: tablePageLimit(), extended: true });
         }
         if (!this.props.users.length) {
             this.props.getUsers({
@@ -128,19 +144,14 @@ class DashboardUserTable extends React.Component<Props, UserTableState> {
         const {
             page,
             rowsPerPage,
-            searchPoint,
-            searchValue,
         } = this.state;
 
         return (
             <React.Fragment>
-                <SearchHeader
-                    data={this.dropdownValues}
-                    searchValue={searchValue}
-                    handleChangeSearchValue={this.handleChangeSearchValue}
-                    searchPoint={searchPoint}
-                    handleChangeSearchPoint={this.handleChangeSearchPoint}
-                    handleSearch={this.handleSearch}
+                <SearchBarContainer
+                    selectedItems={this.dropdownValues}
+                    handleSearchRequest={this.handleSearch}
+                    handleClearSearchRequest={this.handleClearSearchRequest}
                 />
                 <UsersTable
                     dataLength={total}
@@ -157,122 +168,38 @@ class DashboardUserTable extends React.Component<Props, UserTableState> {
         );
     }
 
-    private handleChangeSearchPoint = (value: string) => {
-        const item = this.dropdownValues.find(elem => elem.value === value);
-        if (item) {
-            this.setState({
-                searchPoint: item,
-                searchValue: '',
-            });
-        }
-    };
-
-    private handleChangeSearchValue = (value: string) => {
-        this.setState({
-            searchValue: value,
-        });
-    };
-
     private handleChangePage = (page: number) => {
-        const { searchValue, searchPoint, rowsPerPage } = this.state;
+        const { rowsPerPage } = this.state;
         this.setState({ page });
-        switch (searchPoint.value) {
-            case 'all':
-                this.props.getUsers({ limit: rowsPerPage, page: page + 1, extended: true });
-                break;
-            case 'documents':
-                this.props.getUsersByLabel({
-                    key: 'document',
-                    value: searchValue.toLowerCase(),
-                    limit: rowsPerPage,
-                    page: page + 1,
-                });
-                break;
-            default:
-                const requestObject = {
-                    field: searchPoint.value,
-                    value: searchValue.toLowerCase(),
-                    page: page + 1,
-                    limit: rowsPerPage,
-                    extended: true,
-                };
-                this.props.getDataByFilter(requestObject);
-        }
+        this.handleGetUsers(rowsPerPage, page);
     };
 
     private handleChangeRowsPerPage = (rows: number) => {
-        this.setState({rowsPerPage: rows, page: 1});
-        this.props.getUsers({limit: rows, page: 1, extended: true});
+        this.setState({rowsPerPage: rows, page: 0});
+        this.handleGetUsers(rows, 0);
     }
 
-    // tslint:disable-next-line:no-any
-    private handleSearch = (e?: any) => {
-        if (e) {
-            e.preventDefault();
-        }
-        const { searchValue, searchPoint } = this.state;
-        switch (searchPoint.value) {
-            case 'all':
-                this.props.getUsers({ limit: tablePageLimit(), page: 1, extended: true});
-                this.props.history.push('#all');
-                break;
-            case 'documents':
-                this.props.getUsersByLabel({
-                    key: 'document',
-                    value: searchValue.toLowerCase(),
-                    limit: tablePageLimit(),
-                    page: 1,
-                });
+    private handleGetUsers = (limit: number, page: number) => {
+        const data = this.state.data ? convertToObj(this.state.data) : '';
+        this.props.getUsers({ page: page + 1, limit, ...data, extended: true });
+    }
 
-                let hash = `#${searchPoint.value}=${searchValue.toLowerCase()}`;
-                this.props.history.push(hash);
-                break;
-            default:
-                const requestObject = {
-                    field: searchPoint.value,
-                    value: searchValue.toLowerCase(),
-                    page: 1,
-                    limit: tablePageLimit(),
-                };
-                this.props.getDataByFilter(requestObject);
-                hash = `#${searchPoint.value}=${searchValue.toLowerCase()}`;
-                this.props.history.push(hash);
-        }
+    private handleSearch = (data: SearchBarRequestInterface[]) => {
+        this.setState({ data: data });
+        const obj = convertToObj(data);
+        this.props.getUsers({ page: 1, limit: tablePageLimit(), ...obj, extended: true });
+    }
 
+    private handleClearSearchRequest = () => {
         this.setState({
+            data: [{
+                property: '',
+                value: '',
+            }],
             page: 0,
         });
-    };
-
-    private getRequestFromRouterProps = (search: string) => {
-        const props = search.split('#')[1].split('=');
-        const key = props[0];
-        const value = props[1];
-
-        switch (key) {
-            case 'all':
-                this.props.getUsers({ limit: tablePageLimit(), page: 1, extended: true });
-                break;
-            case 'documents':
-                this.props.getUsersByLabel({
-                    key: 'document',
-                    value: value.toLowerCase(),
-                    limit: tablePageLimit(),
-                    page: 1,
-                });
-                break;
-            default:
-                const requestObject = {
-                    field: key.toLowerCase(),
-                    value: value.toLowerCase(),
-                    page: 1,
-                    limit: tablePageLimit(),
-                };
-                this.props.getDataByFilter(requestObject);
-        }
-        this.handleChangeSearchPoint(key);
-        this.handleChangeSearchValue(value);
-    };
+        this.props.getUsers({ page: this.state.page + 1, limit: tablePageLimit() });
+    }
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, AppState> =

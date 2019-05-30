@@ -22,6 +22,7 @@ export interface SearchBarRequestInterface {
 export interface SearchBarWrapperProps {
     selectedItems: SelectItem[];
     handleSearchRequest: (data: SearchBarRequestInterface[]) => void;
+    handleClearSearchRequest: () => void;
 }
 
 class SearchBarWrapper extends React.Component<SearchBarWrapperProps, SearchBarWrapperState> {
@@ -217,6 +218,8 @@ class SearchBarWrapper extends React.Component<SearchBarWrapperProps, SearchBarW
             selectedMainItemValue: '',
             elems: [],
         });
+
+        this.props.handleClearSearchRequest();
     }
 
     private handleSendRequest = () => {

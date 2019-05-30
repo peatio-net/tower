@@ -3,7 +3,7 @@ import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { rootSaga } from '../../../index';
-import { getUserActivity, userActivityData } from '../actions';
+import { getUserActivity } from '../actions';
 
 const debug = false;
 
@@ -46,7 +46,6 @@ describe('User activity', () => {
 
         const fakeHeaders = { total: 1 };
 
-        const fakeSuccessPayloadFirstPage = { list: payload, page: 1, total: fakeHeaders.total };
         const fakeFetchPayloadFirstPage = { page: 1, limit: 2 };
 
         const mockUserActivityFetch = () => {
@@ -55,7 +54,6 @@ describe('User activity', () => {
 
         const expectedActionsFetchWithFirstPage = [
             getUserActivity(fakeFetchPayloadFirstPage),
-            userActivityData(fakeSuccessPayloadFirstPage),
         ];
 
         it('should fetch user activity for 1 page in success flow', async () => {
@@ -98,7 +96,6 @@ describe('User activity', () => {
 
         const fakeHeaders = { total: 1 };
 
-        const fakeSuccessPayloadFirstPage = { list: payload, page: 1, total: fakeHeaders.total };
         const fakeFetchPayloadFirstPage = { page: 1, limit: 2, uid: 'ID873B710D88' };
 
         const mockUserActivityFetch = () => {
@@ -107,7 +104,6 @@ describe('User activity', () => {
 
         const expectedActionsFetchWithFirstPage = [
             getUserActivity(fakeFetchPayloadFirstPage),
-            userActivityData(fakeSuccessPayloadFirstPage),
         ];
 
         it('should fetch user activity for 1 page in success flow', async () => {

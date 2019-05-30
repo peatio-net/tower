@@ -43,6 +43,15 @@ export interface GetUsersFetch {
         page?: number;
         limit?: number;
         extended?: boolean;
+        email?: string;
+        uid?: string;
+        role?: string;
+        name?: string;
+        country?: string;
+        level?: number;
+        profile?: UserProfile;
+        created_at?: number;
+        updated_at?: number;
     };
 }
 

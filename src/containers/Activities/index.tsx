@@ -12,8 +12,10 @@ import {
     MapDispatchToPropsFunction,
 } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { SearchBarContainer, SearchBarRequestInterface } from '../';
 import { tablePageLimit } from '../../api/config';
 import { InfoTable } from '../../components';
+import { convertToObj } from '../../helpers';
 import {
     AppState,
     getUserActivity,
@@ -41,10 +43,6 @@ const styles = (theme: Theme) => (createStyles({
         '&:hover': {
             backgroundColor: '#f9f9f9',
         },
-    },
-    title: {
-        padding: theme.spacing.unit * 2.5,
-        paddingBottom: 0,
     },
     selectIcon: {
         paddingLeft: '10px',
@@ -75,15 +73,31 @@ interface DispatchProps {
 interface State {
     currentPage: number;
     currentLimit: number;
+    activeSelectItem: {
+        value: string;
+        label: string;
+    };
+    searchValue: string;
+    data: SearchBarRequestInterface[];
 }
 
 type Props = StyleProps & ReduxProps & DispatchProps & OwnProps;
 
 class ActivitiesScreen extends React.Component<Props, State> {
-    public readonly state = {
-        currentPage: this.props.page || 0,
-        currentLimit: tablePageLimit(),
-    };
+    constructor(props: Props) {
+        super(props);
+
+        this.state = {
+            currentPage: 0,
+            currentLimit: tablePageLimit(),
+            activeSelectItem: this.selectedValues[0],
+            searchValue: '',
+            data: [{
+                property: '',
+                value: '',
+            }],
+        };
+    }
 
     private activityRows = [
         { key: 'created_at', alignRight: false, label: 'Date' },
@@ -94,6 +108,29 @@ class ActivitiesScreen extends React.Component<Props, State> {
         { key: 'user_ip', alignRight: true, label: 'IP' },
         { key: 'browser', alignRight: true, label: 'Browser' },
         { key: 'os', alignRight: true, label: 'OS' },
+    ];
+
+    private selectedValues = [
+        {
+            value: 'uid',
+            label: 'UID',
+            checked: false,
+        },
+        {
+            value: 'action',
+            label: 'Action',
+            checked: false,
+        },
+        {
+            value: 'topic',
+            label: 'Topic',
+            checked: false,
+        },
+        {
+            value: 'email',
+            label: 'Email',
+            checked: false,
+        },
     ];
 
     public componentDidMount() {
@@ -112,9 +149,6 @@ class ActivitiesScreen extends React.Component<Props, State> {
         } = this.props;
         return (
             <Paper>
-                <Typography variant="h6" gutterBottom={true} className={classes.title}>
-                    User Activities
-                </Typography>
                 {userActivity[0] && this.renderContent()}
                 {!userActivity.length && !loading && <Typography variant="caption" align="center" className={classes.emptyTable}>There is no data to show</Typography>}
             </Paper>
@@ -133,17 +167,25 @@ class ActivitiesScreen extends React.Component<Props, State> {
         } = this.state;
 
         return (
-            <InfoTable
-                dataLength={total}
-                rows={this.activityRows}
-                data={userActivity}
-                page={currentPage}
-                rowsPerPage={currentLimit}
-                handleChangePage={this.handleChangePage}
-                handleChangeRowsPerPage={this.handleChangeRowsPerPage}
-                hidePagination={false}
-                location={this.props.location}
-            />
+            <React.Fragment>
+                <SearchBarContainer
+                    selectedItems={this.selectedValues}
+                    handleSearchRequest={this.handleSearch}
+                    handleClearSearchRequest={this.handleClearSearchRequest}
+                />
+                <InfoTable
+                    dataLength={total}
+                    rows={this.activityRows}
+                    data={userActivity}
+                    page={currentPage}
+                    rowsPerPage={currentLimit}
+                    handleChangePage={this.handleChangePage}
+                    handleChangeRowsPerPage={this.handleChangeRowsPerPage}
+                    hidePagination={false}
+                    label={'User Activities'}
+                    location={this.props.location}
+                />
+            </React.Fragment>
         );
     }
 
@@ -157,11 +199,27 @@ class ActivitiesScreen extends React.Component<Props, State> {
             currentLimit: rows,
             currentPage: 0,
         });
-        this.handleGetUserActivity(rows, 1);
+        this.handleGetUserActivity(rows, 0);
     };
 
     private handleGetUserActivity = (limit: number, page: number) => {
-        this.props.getUserActivity({ limit: limit, page: page + 1 });
+        const data = this.state.data ? convertToObj(this.state.data) : '';
+        this.props.getUserActivity({ page: page + 1, limit, ...data });
+    }
+
+    private handleSearch = (data: SearchBarRequestInterface[]) => {
+        this.setState({ data: data });
+        const obj = convertToObj(data);
+        this.props.getUserActivity({ page: 1, limit: this.state.currentLimit, ...obj });
+    }
+
+    private handleClearSearchRequest = () => {
+        this.setState({ data: [{
+                property: '',
+                value: '',
+            }],
+        });
+        this.props.getUserActivity({ page: 1, limit: this.state.currentLimit });
     }
 }
 
@@ -175,7 +233,7 @@ const mapStateToProps = (state: AppState): ReduxProps => ({
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
         getUserActivity: params => dispatch(getUserActivity(params)),
-});
+    });
 
 // tslint:disable-next-line:no-any
 export const Activities = withStyles(styles, { withTheme: true })(connect(mapStateToProps, mapDispatchToProps)(withRouter(ActivitiesScreen as any)));
