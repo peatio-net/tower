@@ -177,7 +177,7 @@ class NavBar extends React.Component<Props> {
                     </List>
                     <Divider />
                     <List>
-                        <Link to="/tower" className={classes.link}>
+                        <Link to="/tower/users" className={classes.link}>
                             <ListItem className={classes.listItem} button={true} key="user-directory">
                                 <ListItemIcon>
                                     <People />
@@ -197,7 +197,7 @@ class NavBar extends React.Component<Props> {
                                 />
                             </ListItem>
                         </Link>
-                        <Link to="/tower" className={classes.link}>
+                        <Link to="/tower/activities" className={classes.link}>
                             <ListItem className={classes.listItem} button={true} key="activities">
                                 <ListItemIcon><TrendingUp /></ListItemIcon>
                                 <ListItemText

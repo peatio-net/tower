@@ -4,18 +4,19 @@ exports[`WithdrawListInfoTable component should render 1`] = `
 <TableComponent
   classes={
     Object {
-      "email": "TableComponent-email-6",
-      "green": "TableComponent-green-11",
-      "headerItem": "TableComponent-headerItem-5",
-      "link": "TableComponent-link-7",
-      "red": "TableComponent-red-10",
+      "card": "TableComponent-card-2",
+      "email": "TableComponent-email-7",
+      "green": "TableComponent-green-12",
+      "headerItem": "TableComponent-headerItem-6",
+      "link": "TableComponent-link-8",
+      "red": "TableComponent-red-11",
       "root": "TableComponent-root-1",
-      "table": "TableComponent-table-2",
-      "tableItem": "TableComponent-tableItem-8",
-      "tableItemStatus": "TableComponent-tableItemStatus-9",
-      "tableTitle": "TableComponent-tableTitle-3",
-      "tableWrapper": "TableComponent-tableWrapper-4",
-      "yellow": "TableComponent-yellow-12",
+      "table": "TableComponent-table-3",
+      "tableItem": "TableComponent-tableItem-9",
+      "tableItemStatus": "TableComponent-tableItemStatus-10",
+      "tableTitle": "TableComponent-tableTitle-4",
+      "tableWrapper": "TableComponent-tableWrapper-5",
+      "yellow": "TableComponent-yellow-13",
     }
   }
   data={Array []}

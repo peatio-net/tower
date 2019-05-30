@@ -69,14 +69,14 @@ class Router extends React.Component<RouterProps> {
                     loading={userLoading}
                     isLogged={isCurrentSession}
                     exact={true}
-                    path="/users"
+                    path="/tower/users"
                     component={UserDirectory}
                 />
                 <PrivateRoute
                     loading={userLoading}
                     isLogged={isCurrentSession}
                     exact={true}
-                    path="/activities"
+                    path="/tower/activities"
                     component={Activities}
                 />
                 <PrivateRoute
