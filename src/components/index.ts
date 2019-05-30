@@ -7,7 +7,6 @@ export * from './NavBar';
 export * from './SearchHeader';
 export * from './UserData';
 export * from './UsersTable';
-export * from './WithdrawListInfoTable';
 export * from './WithdrawInfoComponent';
 export * from './WithdrawInfoTableComponent';
 export * from './SearchBar';

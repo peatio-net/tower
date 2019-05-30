@@ -34,6 +34,7 @@ interface WithdrawInfoTableProps {
     handleChangePage: (page: number) => void;
     handleChangeRowsPerPage: (count: string) => void;
     hidePagination?: boolean;
+    tableTitle: string;
 }
 
 const styles = (theme: Theme) => (createStyles({
@@ -122,6 +123,7 @@ class WithdrawInfoTable extends React.Component<Props> {
             page,
             hidePagination,
             dataLength,
+            tableTitle,
         } = this.props;
         return (
             <div className={classes.root}>
@@ -129,7 +131,7 @@ class WithdrawInfoTable extends React.Component<Props> {
                     <CardContent className={classes.cardContent}>
                         <div>
                             <Typography variant="h6" className={classes.tableTitle}>
-                                Withdrawal history
+                                {tableTitle}
                             </Typography>
                         </div>
                         <div className={classes.tableWrapper}>
@@ -146,7 +148,6 @@ class WithdrawInfoTable extends React.Component<Props> {
                                 count={Number(dataLength)}
                                 rowsPerPage={this.props.rowsPerPage}
                                 onChangeRowsPerPage={e => this.handleChangeRowsPerPage(e.target.value)}
-                                rowsPerPageOptions={[5, 10, 25, 50]}
                                 page={page}
                                 backIconButtonProps={{
                                     'aria-label': 'Previous Page',

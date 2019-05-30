@@ -28,6 +28,7 @@ exports[`WithdrawInfoTableComponent test should render 1`] = `
   page={0}
   rows={Array []}
   rowsPerPage={0}
+  tableTitle=""
   theme={
     Object {
       "breakpoints": Object {

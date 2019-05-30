@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux';
 import { SearchBarContainer, SearchBarRequestInterface } from '../';
 import { tablePageLimit } from '../../api/config';
-import { WithdrawListInfoTable } from '../../components';
+import { WithdrawInfoTableComponent } from '../../components';
 import {
     AppState,
     getWithdrawsList,
@@ -100,7 +100,7 @@ class WithdrawListTableContainer extends React.Component<WithdrawListTableContai
                     selectedItems={this.selectedValues}
                     handleSearchRequest={this.handleSearch}
                 />
-                <WithdrawListInfoTable
+                <WithdrawInfoTableComponent
                     dataLength={this.props.withdrawList.length}
                     rows={this.tableRows}
                     data={this.props.withdrawList.length ? this.props.withdrawList : []}
@@ -109,6 +109,7 @@ class WithdrawListTableContainer extends React.Component<WithdrawListTableContai
                     handleChangePage={this.handleChangePage}
                     handleChangeRowsPerPage={this.handleChangeRowsPerPage}
                     hidePagination={false}
+                    tableTitle={'Withdrawal requests'}
                 />
             </React.Fragment>
         );

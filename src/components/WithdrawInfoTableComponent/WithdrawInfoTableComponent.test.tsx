@@ -10,6 +10,7 @@ const defaultProps = {
     rowsPerPage: 0,
     handleChangePage: jest.fn(),
     handleChangeRowsPerPage: jest.fn(),
+    tableTitle: '',
 };
 
 describe('WithdrawInfoTableComponent test', () => {

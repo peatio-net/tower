@@ -99,6 +99,7 @@ class WithdrawInfoContainer extends React.Component<Props, WithdrawInfoContainer
                     handleChangePage={this.handleChangePage}
                     handleChangeRowsPerPage={this.handleChangeRowsPerPage}
                     hidePagination={false}
+                    tableTitle={'Withdrawal History'}
                 />
             </React.Fragment>
         );
