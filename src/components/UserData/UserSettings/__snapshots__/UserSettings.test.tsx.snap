@@ -12,6 +12,7 @@ exports[`UserSummary component should render 1`] = `
       "title": "UserSettingsComponent-title-5",
     }
   }
+  currentUser={Object {}}
   handleChangeRole={[Function]}
   handleChangeUserOTP={[Function]}
   handleChangeUserState={[Function]}

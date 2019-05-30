@@ -4,7 +4,9 @@ import { authReducer, initialStateAuth } from './reducer';
 describe('Auth reducer', () => {
     it('should handle LOGOUT_FETCH', () => {
         const expectedState = { ...initialStateAuth };
+        const spy = jest.spyOn(localStorage, 'removeItem');
         expect(authReducer(initialStateAuth, actions.logout())).toEqual(expectedState);
+        expect(spy).toHaveBeenCalledTimes(1);
     });
 
     it('should handle LOGOUT_DATA', () => {
@@ -27,7 +29,11 @@ describe('Auth reducer', () => {
             state: 'active',
         };
         const expectedState = { ...initialStateAuth, user: fakeUser };
+        const spy = jest.spyOn(localStorage, 'setItem');
+
         expect(authReducer(initialStateAuth, actions.loginData(fakeUser))).toEqual(expectedState);
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(localStorage.getItem('user')).toEqual(JSON.stringify(fakeUser));
     });
 
     it('should handle SIGN_IN_REQUIRE_2FA', () => {

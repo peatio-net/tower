@@ -4,6 +4,7 @@ import * as React from 'react';
 import {
     Router,
 } from 'react-router-dom';
+import {UserDataInterface} from '../../modules/auth';
 
 import {
     TableHeaderItemInterface,
@@ -48,6 +49,7 @@ const defaults: UserDataProps = {
     handleChangeRowsPerPage: jest.fn(),
     goBack: jest.fn(),
     pathname: '',
+    currentUser: {} as UserDataInterface,
 };
 
 const history = createBrowserHistory();

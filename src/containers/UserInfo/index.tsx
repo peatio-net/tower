@@ -24,11 +24,13 @@ import {
     getUserActivity,
     getUserData,
     selectTotalNumber,
+    selectUser,
     selectUserActivity,
     selectUserActivityCurrentPage,
     selectUserActivityLoading,
     selectUserData,
     UserActivityDataInterface,
+    UserDataInterface,
 } from '../../modules';
 
 interface ReduxProps {
@@ -38,6 +40,7 @@ interface ReduxProps {
     total: number;
     page: number;
     userActivity: UserActivityDataInterface[];
+    currentUser: UserDataInterface;
 }
 
 interface DispatchProps {
@@ -157,6 +160,7 @@ class UserInfoScreen extends React.Component<Props, UserInfoState> {
                             total={this.props.total}
                             goBack={this.goBack}
                             pathname={location.pathname}
+                            currentUser={this.props.currentUser}
                         />
                     ) : 'Loading'
                 }
@@ -167,7 +171,7 @@ class UserInfoScreen extends React.Component<Props, UserInfoState> {
     private goBack = event => {
         event.preventDefault();
         this.props.history.goBack();
-    }
+    };
 
     private handleCloseModal = () => {
         this.setState({
@@ -264,7 +268,7 @@ class UserInfoScreen extends React.Component<Props, UserInfoState> {
         this.props.editLabel(requestProps);
         this.changeNameForNewLabel('');
         this.changeValueForNewLabel('');
-    }
+    };
 
     // tslint:disable-next-line:no-any
     private handleChangeUserState = (e: any) => {
@@ -317,6 +321,7 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, AppState> =
         loading: selectUserActivityLoading(state),
         total: selectTotalNumber(state),
         page: selectUserActivityCurrentPage(state),
+        currentUser: selectUser(state),
     });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =

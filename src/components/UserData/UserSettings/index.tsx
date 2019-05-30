@@ -13,6 +13,7 @@ import {
     withStyles,
 } from '@material-ui/core';
 import * as React from 'react';
+import {UserDataInterface} from '../../../modules/auth';
 
 const styles = (theme: Theme) => createStyles({
     paper: {
@@ -50,6 +51,7 @@ export interface UserSettingsProps {
     handleChangeUserState: (e: any) => void;
     handleChangeRole: (e: any) => void;
     handleChangeUserOTP: (e: any) => void;
+    currentUser: UserDataInterface;
 }
 // tslint:enable:no-any
 
@@ -77,6 +79,34 @@ const roleTypes = [
         value: 'Member',
         key: 'member',
     },
+    {
+        value: 'Super Admin',
+        key: 'superadmin',
+    },
+    {
+        value: 'Accountant',
+        key: 'accountant',
+    },
+    {
+        value: 'Compliance',
+        key: 'compliance',
+    },
+    {
+        value: 'Technical',
+        key: 'technical',
+    },
+    {
+        value: 'Support',
+        key: 'support',
+    },
+    {
+        value: 'Trader',
+        key: 'trader',
+    },
+    {
+        value: 'Broker',
+        key: 'broker',
+    },
 ];
 
 type Props = StyleProps & UserSettingsProps;
@@ -89,6 +119,7 @@ class UserSettingsComponent extends React.Component<Props> {
             handleChangeUserState,
             handleChangeRole,
             handleChangeUserOTP,
+            currentUser,
         } = this.props;
 
         return (
@@ -109,16 +140,18 @@ class UserSettingsComponent extends React.Component<Props> {
                             </FormControl>
                         </Grid>
                         <Grid container={true} item={true} justify={'flex-start'} xs={12}>
+                            {currentUser && currentUser.role === 'superadmin' &&
                             <FormControl fullWidth={true} className={classes.formControl}>
                                 <InputLabel htmlFor="role-label-placeholder">Role</InputLabel>
                                 <Select
                                     value={user.role}
                                     onChange={handleChangeRole}
-                                    input={<Input id="role-label-placeholder" />}
+                                    input={<Input id="role-label-placeholder"/>}
                                 >
-                                    {roleTypes.map(option => <MenuItem key={option.key} value={option.key}>{option.value}</MenuItem>)}
+                                    {roleTypes.sort((a, b) => a.value.localeCompare(b.value)).map(option =>
+                                        <MenuItem key={option.key} value={option.key}>{option.value}</MenuItem>)}
                                 </Select>
-                            </FormControl>
+                            </FormControl>}
                         </Grid>
                     </Grid>
                     <Grid item={true} xs={6} className={classes.gridRowCenter}>

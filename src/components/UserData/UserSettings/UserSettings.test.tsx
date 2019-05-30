@@ -1,5 +1,6 @@
 import {shallow} from 'enzyme';
 import * as React from 'react';
+import {UserDataInterface} from '../../../modules/auth';
 import {UserSettings, UserSettingsProps} from './index';
 
 const defaults: UserSettingsProps = {
@@ -7,6 +8,7 @@ const defaults: UserSettingsProps = {
     handleChangeUserState: jest.fn(),
     handleChangeRole: jest.fn(),
     handleChangeUserOTP: jest.fn(),
+    currentUser: {} as UserDataInterface,
 };
 
 describe('UserSummary component', () => {

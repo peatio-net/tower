@@ -5,9 +5,9 @@ import {
     LOGOUT_FETCH,
     SIGN_IN_REQUIRE_2FA,
 } from '../constants';
-import { AuthAction } from './';
+import {AuthAction} from './';
 
-interface UserDataInterface {
+export interface UserDataInterface {
     email: string;
     level: number;
     otp: boolean;
@@ -21,8 +21,16 @@ export interface AuthState {
     require2FA?: boolean;
 }
 
+const getUser = () => {
+    try {
+        return JSON.parse(localStorage.getItem('user') || '{}');
+    } catch (e) {
+        return {};
+    }
+};
+
 export const initialStateAuth = {
-    user: {},
+    user: getUser(),
 };
 
 export const authReducer = (state = initialStateAuth, action: AuthAction) => {
@@ -32,16 +40,18 @@ export const authReducer = (state = initialStateAuth, action: AuthAction) => {
                 ...state,
             };
         case LOGIN_DATA:
+            localStorage.setItem('user', JSON.stringify(action.payload));
             return {
                 ...state,
                 user: action.payload,
             };
         case LOGOUT_FETCH:
+            localStorage.removeItem('user');
             return {
                 ...state,
             };
         case LOGOUT_DATA:
-            return  {
+            return {
                 ...state,
                 user: {},
             };

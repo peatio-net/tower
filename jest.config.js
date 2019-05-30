@@ -28,4 +28,5 @@ module.exports = {
     'collectCoverageFrom': [
         "<rootDir>/src/**/*.{ts,tsx,js,jsx}",
     ],
+    "setupFiles": ["<rootDir>/src/helpers/browserMocks.ts"]
 };
