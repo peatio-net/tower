@@ -42,3 +42,18 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## Locking the build to a domain name an set an expiration time
+
+To prepare an obfuscated build, run:
+
+```
+docker build -t tower:obfuscated
+  --build-arg BUILD_EXPIRE=1560761577000(unix epoch seconds)
+  --build-arg BUILD_DOMAIN="example.com"
+  -f Dockerfile .
+```
+where `BUILD_EXPIRE` is a Unix Timestamp of the build expiration date in seconds, `BUILD_DOMAIN` is the domain which you'd like to use during the deployment
+
+The resulting image would be accessible by the `tower:obfuscated` tag.
+
