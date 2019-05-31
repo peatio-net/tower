@@ -7,3 +7,4 @@ export * from './convertErrors';
 export * from './jest';
 export * from './getUserBrowser';
 export * from './getUserOS';
+export * from './buildQueryString';

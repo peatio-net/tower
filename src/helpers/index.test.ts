@@ -1,4 +1,5 @@
 import {
+    buildQueryString,
     convertToOtp,
     convertToUTCTime,
     findPhone,
@@ -79,5 +80,14 @@ describe('Helpers', () => {
         ];
 
         expect(metricsToChartData(metrics, new Date('2019-05-24'))).toEqual(expected);
+    });
+
+    it('buildQueryString', () => {
+        expect(buildQueryString({ page: 0, limit: 25 })).toBe('page=0&limit=25');
+        expect(buildQueryString({ page: 1, limit: 10 })).toBe('page=1&limit=10');
+        expect(buildQueryString({ page: 2, limit: 5 })).toBe('page=2&limit=5');
+        expect(buildQueryString({ page: 2, limit: 5, uid: 'ID873B710D88' })).toBe('page=2&limit=5&uid=ID873B710D88');
+        expect(buildQueryString({ page: 2, limit: 5, uid: 'ID873B710D88' })).toBe('page=2&limit=5&uid=ID873B710D88');
+        expect(buildQueryString({ page: 1, limit: 50, uid: 'ID873B710D88', role: 'admin' })).toBe('page=1&limit=50&uid=ID873B710D88&role=admin');
     });
 });
