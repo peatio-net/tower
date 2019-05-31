@@ -27,7 +27,7 @@ steps:
       - cat build/env.js
       - cd build
       - mkdir tower
-      - mv static tower && mv env.js tower
+      - mv static tower && mv env.js tower && mv commons.js* tower
       - cd ..
       - scp -r -i id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null build mock@mock.openware.work:/home/mock/builds/${DRONE_COMMIT_SHA:0:7}
       - echo "http://${DRONE_COMMIT_SHA:0:7}.mock.openware.work/tower"
