@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserSummary component should render 1`] = `
+<UserSettingsComponent
+  classes={
+    Object {
+      "formControl": "UserSettingsComponent-formControl-2",
+      "gridRow": "UserSettingsComponent-gridRow-3",
+      "gridRowCenter": "UserSettingsComponent-gridRowCenter-4",
+      "paper": "UserSettingsComponent-paper-1",
+      "subtitle": "UserSettingsComponent-subtitle-6",
+      "title": "UserSettingsComponent-title-5",
+    }
+  }
+  handleChangeRole={[Function]}
+  handleChangeUserOTP={[Function]}
+  handleChangeUserState={[Function]}
+  user={
+    Object {
+      "phones": Array [],
+      "profile": Object {
+        "country": "US",
+      },
+    }
+  }
+/>
+`;

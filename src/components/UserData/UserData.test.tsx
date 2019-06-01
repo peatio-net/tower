@@ -1,14 +1,21 @@
 import {mount} from 'enzyme';
+import { createBrowserHistory } from 'history';
 import * as React from 'react';
+import {
+    Router,
+} from 'react-router-dom';
+
 import {
     TableHeaderItemInterface,
     UserData,
     UserDataProps,
 } from './index';
-import { UserDataFooter } from './UserDataFooter';
+import { UserActivities } from './UserActivities';
 import { UserDataHeader } from './UserDataHeader';
 import { UserDocument } from './UserDocument';
+import { UserKYC } from './UserKYC';
 import { UserLabel } from './UserLabel';
+import { UserSettings } from './UserSettings';
 import { UserSummary } from './UserSummary';
 
 const defaults: UserDataProps = {
@@ -32,16 +39,29 @@ const defaults: UserDataProps = {
     user: {labels: [], phones: [], profile: {country: 'US'}},
     page: 0,
     rowsPerPage: 0,
+    total: 0,
     handleChangePage: jest.fn(),
     documentsRows: [] as TableHeaderItemInterface[],
-    showMore: false,
-    showMoreUserInfo: jest.fn(),
+    handleEditLabel: jest.fn(),
+    activityRows: [] as TableHeaderItemInterface[],
+    userActivity: { labels: [], phones: [], profile: { country: 'US' }},
+    handleChangeRowsPerPage: jest.fn(),
+    goBack: jest.fn(),
+    pathname: '',
 };
+
+const history = createBrowserHistory();
+
 
 describe('UserData component', () => {
     const setup = (props: Partial<UserDataProps> = {}) => {
-        return mount(<UserData {...{...defaults, ...props}}/>);
+        return mount(<Router history={history}><UserData {...{ ...defaults, ...props }} /></Router>);
     };
+
+    it('should render', () => {
+        const wrapper = setup();
+        expect(wrapper).toBeDefined();
+    });
 
     it('should render', () => {
         const wrapper = setup();
@@ -58,6 +78,16 @@ describe('UserData component', () => {
         expect(wrapper.find(UserSummary)).toHaveLength(1);
     });
 
+    it('should render UserKYC', () => {
+        const wrapper = setup();
+        expect(wrapper.find(UserKYC)).toHaveLength(1);
+    });
+
+    it('should render UserSettings', () => {
+        const wrapper = setup();
+        expect(wrapper.find(UserSettings)).toHaveLength(1);
+    });
+
     it('should render UserLabel', () => {
         const wrapper = setup();
         expect(wrapper.find(UserLabel)).toHaveLength(1);
@@ -68,8 +98,8 @@ describe('UserData component', () => {
         expect(wrapper.find(UserDocument)).toHaveLength(1);
     });
 
-    it('should render UserDataFooter', () => {
+    it('should render UserActivity', () => {
         const wrapper = setup();
-        expect(wrapper.find(UserDataFooter)).toHaveLength(1);
+        expect(wrapper.find(UserActivities)).toHaveLength(1);
     });
 });

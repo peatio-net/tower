@@ -1,223 +1,120 @@
 import {
-    Button,
+    createStyles,
     Grid,
-    Switch,
-    TextField,
+    Theme,
     Typography,
+    WithStyles,
+    withStyles,
 } from '@material-ui/core';
 import Countries = require('country-data');
 import * as React from 'react';
-import { convertToUTCTime, findPhone } from '../../../helpers';
+import { findPhone, localeDate } from '../../../helpers';
+
+const styles = (theme: Theme) => createStyles({
+    gridRow: {
+        justifyContent: 'space-between',
+        marginTop: 20,
+    },
+    title: {
+        color: '#757575',
+    },
+    paper: {
+        padding: '8px',
+    },
+    label: {
+        letterSpacing: '0.15px',
+        paddingBottom: '0px',
+        fontWeight: 600,
+    },
+});
+
+interface StyleProps extends WithStyles<typeof styles> {
+    theme?: Theme;
+}
 
 // tslint:disable:no-any
 export interface UserSummaryProps {
-    classes: any;
     user: any;
-    handleChangeUserState: (e: any) => void;
-    handleChangeRole: (e: any) => void;
-    handleChangeUserOTP: (e: any) => void;
-    showMore: boolean;
-    showMoreUserInfo: (e: any) => void;
 }
 // tslint:enable:no-any
 
-const stateTypes = [
-    {
-        value: 'Active',
-        key: 'active',
-    },
-    {
-        value: 'Banned',
-        key: 'banned',
-    },
-];
+type Props = StyleProps & UserSummaryProps;
 
-const roleTypes = [
-    {
-        value: 'Admin',
-        key: 'admin',
-    },
-    {
-        value: 'Member',
-        key: 'member',
-    },
-];
-
-
-export class UserSummary extends React.Component<UserSummaryProps> {
+class UserSummaryComponent extends React.Component<Props> {
     public render() {
         const {
             classes,
             user,
-            handleChangeUserState,
-            handleChangeRole,
-            handleChangeUserOTP,
-            showMore,
         } = this.props;
 
         return (
-            <React.Fragment>
-                <Typography variant="h3" gutterBottom={true} component="h3">
+            <div className={classes.paper}>
+                <Typography gutterBottom={true} variant="h6" className={classes.label}>
                     {user.email}
                 </Typography>
+                <Grid item={true}>
+                    <Typography style={{ color: '#757575', fontSize: '12px'}}>
+                        Last activity: {localeDate(user.updated_at, 'fullDate')}
+                    </Typography>
+                </Grid>
                 <br/>
-                <Grid container={true} justify={'space-between'} style={{marginTop: 20, marginBottom: 40}}>
-                    <Grid item={true} xs={3}>
-                        <Typography variant="h6" component="h6" gutterBottom={true}>
-                            <b>Level</b>
-                        </Typography>
-                        <Typography variant="h6" gutterBottom={true} component="h6" style={{color: '#757575'}}>
-                            {user.level}
-                        </Typography>
+                <Grid container={true} className={classes.gridRow}>
+                    <Grid item={true} xs={6}>
+                        <Typography gutterBottom={true} className={classes.title}>UID</Typography>
+                        <Typography gutterBottom={true}>{user.uid}</Typography>
                     </Grid>
-                    <Grid item={true} xs={3}>
-                        <Typography variant="h6" gutterBottom={true} component="h6">
-                            <b>UID</b>
-                        </Typography>
-                        <Typography variant="h6" gutterBottom={true} component="h6" style={{color: '#757575'}}>
-                            {user.uid}
-                        </Typography>
-                    </Grid>
-                    <Grid item={true} xs={3}>
-                        <Typography variant="h6" gutterBottom={true} component="h6">
-                            <b>Phone number</b>
-                        </Typography>
-                        <Typography variant="h6" gutterBottom={true} component="h6" style={{color: '#757575'}}>
-                            {user.phones.length > 0 ? findPhone(user.phones).number : '-'}
-                        </Typography>
-                    </Grid>
-                    <Grid item={true} xs={3} style={{paddingTop: 5}}>
-                        <Typography variant="h6" gutterBottom={true} component="h6">
-                            <TextField
-                                select={true}
-                                value={user.state}
-                                label="State"
-                                variant="outlined"
-                                className={classes.textField}
-                                onChange={handleChangeUserState}
-                                SelectProps={{
-                                    native: true,
-                                    MenuProps: {
-                                        className: classes.menu,
-                                    },
-                                }}
-                            >
-                                {stateTypes.map(option => (
-                                    <option key={option.key} value={option.key}>
-                                        {option.value}
-                                    </option>
-                                ))}
-                            </TextField>
-                        </Typography>
+                    <Grid item={true} xs={6}>
+                        <Typography gutterBottom={true} className={classes.title}>Created at</Typography>
+                        <Typography gutterBottom={true}>{localeDate(user.created_at, 'shortDate') || '-'}</Typography>
                     </Grid>
                 </Grid>
-                <Grid container={true} justify={'space-between'} style={{marginTop: 20, marginBottom: 40}}>
-                    <Grid item={true} xs={3}>
-                        <Typography variant="h6" component="h6" gutterBottom={true}>
-                            <b>First name</b>
-                        </Typography>
-                        <Typography variant="h6" gutterBottom={true} component="h6" style={{color: '#757575'}}>
-                            {user.profile !== null ? user.profile.first_name : '-'}
-                        </Typography>
+                <Grid container={true} className={classes.gridRow}>
+                    <Grid item={true} xs={6}>
+                        <Typography gutterBottom={true} className={classes.title}>First name</Typography>
+                        <Typography gutterBottom={true}>{user.profile !== null ? user.profile.first_name : '-'}</Typography>
                     </Grid>
-                    <Grid item={true} xs={3}>
-                        <Typography variant="h6" gutterBottom={true} component="h6">
-                            <b>Last name</b>
-                        </Typography>
-                        <Typography variant="h6" gutterBottom={true} component="h6" style={{color: '#757575'}}>
-                            {user.profile !== null ? user.profile.last_name : '-'}
-                        </Typography>
-                    </Grid>
-                    <Grid item={true} xs={3}>
-                        <Typography variant="h6" gutterBottom={true} component="h6">
-                            <b>Day of Birth</b>
-                        </Typography>
-                        <Typography variant="h6" gutterBottom={true} component="h6" style={{color: '#757575'}}>
-                            {user.profile !== null ? user.profile.dob : '-'}
-                        </Typography>
-                    </Grid>
-                    <Grid item={true} xs={3} style={{paddingTop: 5}}>
-                        <Typography variant="h6" gutterBottom={true} component="h6">
-                            <TextField
-                                select={true}
-                                value={user.role}
-                                label="Role"
-                                variant="outlined"
-                                className={classes.textField}
-                                onChange={handleChangeRole}
-                                SelectProps={{
-                                    native: true,
-                                    MenuProps: {
-                                        className: classes.menu,
-                                    },
-                                }}
-                            >
-                                {roleTypes.map(option => (
-                                    <option key={option.key} value={option.key}>
-                                        {option.value}
-                                    </option>
-                                ))}
-                            </TextField>
-                        </Typography>
+                    <Grid item={true} xs={6}>
+                        <Typography gutterBottom={true} className={classes.title}>Last name</Typography>
+                        <Typography gutterBottom={true}>{user.profile !== null ? user.profile.last_name : '-'}</Typography>
                     </Grid>
                 </Grid>
-                <Grid container={true} justify={'space-between'} style={{marginTop: 20, marginBottom: 40}}>
-                    <Grid item={true} xs={3}>
-                        <Typography variant="h6" gutterBottom={true} component="h6">
-                            <b>Country</b>
-                        </Typography>
-                        <Typography variant="h6" gutterBottom={true} component="h6" style={{color: '#757575'}}>
-                            {user.profile !== null ? this.displayCountry(user.profile.country) : '-'}
-                        </Typography>
+                <Grid container={true} className={classes.gridRow}>
+                    <Grid item={true} xs={6}>
+                        <Typography gutterBottom={true} className={classes.title}>Phone number</Typography>
+                        <Typography gutterBottom={true}>{user.phones.length > 0 ? findPhone(user.phones).number : '-'}</Typography>
                     </Grid>
-                    <Grid item={true} xs={3}>
-                        <Typography variant="h6" gutterBottom={true} component="h6">
-                            <b>Validated at</b>
-                        </Typography>
-                        <Typography variant="h6" gutterBottom={true} component="h6" style={{color: '#757575'}}>
-                            {user.phones.length > 0 ? convertToUTCTime(findPhone(user.phones).validated_at) : '-'}
-                        </Typography>
-                    </Grid>
-                    <Grid item={true} xs={3}>
-                        {user.profile === null || showMore ? (
-                            <><Typography variant="h6" gutterBottom={true} component="h6">
-                                <b>Postcode</b>
-                            </Typography>
-                                <Typography
-                                    variant="h6"
-                                    gutterBottom={true}
-                                    component="h6"
-                                    style={{color: '#757575'}}
-                                >
-                                    {user.profile !== null ? user.profile.postcode : '-'}
-                                </Typography></>
-                        ) : (
-                            <Button onClick={e => this.props.showMoreUserInfo(e)} style={{marginTop: 10}}>
-                                <Typography variant="h6" component="h6" style={{color: '#3598D5'}}>
-                                    MORE USER INFO
-                                </Typography>
-                            </Button>
-                        )}
-                    </Grid>
-                    <Grid container={true} justify={'flex-start'} item={true} xs={3}>
-                        <Grid item={true} style={{paddingLeft: 10, marginRight: 60}}>
-                            <Typography variant="h6" gutterBottom={true} component="h6">
-                                <b>Authorization 2FA</b>
-                            </Typography>
-                            <Typography variant="h6" gutterBottom={true} component="h6" style={{color: '#757575'}}>
-                                {user.otp ? 'Enable' : 'Disable'}
-                            </Typography>
-                        </Grid>
-                        <Grid item={true}>
-                            <Switch
-                                checked={user.otp}
-                                onChange={handleChangeUserOTP}
-                                color="primary"
-                            />
-                        </Grid>
+                    <Grid item={true} xs={6}>
+                        <Typography gutterBottom={true} className={classes.title}>Day of Birth</Typography>
+                        <Typography gutterBottom={true}>{user.profile !== null ? localeDate(user.profile.dob, 'date') : '-'}</Typography>
                     </Grid>
                 </Grid>
-            </React.Fragment>
+                <Grid container={true} className={classes.gridRow}>
+                    <Grid item={true} xs={6}>
+                        <Typography gutterBottom={true} className={classes.title}>Citizenship</Typography>
+                        <Typography gutterBottom={true} >-</Typography>
+                    </Grid>
+                    <Grid item={true} xs={6}>
+                        <Typography gutterBottom={true} className={classes.title}>Country</Typography>
+                        <Typography gutterBottom={true} >{user.profile !== null ? this.displayCountry(user.profile.country) : '-'}</Typography>
+                    </Grid>
+                </Grid>
+                <Grid container={true} className={classes.gridRow}>
+                    <Grid item={true} xs={6}>
+                        <Typography gutterBottom={true} className={classes.title}>City</Typography>
+                        <Typography gutterBottom={true}>{user.profile !== null ? user.profile.city : '-'}</Typography>
+                    </Grid>
+                    <Grid item={true} xs={6}>
+                        <Typography gutterBottom={true} className={classes.title}>Address</Typography>
+                        <Typography gutterBottom={true} >{user.profile !== null ? user.profile.address : '-'}</Typography>
+                    </Grid>
+                </Grid>
+                <Grid container={true} className={classes.gridRow}>
+                    <Grid item={true} xs={6}>
+                        <Typography gutterBottom={true} className={classes.title}>Postcode</Typography>
+                        <Typography gutterBottom={true}>{user.profile !== null ? user.profile.postcode : '-'}</Typography>
+                    </Grid>
+                </Grid>
+            </div>
         );
     }
 
@@ -230,3 +127,5 @@ export class UserSummary extends React.Component<UserSummaryProps> {
         return code;
     }
 }
+
+export const UserSummary = withStyles(styles)(UserSummaryComponent);

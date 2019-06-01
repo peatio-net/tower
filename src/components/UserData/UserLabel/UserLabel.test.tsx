@@ -3,7 +3,6 @@ import * as React from 'react';
 import {UserLabel, UserLabelProps} from './index';
 
 const defaults: UserLabelProps = {
-    classes: {},
     user: {labels: []},
     newLabelName: '',
     newLabelValue: '',
@@ -19,6 +18,7 @@ const defaults: UserLabelProps = {
     openAddLabelModal: jest.fn(),
     openEditLabelModal: jest.fn(),
     closeModal: jest.fn(),
+    classes: '',
 };
 
 describe('UserLabel component', () => {
@@ -27,6 +27,7 @@ describe('UserLabel component', () => {
 
     it('should render', () => {
         const wrapper = setup();
+        expect(wrapper).toMatchSnapshot();
         expect(wrapper).toBeDefined();
     });
 });

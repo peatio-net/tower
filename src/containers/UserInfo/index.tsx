@@ -1,3 +1,4 @@
+import { History } from 'history';
 import * as React from 'react';
 import {
     connect,
@@ -5,6 +6,10 @@ import {
     MapStateToProps,
 } from 'react-redux';
 import { RouteProps } from 'react-router';
+import { withRouter } from 'react-router-dom';
+import {
+    tablePageLimit,
+} from '../../api/config';
 import {
     UserData,
 } from '../../components';
@@ -16,13 +21,23 @@ import {
     changeUserState,
     deleteLabel,
     editLabel,
+    getUserActivity,
     getUserData,
+    selectTotalNumber,
+    selectUserActivity,
+    selectUserActivityCurrentPage,
+    selectUserActivityLoading,
     selectUserData,
+    UserActivityDataInterface,
 } from '../../modules';
 
 interface ReduxProps {
     // tslint:disable-next-line:no-any
     userData: any;
+    loading: boolean;
+    total: number;
+    page: number;
+    userActivity: UserActivityDataInterface[];
 }
 
 interface DispatchProps {
@@ -33,11 +48,16 @@ interface DispatchProps {
     changeUserOTP: typeof changeUserOTP;
     deleteLabel: typeof deleteLabel;
     getUserData: typeof getUserData;
+    getUserActivity: typeof getUserActivity;
 }
 
 interface OwnProps {
     // tslint:disable-next-line:no-any
     match: any;
+    history: History;
+    location: {
+        pathname: string;
+    };
 }
 
 interface UserInfoState {
@@ -48,7 +68,6 @@ interface UserInfoState {
     scopeLabel: string;
     page: number;
     rowsPerPage: number;
-    showMore: boolean;
 }
 
 type Props = ReduxProps & DispatchProps & RouteProps & OwnProps;
@@ -64,21 +83,33 @@ class UserInfoScreen extends React.Component<Props, UserInfoState> {
             valueLabel: '',
             scopeLabel: 'private',
             page: 0,
-            rowsPerPage: 15,
-            showMore: false,
+            rowsPerPage: tablePageLimit(),
         };
     }
 
     private documentsRows = [
-        { key: 'doc_type', alignRight: false, label: 'Doc type' },
-        { key: 'created_at', alignRight: true, label: 'Created_at' },
-        { key: 'doc_number', alignRight: true, label: 'Doc number' },
+        { key: 'created_at', alignRight: false, label: 'Date' },
+        { key: 'doc_number', alignRight: false, label: 'Doc number' },
         { key: 'doc_expire', alignRight: true, label: 'Doc expire' },
-        { key: 'upload', alignRight: true, label: 'Photos' },
+        { key: 'upload', alignRight: true, label: 'Attachments' },
+    ];
+
+    private activityRows = [
+        { key: 'created_at', alignRight: false, label: 'Date' },
+        { key: 'action', alignRight: false, label: 'Action' },
+        { key: 'result', alignRight: false, label: 'Result' },
+        { key: 'user_ip', alignRight: true, label: 'IP' },
+        { key: 'browser', alignRight: true, label: 'Browser' },
+        { key: 'os', alignRight: true, label: 'OS' },
     ];
 
     public componentDidMount() {
-        this.props.getUserData({uid: this.props.match.params.uid});
+        const {
+            page,
+            rowsPerPage,
+        } = this.state;
+        this.props.getUserData({ uid: this.props.match.params.uid });
+        this.props.getUserActivity({ page: page + 1, limit: rowsPerPage, uid: this.props.match.params.uid });
     }
 
     public render() {
@@ -94,7 +125,7 @@ class UserInfoScreen extends React.Component<Props, UserInfoState> {
 
         return (
             <React.Fragment>
-                {this.props.userData
+                {this.props.userData && !this.props.loading
                     ? (
                         <UserData
                             documentsRows={this.documentsRows}
@@ -116,16 +147,26 @@ class UserInfoScreen extends React.Component<Props, UserInfoState> {
                             openAddLabelModal={this.handleOpenAddLabelModal}
                             openEditLabelModal={this.handleOpenEditLabelModal}
                             user={this.props.userData}
+                            handleEditLabel={this.handleEditLabel}
+                            activityRows={this.activityRows}
+                            userActivity={this.props.userActivity}
                             page={page}
                             rowsPerPage={rowsPerPage}
                             handleChangePage={this.handleChangePage}
-                            showMore={this.state.showMore}
-                            showMoreUserInfo={this.showMoreUserInfo}
+                            handleChangeRowsPerPage={this.handleChangeRowsPerPage}
+                            total={this.props.total}
+                            goBack={this.goBack}
+                            pathname={location.pathname}
                         />
                     ) : 'Loading'
                 }
             </React.Fragment>
         );
+    }
+
+    private goBack = event => {
+        event.preventDefault();
+        this.props.history.goBack();
     }
 
     private handleCloseModal = () => {
@@ -204,6 +245,27 @@ class UserInfoScreen extends React.Component<Props, UserInfoState> {
         this.changeValueForNewLabel('');
     };
 
+    private handleEditLabel = (key: string, value: string, scope: string) => {
+        const { uid } = this.props.userData;
+
+        this.setState({
+            nameLabel: key,
+            valueLabel: value,
+            scopeLabel: scope,
+        });
+
+        const requestProps = {
+            key: key,
+            value: value,
+            scope: scope,
+            uid: uid,
+        };
+
+        this.props.editLabel(requestProps);
+        this.changeNameForNewLabel('');
+        this.changeValueForNewLabel('');
+    }
+
     // tslint:disable-next-line:no-any
     private handleChangeUserState = (e: any) => {
         const { uid } = this.props.userData;
@@ -226,21 +288,35 @@ class UserInfoScreen extends React.Component<Props, UserInfoState> {
         }
     };
 
-    // tslint:disable-next-line:no-any
-    private showMoreUserInfo = (e: any) => {
-        this.setState({ showMore: !this.state.showMore });
+    private handleChangePage = (page: number) => {
+        this.setState({ page: Number(page) });
+        this.handleGetUserActivity(this.state.rowsPerPage, page);
     };
 
-    private handleChangePage = (page: number) => {
+    // tslint:disable-next-line:no-any
+    private handleChangeRowsPerPage = (rows: number) => {
         this.setState({
-            page: Number(page),
+            rowsPerPage: rows,
+            page: 0,
         });
+        this.handleGetUserActivity(rows, 0);
     };
+
+    private handleGetUserActivity = (limit: number, page: number) => {
+        const { userData } = this.props;
+        const uid = userData.uid;
+
+        this.props.getUserActivity({ limit, page: page + 1, uid });
+    }
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, AppState> =
     (state: AppState): ReduxProps => ({
         userData: selectUserData(state),
+        userActivity: selectUserActivity(state),
+        loading: selectUserActivityLoading(state),
+        total: selectTotalNumber(state),
+        page: selectUserActivityCurrentPage(state),
     });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
@@ -252,6 +328,10 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         changeUserOTP: payload => dispatch(changeUserOTP(payload)),
         deleteLabel:payload => dispatch(deleteLabel(payload)),
         getUserData: payload => dispatch(getUserData(payload)),
+        getUserActivity: params => dispatch(getUserActivity(params)),
     });
 
-export const UserInfo = connect(mapStateToProps, mapDispatchToProps)(UserInfoScreen);
+export const UserInfoPage = connect(mapStateToProps, mapDispatchToProps)(UserInfoScreen);
+
+// tslint:disable-next-line:no-any
+export const UserInfo = withRouter(UserInfoPage as any);

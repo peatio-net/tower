@@ -4,15 +4,18 @@ exports[`InfoTable test should render 1`] = `
 <TableComponent
   classes={
     Object {
-      "active": "TableComponent-active-10",
-      "banned": "TableComponent-banned-11",
-      "content": "TableComponent-content-7",
-      "emptyTable": "TableComponent-emptyTable-8",
-      "headers": "TableComponent-headers-6",
-      "label": "TableComponent-label-5",
+      "active": "TableComponent-active-11",
+      "attachment": "TableComponent-attachment-5",
+      "banned": "TableComponent-banned-12",
+      "cell": "TableComponent-cell-14",
+      "content": "TableComponent-content-8",
+      "emptyTable": "TableComponent-emptyTable-9",
+      "greyIcon": "TableComponent-greyIcon-13",
+      "headers": "TableComponent-headers-7",
+      "label": "TableComponent-label-6",
       "link": "TableComponent-link-4",
       "root": "TableComponent-root-1",
-      "selectIcon": "TableComponent-selectIcon-9",
+      "selectIcon": "TableComponent-selectIcon-10",
       "table": "TableComponent-table-2",
       "tableWrapper": "TableComponent-tableWrapper-3",
     }

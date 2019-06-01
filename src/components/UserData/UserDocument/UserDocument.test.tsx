@@ -5,9 +5,8 @@ import { UserDocument, UserDocumentProps } from './index';
 
 const defaults: UserDocumentProps = {
     user: {},
-    page: 0,
-    handleChangePage: jest.fn(),
     documentsRows: {} as TableHeaderItemInterface[],
+    classes: '',
 };
 
 describe('UserDocument component', () => {
@@ -16,6 +15,7 @@ describe('UserDocument component', () => {
 
     it('should render', () => {
         const wrapper = setup();
+        expect(wrapper).toMatchSnapshot();
         expect(wrapper).toBeDefined();
     });
 });

@@ -3,13 +3,7 @@ import * as React from 'react';
 import {UserSummary, UserSummaryProps} from './index';
 
 const defaults: UserSummaryProps = {
-    classes: {},
     user: {phones: [], profile: {country: 'US'}},
-    handleChangeUserState: jest.fn(),
-    handleChangeRole: jest.fn(),
-    handleChangeUserOTP: jest.fn(),
-    showMore: false,
-    showMoreUserInfo: jest.fn(),
 };
 
 describe('UserSummary component', () => {
@@ -18,6 +12,7 @@ describe('UserSummary component', () => {
 
     it('should render', () => {
         const wrapper = setup();
+        expect(wrapper).toMatchSnapshot();
         expect(wrapper).toBeDefined();
     });
 });

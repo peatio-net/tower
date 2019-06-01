@@ -29,6 +29,9 @@ interface InfoTableProps {
     handleChangeRowsPerPage?: (rows: number) => void;
     hidePagination?: boolean;
     label?: string;
+    location?: {
+        pathname: string;
+    };
 }
 
 const styles = (theme: Theme) => (createStyles({
@@ -114,6 +117,7 @@ class TableComponent extends React.Component<Props> {
             hidePagination,
             dataLength,
         } = this.props;
+
         return (
             <div className={classes.root}>
                 <div className={classes.tableWrapper}>
@@ -128,7 +132,7 @@ class TableComponent extends React.Component<Props> {
                                                 return (
                                                     <TableCell key={index} component="td" align={row.alignRight ? 'right' : 'left'}>
                                                         <Typography variant="caption" gutterBottom={true} className={classes.content}>
-                                                            { row.key === 'email' ? (<Link to={`/users/${n.uid}`} className={classes.link}>{n.email}</Link>)
+                                                            {row.key === 'email' ? (<Link to={`${location && location.pathname}/${n.uid}`} className={classes.link}>{n.email}</Link>)
                                                                 : row.key === 'created_at' || row.key === 'validated_at' || row.key === 'updated_at' ? localeDate(n[row.key], 'shortDate')
                                                                 : row.key === 'state' ? this.getColored(n[row.key])
                                                                 : row.key === 'name' ? n.profile && `${n.profile.first_name} ${n.profile.last_name}`

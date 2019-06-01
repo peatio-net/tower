@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserLabel component should render 1`] = `
+<div>
+  <WithStyles(Grid)
+    item={true}
+    style={
+      Object {
+        "display": "flex",
+        "justifyContent": "space-between",
+      }
+    }
+    xs={12}
+  >
+    <WithStyles(Typography)
+      gutterBottom={true}
+      style={
+        Object {
+          "paddingLeft": 0,
+          "paddingTop": 0,
+        }
+      }
+      variant="h6"
+    >
+      Labels
+    </WithStyles(Typography)>
+    <WithStyles(Grid)
+      item={true}
+    >
+      <WithStyles(Button)
+        onClick={[Function]}
+      >
+        <pure(AddCircleOutlineIcon)
+          style={
+            Object {
+              "color": "#979797",
+              "opacity": 0.6,
+            }
+          }
+        />
+      </WithStyles(Button)>
+    </WithStyles(Grid)>
+  </WithStyles(Grid)>
+  <WithStyles(Typography)
+    gutterBottom={true}
+    style={
+      Object {
+        "color": "#757575",
+      }
+    }
+    variant="h6"
+  >
+    No labels
+  </WithStyles(Typography)>
+</div>
+`;

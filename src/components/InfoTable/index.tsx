@@ -1,6 +1,5 @@
 import {
     createStyles,
-    Paper,
     Table,
     TableBody,
     TableCell,
@@ -12,6 +11,9 @@ import {
     WithStyles,
     withStyles,
 } from '@material-ui/core';
+import {
+    AttachFile,
+} from '@material-ui/icons';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import {
@@ -26,12 +28,15 @@ interface InfoTableProps {
     rows: Array<{ key: string; alignRight: boolean; label: string; }>;
     // tslint:disable-next-line:no-any
     data: any;
-    page: number;
+    page?: number;
     rowsPerPage: number;
-    handleChangePage: (page: number) => void;
+    handleChangePage?: (page: number) => void;
     handleChangeRowsPerPage?: (rows: number) => void;
     hidePagination?: boolean;
     label?: string;
+    location?: {
+        pathname: string;
+    };
 }
 
 const styles = (theme: Theme) => (createStyles({
@@ -52,6 +57,14 @@ const styles = (theme: Theme) => (createStyles({
         textDecoration: 'none',
         letterSpacing: '0.4px',
     },
+    attachment: {
+        color: 'rgba(0, 0, 0, 0.87)',
+        cursor: 'pointer',
+        textDecoration: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+    },
     label: {
         letterSpacing: '0.15px',
         padding: '25px',
@@ -70,6 +83,11 @@ const styles = (theme: Theme) => (createStyles({
     },
     emptyTable: {
         padding: theme.spacing.unit,
+        color: 'rgba(0, 0, 0, 0.87)',
+        fontSize: '14px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
     },
     selectIcon: {
         paddingLeft: '10px',
@@ -79,6 +97,13 @@ const styles = (theme: Theme) => (createStyles({
     },
     banned: {
         color: '#E23328',
+    },
+    greyIcon: {
+        cursor: 'pointer',
+        color: '#979797',
+    },
+    cell: {
+        padding: '4px 0px',
     },
 }));
 
@@ -98,12 +123,8 @@ class TableComponent extends React.Component<Props> {
         } = this.props;
         return (
             <div className={classes.root}>
-                <Paper style={{ marginBottom: 25 }}>
-                    <Typography variant="h5" gutterBottom={true} className={classes.label}>
-                        {label}
-                    </Typography>
+                    {label && (<Typography variant="h6" gutterBottom={true} className={classes.label}>{label}</Typography>)}
                     {data.length ? this.renderContent() : <Typography variant="caption" align="center" className={classes.emptyTable}>There is no data to show</Typography>}
-                </Paper>
             </div>
         );
     }
@@ -111,12 +132,14 @@ class TableComponent extends React.Component<Props> {
     private renderContent = () => {
         const {
             classes,
-            rows,
-            data,
             page,
             hidePagination,
             dataLength,
+            data,
+            rows,
+            location,
         } = this.props;
+
         return (
             <div className={classes.root}>
                 <div className={classes.tableWrapper}>
@@ -129,19 +152,18 @@ class TableComponent extends React.Component<Props> {
                                         <TableRow key={i}>
                                             {rows.map((row: any, index: number) => {
                                                 return (
-                                                    <TableCell key={index} component="td" align={row.alignRight ? 'right' : 'left'}>
-                                                        <Typography variant="caption" gutterBottom={true} className={classes.content}>
-                                                            { row.key === 'email' ? (<Link to={`/tower/users/${n.uid}`} className={classes.link}>{n.email}</Link>)
-                                                                : row.key === 'user_email' ? (<Link to={`/tower/users/${n.user.uid}`} className={classes.link}>{n.user.email}</Link>)
-                                                                : row.key === 'otp' ? (convertToOtp(n.otp) === 'true' ? '2FA' : '-')
-                                                                : row.key === 'upload' ? (<a target="_blank" href={n.upload.url} className={classes.link}>Image</a>)
-                                                                : row.key === 'created_at' || row.key === 'validated_at' || row.key === 'updated_at' ? localeDate(n[row.key], 'fullDate')
-                                                                : row.key === 'browser' ? getUserBrowser(n.user_agent) || '-'
-                                                                : row.key === 'os' ? getUserOS(n.user_agent) || '-'
-                                                                : row.key === 'result' || row.key === 'state' ? this.getColored(n[row.key])
-                                                                : row.key === 'user_role' ? n.user.role
-                                                                : n[row.key]}
-                                                            </Typography>
+                                                    <TableCell key={index} component="td" align={row.alignRight ? 'right' : 'left'} >
+                                                        { row.key === 'email' ? (<Link to={`${location && location.pathname}/${n.uid}`} className={classes.link}>{n.email}</Link>)
+                                                            : row.key === 'user_email' ? (<Link to={`${location && location.pathname}/${n.user.uid}`} className={classes.link}>{n.user.email}</Link>)
+                                                            : row.key === 'otp' ? (convertToOtp(n.otp) === 'true' ? '2FA' : '-')
+                                                            : row.key === 'upload' ? (<a target="_blank" href={n.upload.url} className={classes.attachment}>1 <AttachFile className={classes.greyIcon} /></a>)
+                                                            : row.key === 'created_at' || row.key === 'validated_at' || row.key === 'updated_at' ? localeDate(n[row.key], 'fullDate')
+                                                            : row.key === 'browser' ? getUserBrowser(n.user_agent) || '-'
+                                                            : row.key === 'os' ? getUserOS(n.user_agent) || '-'
+                                                            : row.key === 'result' ? this.getColored(n.result)
+                                                            : row.key === 'user_role' ? n.user.role
+                                                            : row.key === 'doc_expire' ? localeDate(n[row.key], 'date')
+                                                            : n[row.key]}
                                                     </TableCell>
                                                 );})
                                             }
@@ -157,7 +179,7 @@ class TableComponent extends React.Component<Props> {
                         component="div"
                         count={Number(dataLength)}
                         rowsPerPage={this.props.rowsPerPage}
-                        page={page}
+                        page={page || 0}
                         backIconButtonProps={{
                             'aria-label': 'Previous Page',
                         }}
@@ -175,7 +197,7 @@ class TableComponent extends React.Component<Props> {
 
     // tslint:disable-next-line:no-any
     private handleChangePage = (event: any, page: number) => {
-        this.props.handleChangePage(page);
+        this.props.handleChangePage && this.props.handleChangePage(page);
     };
 
     private handleChangeRowsPerPage = event => {
@@ -188,10 +210,7 @@ class TableComponent extends React.Component<Props> {
             <TableHead>
                 <TableRow>
                     {this.props.rows.map((row: {key: string, alignRight: boolean, label: string}) => (
-                        <TableCell
-                            key={row.key}
-                            align={row.alignRight ? 'right' : 'left'}
-                        >
+                        <TableCell key={row.key} align={row.alignRight ? 'right' : 'left'}>
                             <Typography variant="subtitle2" gutterBottom={true} className={classes.headers}>
                                 {row.label}
                             </Typography>

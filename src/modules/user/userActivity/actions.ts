@@ -6,6 +6,7 @@ import {
 interface UserActivityFetchPayload {
     page: number;
     limit: number;
+    uid?: string;
 }
 
 export interface UserActivitySuccessPayload {

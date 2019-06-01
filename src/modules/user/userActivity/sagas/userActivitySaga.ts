@@ -5,6 +5,7 @@ import {
     UserActivityFetch,
 } from '../../../';
 import { API, RequestOptions } from '../../../../api';
+import { buildQueryString } from '../../../../helpers';
 
 const requestOptions: RequestOptions = {
     apiVersion: 'barong',
@@ -12,8 +13,9 @@ const requestOptions: RequestOptions = {
 
 export function* userActivitySaga(action: UserActivityFetch) {
     try {
-        const { page, limit } = action.payload;
-        const { data, headers } = yield call(API.get(requestOptions), `/admin/activities?limit=${limit}&page=${page + 1}`);
+        const { page } = action.payload;
+        const params = buildQueryString(action.payload);
+        const { data, headers } = yield call(API.get(requestOptions), `/admin/activities?${params}`);
         yield put(userActivityData({ list: data, page, total: headers.total }));
     } catch (error) {
         yield put(alertPush({message: error.message, code: error.code, type: 'error'}));

@@ -11,6 +11,7 @@ import {
     connect,
     MapDispatchToPropsFunction,
 } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { tablePageLimit } from '../../api/config';
 import { InfoTable } from '../../components';
 import {
@@ -61,6 +62,12 @@ interface ReduxProps {
     userActivity: UserActivityDataInterface[];
 }
 
+interface OwnProps {
+    location?: {
+        pathname: string;
+    };
+}
+
 interface DispatchProps {
     getUserActivity: typeof getUserActivity;
 }
@@ -70,7 +77,7 @@ interface State {
     currentLimit: number;
 }
 
-type Props = StyleProps & ReduxProps & DispatchProps;
+type Props = StyleProps & ReduxProps & DispatchProps & OwnProps;
 
 class ActivitiesScreen extends React.Component<Props, State> {
     public readonly state = {
@@ -94,7 +101,7 @@ class ActivitiesScreen extends React.Component<Props, State> {
             currentLimit,
             currentPage,
         } = this.state;
-        this.props.getUserActivity({ page: currentPage, limit: currentLimit });
+        this.props.getUserActivity({ page: currentPage + 1, limit: currentLimit });
     }
 
     public render() {
@@ -135,6 +142,7 @@ class ActivitiesScreen extends React.Component<Props, State> {
                 handleChangePage={this.handleChangePage}
                 handleChangeRowsPerPage={this.handleChangeRowsPerPage}
                 hidePagination={false}
+                location={this.props.location}
             />
         );
     }
@@ -149,11 +157,11 @@ class ActivitiesScreen extends React.Component<Props, State> {
             currentLimit: rows,
             currentPage: 0,
         });
-        this.handleGetUserActivity(rows, 0);
+        this.handleGetUserActivity(rows, 1);
     };
 
     private handleGetUserActivity = (limit: number, page: number) => {
-        this.props.getUserActivity({ limit, page });
+        this.props.getUserActivity({ limit: limit, page: page + 1 });
     }
 }
 
@@ -169,4 +177,5 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         getUserActivity: params => dispatch(getUserActivity(params)),
 });
 
-export const Activities = withStyles(styles, { withTheme: true })(connect(mapStateToProps, mapDispatchToProps)(ActivitiesScreen));
+// tslint:disable-next-line:no-any
+export const Activities = withStyles(styles, { withTheme: true })(connect(mapStateToProps, mapDispatchToProps)(withRouter(ActivitiesScreen as any)));

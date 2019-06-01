@@ -4,8 +4,9 @@ import {
     Typography,
 } from '@material-ui/core';
 import SvgIcon from '@material-ui/core/SvgIcon';
+import { AddCircleOutline } from '@material-ui/icons';
 import * as React from 'react';
-import {EditLabel} from '../../';
+import { EditLabel } from '../../';
 
 export interface UserLabelProps {
     // tslint:disable-next-line:no-any
@@ -33,55 +34,71 @@ export class UserLabel extends React.Component<UserLabelProps> {
         const {
             classes,
             user,
+        } = this.props;
+
+        return (
+            <div className={classes.paper}>
+                <Grid item={true} xs={12} style={{ display: 'flex', justifyContent: 'space-between'}}>
+                    <Typography variant="h6" gutterBottom={true} className={classes.title} style={{ paddingLeft: 0, paddingTop: 0 }}>
+                        Labels
+                    </Typography>
+                    <Grid item={true}>
+                        <Button onClick={e => this.openAddLabelModal()}>
+                            <AddCircleOutline style={{ color: '#979797', opacity: 0.6 }} />
+                        </Button>
+                    </Grid>
+                </Grid>
+                {user && user.labels && user.labels.length === 0 ? (
+                <Typography variant="h6" gutterBottom={true} style={{ color: '#757575' }}>
+                    No labels
+                </Typography>
+                ) : this.renderContent()}
+
+            </div>
+        );
+    }
+
+    private renderContent = () => {
+        const {
+            classes,
+            user,
             newLabelName,
             newLabelValue,
             newLabelScope,
         } = this.props;
 
         return (
-            <React.Fragment>
-                <Typography variant="h5" gutterBottom={true} component="h5">
-                    Labels
-                </Typography>
-                <Grid container={true} justify={'flex-start'} spacing={16}>
-                    {user.labels.map((label: any, i: number) => this.getLabelData(label, i, classes))/* tslint:disable-line:no-any */}
-                    <Grid item={true}>
-                        <Button onClick={e => this.openAddLabelModal()}>
-                            <Typography variant="h6" component="h6" style={{color: '#3598D5'}}>
-                                ADD NEW LABEL
-                            </Typography>
-                        </Button>
-                    </Grid>
-                    <EditLabel
-                        editLabel={this.props.addNewLabel}
-                        handleChangeLabelName={this.props.changeLabelName}
-                        handleChangeLabelScope={this.props.changeLabelScope}
-                        handleChangeLabelValue={this.props.changeLabelValue}
-                        modalClose={this.modalClose}
-                        name={newLabelName}
-                        open={this.props.isAddLabelModalOpened}
-                        scope={newLabelScope}
-                        value={newLabelValue}
-                    />
-                    <EditLabel
-                        editLabel={this.props.editLabel}
-                        handleChangeLabelName={this.props.changeLabelName}
-                        handleChangeLabelScope={this.props.changeLabelScope}
-                        handleChangeLabelValue={this.props.changeLabelValue}
-                        modalClose={this.modalClose}
-                        name={newLabelName}
-                        open={this.props.isEditLabelModalOpened}
-                        scope={newLabelScope}
-                        value={newLabelValue}
-                    />
-                </Grid>
-            </React.Fragment>
+            <Grid container={true} justify={'flex-start'} spacing={16}>
+                {user.labels.map((label: any, i: number) => this.getLabelData(label, i, classes))/* tslint:disable-line:no-any */}
+                <EditLabel
+                    editLabel={this.props.addNewLabel}
+                    handleChangeLabelName={this.props.changeLabelName}
+                    handleChangeLabelScope={this.props.changeLabelScope}
+                    handleChangeLabelValue={this.props.changeLabelValue}
+                    modalClose={this.modalClose}
+                    name={newLabelName}
+                    open={this.props.isAddLabelModalOpened}
+                    scope={newLabelScope}
+                    value={newLabelValue}
+                />
+                <EditLabel
+                    editLabel={this.props.editLabel}
+                    handleChangeLabelName={this.props.changeLabelName}
+                    handleChangeLabelScope={this.props.changeLabelScope}
+                    handleChangeLabelValue={this.props.changeLabelValue}
+                    modalClose={this.modalClose}
+                    name={newLabelName}
+                    open={this.props.isEditLabelModalOpened}
+                    scope={newLabelScope}
+                    value={newLabelValue}
+                />
+            </Grid>
         );
     }
 
     // tslint:disable-next-line:no-any
     private getLabelData = (label: any, i: number, classes: any) => {
-        const {user} = this.props;
+        const { user } = this.props;
         switch (label.key) {
             case 'email':
                 return (
@@ -90,7 +107,7 @@ export class UserLabel extends React.Component<UserLabelProps> {
                             container={true}
                             justify={'space-between'}
                             className={classes.label}
-                            style={{backgroundColor: '#43A047'}}
+                            style={{ backgroundColor: '#43A047' }}
                         >
                             <Typography
                                 onClick={e => this.openEditLabelModal(label.key, label.value, label.scope)}
@@ -120,7 +137,7 @@ export class UserLabel extends React.Component<UserLabelProps> {
                             container={true}
                             justify={'space-between'}
                             className={classes.label}
-                            style={{backgroundColor: '#009688'}}
+                            style={{ backgroundColor: '#309CEA' }}
                         >
                             <Typography
                                 onClick={e => this.openEditLabelModal(label.key, label.value, label.scope)}
@@ -150,7 +167,7 @@ export class UserLabel extends React.Component<UserLabelProps> {
                             container={true}
                             justify={'space-between'}
                             className={classes.label}
-                            style={{backgroundColor: '#3F51B5'}}
+                            style={{ backgroundColor: '#3F51B5' }}
                         >
                             <Typography
                                 onClick={e => this.openEditLabelModal(label.key, label.value, label.scope)}
@@ -180,11 +197,11 @@ export class UserLabel extends React.Component<UserLabelProps> {
                             container={true}
                             justify={'space-between'}
                             className={classes.label}
-                            style={{backgroundColor: '#e0e0e0'}}
+                            style={{ backgroundColor: '#e0e0e0' }}
                         >
                             <Typography
                                 onClick={e => this.openEditLabelModal(label.key, label.value, label.scope)}
-                                style={{paddingTop: 8, color: '#757575', fontSize: 16, marginRight: 7}}
+                                style={{ paddingTop: 5, color: '#757575', fontSize: 14, marginRight: 7 }}
                             >
                                 {label.key}
                             </Typography>
@@ -196,7 +213,7 @@ export class UserLabel extends React.Component<UserLabelProps> {
                                 <path
                                     d="m15,0.25c8.15675,0 14.75,6.59325 14.75,14.75c0,8.15675 -6.59325,14.75 -14.75,14.75c-8.15675,0 -14.75,-6.59325 -14.75,-14.75c0,-8.15675 6.59325,-14.75 14.75,-14.75m5.29525,7.375l-5.29525,5.29525l-5.29525,-5.29525l-2.07975,2.07975l5.29525,5.29525l-5.29525,5.29525l2.07975,2.07975l5.29525,-5.29525l5.29525,5.29525l2.07975,-2.07975l-5.29525,-5.29525l5.29525,-5.29525l-2.07975,-2.07975z"
                                     id="svg_1"
-                                    fill="#ffffff"
+                                    fill="#979797"
                                     stroke="null"
                                 />
                             </SvgIcon>

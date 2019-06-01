@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserActivities component should render 1`] = `
+<Fragment>
+  <WithStyles(Typography)
+    gutterBottom={true}
+    variant="h6"
+  >
+    User activities
+  </WithStyles(Typography)>
+  <WithStyles(Typography)
+    gutterBottom={true}
+    style={
+      Object {
+        "color": "#757575",
+        "paddingBottom": 26,
+        "paddingLeft": 26,
+      }
+    }
+    variant="h6"
+  >
+    No user activities
+  </WithStyles(Typography)>
+</Fragment>
+`;

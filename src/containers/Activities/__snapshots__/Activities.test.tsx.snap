@@ -1,16 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Activities test should render 1`] = `
-<Connect(ActivitiesScreen)
+<Connect(withRouter(ActivitiesScreen))
   classes={
     Object {
-      "emptyTable": "Connect-ActivitiesScreen--emptyTable-1",
-      "root": "Connect-ActivitiesScreen--root-2",
-      "selectIcon": "Connect-ActivitiesScreen--selectIcon-7",
-      "table": "Connect-ActivitiesScreen--table-3",
-      "tableRow": "Connect-ActivitiesScreen--tableRow-5",
-      "tableWrapper": "Connect-ActivitiesScreen--tableWrapper-4",
-      "title": "Connect-ActivitiesScreen--title-6",
+      "emptyTable": "Connect-withRouter-ActivitiesScreen---emptyTable-1",
+      "root": "Connect-withRouter-ActivitiesScreen---root-2",
+      "selectIcon": "Connect-withRouter-ActivitiesScreen---selectIcon-7",
+      "table": "Connect-withRouter-ActivitiesScreen---table-3",
+      "tableRow": "Connect-withRouter-ActivitiesScreen---tableRow-5",
+      "tableWrapper": "Connect-withRouter-ActivitiesScreen---tableWrapper-4",
+      "title": "Connect-withRouter-ActivitiesScreen---title-6",
     }
   }
   theme={

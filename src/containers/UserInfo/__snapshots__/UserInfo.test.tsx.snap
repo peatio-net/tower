@@ -1,7 +1,34 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`UserInfo test should render 1`] = `
-<ContextConsumer>
-  <Component />
-</ContextConsumer>
+<Connect(UserInfoScreen)
+  history={
+    Object {
+      "action": "POP",
+      "block": [Function],
+      "createHref": [Function],
+      "go": [Function],
+      "goBack": [Function],
+      "goForward": [Function],
+      "length": 1,
+      "listen": [Function],
+      "location": Object {
+        "hash": "",
+        "pathname": "/tower",
+        "search": "",
+        "state": undefined,
+      },
+      "push": [Function],
+      "replace": [Function],
+    }
+  }
+  location={[Function]}
+  match={
+    Object {
+      "params": Object {
+        "uid": "",
+      },
+    }
+  }
+/>
 `;

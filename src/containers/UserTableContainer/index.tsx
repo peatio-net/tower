@@ -46,6 +46,7 @@ interface RouterProps {
     history: History;
     location: {
         hash: string;
+        pathname: string;
     };
 }
 
@@ -123,7 +124,7 @@ class DashboardUserTable extends React.Component<Props, UserTableState> {
     }
 
     public render() {
-        const { total, users } = this.props;
+        const { total, users, location } = this.props;
         const {
             page,
             rowsPerPage,
@@ -150,6 +151,7 @@ class DashboardUserTable extends React.Component<Props, UserTableState> {
                     handleChangePage={this.handleChangePage}
                     handleChangeRowsPerPage={this.handleChangeRowsPerPage}
                     label={'User Directory'}
+                    location={location}
                 />
             </React.Fragment>
         );
@@ -199,8 +201,8 @@ class DashboardUserTable extends React.Component<Props, UserTableState> {
     };
 
     private handleChangeRowsPerPage = (rows: number) => {
-        this.setState({rowsPerPage: rows, page: 0});
-        this.props.getUsers({limit: rows, page: 0, extended: true});
+        this.setState({rowsPerPage: rows, page: 1});
+        this.props.getUsers({limit: rows, page: 1, extended: true});
     }
 
     // tslint:disable-next-line:no-any

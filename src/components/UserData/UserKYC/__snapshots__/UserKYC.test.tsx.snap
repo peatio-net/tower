@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserKYC component should render 1`] = `
+<UserKYCComponent
+  classes={
+    Object {
+      "formControl": "UserKYCComponent-formControl-2",
+      "gridColumn": "UserKYCComponent-gridColumn-4",
+      "gridRow": "UserKYCComponent-gridRow-3",
+      "gridRowWithDivider": "UserKYCComponent-gridRowWithDivider-5",
+      "info": "UserKYCComponent-info-7",
+      "level": "UserKYCComponent-level-8",
+      "paper": "UserKYCComponent-paper-1",
+      "title": "UserKYCComponent-title-6",
+    }
+  }
+  editLabel={[Function]}
+  user={
+    Object {
+      "phones": Array [],
+      "profile": Object {
+        "country": "US",
+      },
+    }
+  }
+/>
+`;

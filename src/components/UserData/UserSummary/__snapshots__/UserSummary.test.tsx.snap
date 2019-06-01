@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserSummary component should render 1`] = `
+<UserSummaryComponent
+  classes={
+    Object {
+      "gridRow": "UserSummaryComponent-gridRow-1",
+      "label": "UserSummaryComponent-label-4",
+      "paper": "UserSummaryComponent-paper-3",
+      "title": "UserSummaryComponent-title-2",
+    }
+  }
+  user={
+    Object {
+      "phones": Array [],
+      "profile": Object {
+        "country": "US",
+      },
+    }
+  }
+/>
+`;

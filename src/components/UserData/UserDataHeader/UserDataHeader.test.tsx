@@ -4,6 +4,9 @@ import {UserDataHeader, UserDataHeaderProps} from './index';
 
 const defaults: UserDataHeaderProps = {
     classes: {},
+    user: 'user1',
+    goBack: jest.fn(),
+    pathname: '',
 };
 
 describe('UserDataHeader component', () => {
