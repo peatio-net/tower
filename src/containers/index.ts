@@ -9,3 +9,4 @@ export * from './WithdrawListTableContainer';
 export * from './WithdrawInfoContainer';
 export * from './Layout';
 export * from './SearchBarContainer';
+export * from './DocumentReview';

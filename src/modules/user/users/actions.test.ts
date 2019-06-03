@@ -64,4 +64,31 @@ describe('Users actions', () => {
         const expectedAction = { type: 'GET_USERS_BY_LABELS_FETCH', payload };
         expect(actions.getUsersByLabel(payload)).toEqual(expectedAction);
     });
+
+    it('should check getUsersWithPendingDocumentsData action creator', () => {
+        const payload = {
+            users: [{
+                created_at: '',
+                email: '',
+                id: 0,
+                level: 0,
+                otp: false,
+                role: '',
+                state: '',
+                uid: '',
+                updated_at: '',
+            }],
+            total: 10,
+        };
+        const expectedAction = { type: 'GET_USERS_PENDING_DOCUMENTS_DATA', payload };
+        expect(actions.getUsersWithPendingDocumentsData(payload)).toEqual(expectedAction);
+    });
+
+    it('should check filterUsersWithVerifiedDocuments action creator', () => {
+        const payload = {
+            uid: '1',
+        };
+        const expectedAction = { type: 'FILTER_USERS_VERIFIED_DOCUMENTS', payload };
+        expect(actions.filterUsersWithVerifiedDocuments(payload)).toEqual(expectedAction);
+    });
 });

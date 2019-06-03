@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DocumentReview test should render 1`] = `
+<Connect(withRouter(DocumentReviewComponent))
+  classes={
+    Object {
+      "attachments": "Connect-withRouter-DocumentReviewComponent---attachments-8",
+      "blueIcon": "Connect-withRouter-DocumentReviewComponent---blueIcon-6",
+      "greenIcon": "Connect-withRouter-DocumentReviewComponent---greenIcon-4",
+      "greyIcon": "Connect-withRouter-DocumentReviewComponent---greyIcon-3",
+      "header": "Connect-withRouter-DocumentReviewComponent---header-1",
+      "link": "Connect-withRouter-DocumentReviewComponent---link-2",
+      "redIcon": "Connect-withRouter-DocumentReviewComponent---redIcon-5",
+      "selectIcon": "Connect-withRouter-DocumentReviewComponent---selectIcon-7",
+    }
+  }
+/>
+`;

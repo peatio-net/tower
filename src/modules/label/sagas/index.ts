@@ -1,4 +1,4 @@
-import { takeLatest } from 'redux-saga/effects';
+import {takeEvery, takeLatest} from 'redux-saga/effects';
 import {
     ADD_USER_LABEL_FETCH,
     DELETE_USER_LABEL_FETCH,
@@ -10,6 +10,6 @@ import { editUserLabelSaga } from './editUserLabelSaga';
 
 export function* rootLabelSaga() {
     yield takeLatest(ADD_USER_LABEL_FETCH, addUserLabelSaga);
-    yield takeLatest(DELETE_USER_LABEL_FETCH, deleteUserLabelSaga);
-    yield takeLatest(EDIT_USER_LABEL_FETCH, editUserLabelSaga);
+    yield takeEvery(DELETE_USER_LABEL_FETCH, deleteUserLabelSaga);
+    yield takeEvery(EDIT_USER_LABEL_FETCH, editUserLabelSaga);
 }

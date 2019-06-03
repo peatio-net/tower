@@ -51,8 +51,8 @@ describe('GetUsersData saga', () => {
         updated_at: '',
         profile: {
             uid: '123',
-            firstName: '',
-            lastName: '',
+            first_name: '',
+            last_name: '',
             dob: '',
             address: '',
             postcode: '',

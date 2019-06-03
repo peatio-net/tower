@@ -188,8 +188,8 @@ class NavBar extends React.Component<Props> {
                                 />
                             </ListItem>
                         </Link>
-                        <Link to="/tower" className={classes.link}>
-                            <ListItem className={classes.listItem} button={true} key="pending=review">
+                        <Link to="/tower/pending" className={classes.link}>
+                            <ListItem className={classes.listItem} button={true} key="pending">
                                 <ListItemIcon><AccessTime /></ListItemIcon>
                                 <ListItemText
                                     disableTypography={true}

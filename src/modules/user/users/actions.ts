@@ -1,17 +1,20 @@
 import {
+    FILTER_USERS_VERIFIED_DOCUMENTS,
     GET_CURRENT_USER_DATA,
     GET_CURRENT_USER_ERROR,
     GET_CURRENT_USER_FETCH,
     GET_DATA_BY_FILTER_FETCH,
     GET_USERS_BY_LABELS_FETCH,
     GET_USERS_FETCH,
+    GET_USERS_PENDING_DOCUMENTS_DATA,
+    GET_USERS_PENDING_DOCUMENTS_FETCH,
     GET_USERS_SUCCESS,
 } from '../../constants';
 
 export interface UserProfile {
     uid: string;
-    firstName: string;
-    lastName: string;
+    first_name: string;
+    last_name: string;
     dob: string;
     address: string;
     postcode: string;
@@ -84,13 +87,39 @@ export interface GetUsersByLabelFetch {
     };
 }
 
+export interface GetUsersWithPendingDocuments {
+    type: typeof GET_USERS_PENDING_DOCUMENTS_FETCH;
+    payload: {
+        page?: number;
+        limit?: number;
+    };
+}
+
+export interface GetUsersWithPendingDocumentsData {
+    type: typeof GET_USERS_PENDING_DOCUMENTS_DATA;
+    payload: {
+        users: UserInterface[],
+        total: number,
+    };
+}
+
+export interface FilterUsersWithVerifiedDocuments {
+    type: typeof FILTER_USERS_VERIFIED_DOCUMENTS;
+    payload: {
+        uid: UserInterface['uid'],
+    };
+}
+
 export type UsersAction = GetUsersFetch
     | GetUsersSuccess
     | GetCurrentUserFetch
     | GetCurrentUserData
     | GetDataByFilterFetch
     | GetUsersByLabelFetch
-    | GetCurrentUserError;
+    | GetCurrentUserError
+    | GetUsersWithPendingDocuments
+    | GetUsersWithPendingDocumentsData
+    | FilterUsersWithVerifiedDocuments;
 
 export const getUsers = (payload: GetUsersFetch['payload']): GetUsersFetch => ({
     type: GET_USERS_FETCH,
@@ -124,3 +153,20 @@ export const getUsersByLabel = (payload: GetUsersByLabelFetch['payload']): GetUs
     type: GET_USERS_BY_LABELS_FETCH,
     payload,
 });
+
+export const getUsersWithPendingDocuments = (payload: GetUsersWithPendingDocuments['payload']): GetUsersWithPendingDocuments => ({
+    type: GET_USERS_PENDING_DOCUMENTS_FETCH,
+    payload,
+});
+
+export const getUsersWithPendingDocumentsData =
+    (payload: GetUsersWithPendingDocumentsData['payload']): GetUsersWithPendingDocumentsData => ({
+        type: GET_USERS_PENDING_DOCUMENTS_DATA,
+        payload,
+    });
+
+export const filterUsersWithVerifiedDocuments =
+    (payload: FilterUsersWithVerifiedDocuments['payload']): FilterUsersWithVerifiedDocuments => ({
+        type: FILTER_USERS_VERIFIED_DOCUMENTS,
+        payload,
+    });

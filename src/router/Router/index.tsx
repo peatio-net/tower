@@ -14,6 +14,7 @@ import {
     WithdrawInfo,
     WithdrawList,
 } from '../../containers';
+import {DocumentReview} from '../../containers/DocumentReview';
 
 const renderLoading = () => {
     return (
@@ -71,6 +72,12 @@ class Router extends React.Component<RouterProps> {
                     exact={true}
                     path="/tower/users"
                     component={UserDirectory}
+                />
+                <PrivateRoute
+                    isLogged={isCurrentSession}
+                    exact={true}
+                    path="/tower/pending"
+                    component={DocumentReview}
                 />
                 <PrivateRoute
                     loading={userLoading}
