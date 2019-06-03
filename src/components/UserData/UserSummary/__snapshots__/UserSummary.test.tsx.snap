@@ -15,6 +15,9 @@ exports[`UserSummary component should render 1`] = `
       "phones": Array [],
       "profile": Object {
         "country": "US",
+        "metadata": Object {
+          "nationality": "American",
+        },
       },
     }
   }

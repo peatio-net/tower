@@ -55,6 +55,9 @@ describe('GetUsersData saga', () => {
             last_name: '',
             dob: '',
             address: '',
+            metadata: {
+                nationality: '',
+            },
             postcode: '',
             city: '',
             country: '',

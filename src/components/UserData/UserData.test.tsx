@@ -37,7 +37,7 @@ const defaults: UserDataProps = {
     isEditLabelModalOpened: false,
     openAddLabelModal: jest.fn(),
     openEditLabelModal: jest.fn(),
-    user: {labels: [], phones: [], profile: {country: 'US'}},
+    user: {labels: [], phones: [], profile: {country: 'US',  metadata: { nationality: 'American'}}},
     page: 0,
     rowsPerPage: 0,
     total: 0,

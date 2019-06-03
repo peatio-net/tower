@@ -91,7 +91,7 @@ class UserSummaryComponent extends React.Component<Props> {
                 <Grid container={true} className={classes.gridRow}>
                     <Grid item={true} xs={6}>
                         <Typography gutterBottom={true} className={classes.title}>Citizenship</Typography>
-                        <Typography gutterBottom={true} >-</Typography>
+                        <Typography gutterBottom={true} >{user.profile !== null ? user.profile.metadata !== null && user.profile.metadata.nationality : '-'}</Typography>
                     </Grid>
                     <Grid item={true} xs={6}>
                         <Typography gutterBottom={true} className={classes.title}>Country</Typography>
