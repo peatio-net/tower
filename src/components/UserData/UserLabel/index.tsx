@@ -34,6 +34,9 @@ export class UserLabel extends React.Component<UserLabelProps> {
         const {
             classes,
             user,
+            newLabelName,
+            newLabelValue,
+            newLabelScope,
         } = this.props;
 
         return (
@@ -48,53 +51,42 @@ export class UserLabel extends React.Component<UserLabelProps> {
                         </Button>
                     </Grid>
                 </Grid>
+                <Grid container={true} justify={'flex-start'}>
                 {user && user.labels && user.labels.length === 0 ? (
-                <Typography variant="h6" gutterBottom={true} style={{ color: '#757575' }}>
-                    No labels
-                </Typography>
-                ) : this.renderContent()}
+                    <Typography variant="h6" gutterBottom={true} style={{ color: '#757575' }}>
+                        No labels
+                    </Typography>
+                    ) : this.renderContent()}
+                    <EditLabel
+                        editLabel={this.props.addNewLabel}
+                        handleChangeLabelName={this.props.changeLabelName}
+                        handleChangeLabelScope={this.props.changeLabelScope}
+                        handleChangeLabelValue={this.props.changeLabelValue}
+                        modalClose={this.modalClose}
+                        name={newLabelName}
+                        open={this.props.isAddLabelModalOpened}
+                        scope={newLabelScope}
+                        value={newLabelValue}
+                    />
+                    <EditLabel
+                        editLabel={this.props.editLabel}
+                        handleChangeLabelName={this.props.changeLabelName}
+                        handleChangeLabelScope={this.props.changeLabelScope}
+                        handleChangeLabelValue={this.props.changeLabelValue}
+                        modalClose={this.modalClose}
+                        name={newLabelName}
+                        open={this.props.isEditLabelModalOpened}
+                        scope={newLabelScope}
+                        value={newLabelValue}
+                    />
+                </Grid>
 
             </div>
         );
     }
 
-    private renderContent = () => {
-        const {
-            classes,
-            user,
-            newLabelName,
-            newLabelValue,
-            newLabelScope,
-        } = this.props;
-
-        return (
-            <Grid container={true} justify={'flex-start'} spacing={16}>
-                {user.labels.map((label: any, i: number) => this.getLabelData(label, i, classes))/* tslint:disable-line:no-any */}
-                <EditLabel
-                    editLabel={this.props.addNewLabel}
-                    handleChangeLabelName={this.props.changeLabelName}
-                    handleChangeLabelScope={this.props.changeLabelScope}
-                    handleChangeLabelValue={this.props.changeLabelValue}
-                    modalClose={this.modalClose}
-                    name={newLabelName}
-                    open={this.props.isAddLabelModalOpened}
-                    scope={newLabelScope}
-                    value={newLabelValue}
-                />
-                <EditLabel
-                    editLabel={this.props.editLabel}
-                    handleChangeLabelName={this.props.changeLabelName}
-                    handleChangeLabelScope={this.props.changeLabelScope}
-                    handleChangeLabelValue={this.props.changeLabelValue}
-                    modalClose={this.modalClose}
-                    name={newLabelName}
-                    open={this.props.isEditLabelModalOpened}
-                    scope={newLabelScope}
-                    value={newLabelValue}
-                />
-            </Grid>
-        );
-    }
+    // tslint:disable-next-line:no-any
+    private renderContent = () => this.props.user.labels.map((label: any, i: number) => this.getLabelData(label, i, this.props.classes));
 
     // tslint:disable-next-line:no-any
     private getLabelData = (label: any, i: number, classes: any) => {
