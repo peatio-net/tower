@@ -104,6 +104,9 @@ const styles = (theme: Theme) => createStyles({
             backgroundColor: 'rgba(48, 156, 234, 0.1)',
         },
     },
+    selected: {
+        backgroundColor: 'rgba(48, 156, 234, 0.1) !important',
+    },
     link: {
         textDecoration: 'none',
     },
@@ -121,10 +124,28 @@ interface Props extends WithStyles<typeof styles> {
     loggedIn: boolean;
 }
 
-class NavBar extends React.Component<Props> {
+interface NavBarState {
+    key: string;
+}
+
+class NavBar extends React.Component<Props, NavBarState> {
+    constructor(props: Props) {
+        super(props);
+
+        this.state = {
+            key: '',
+        };
+    }
+
+    public componentDidMount() {
+        this.setState({
+            key: 'dashboard',
+        });
+    }
 
     public render() {
         const { classes, loggedIn } = this.props;
+        const { key } = this.state;
 
         return (
             <div>
@@ -164,7 +185,14 @@ class NavBar extends React.Component<Props> {
                     <Divider />
                     <List>
                         <Link to="/tower" className={classes.link}>
-                            <ListItem className={classes.listItem} button={true} key="dashboard">
+                            <ListItem
+                                className={classes.listItem}
+                                classes={{ selected: classes.selected }}
+                                button={true}
+                                key="dashboard"
+                                onClick={this.handleClick('dashboard')}
+                                selected={key === 'dashboard'}
+                            >
                                 <ListItemIcon>
                                     <Dashboard />
                                 </ListItemIcon>
@@ -178,7 +206,15 @@ class NavBar extends React.Component<Props> {
                     <Divider />
                     <List>
                         <Link to="/tower/users" className={classes.link}>
-                            <ListItem className={classes.listItem} button={true} key="user-directory">
+                            <ListItem
+                                className={classes.listItem}
+                                classes={{ selected: classes.selected }}
+                                button={true}
+                                key="users"
+                                onClick={this.handleClick('users')}
+                                selected={key === 'users'}
+
+                            >
                                 <ListItemIcon>
                                     <People />
                                 </ListItemIcon>
@@ -189,7 +225,15 @@ class NavBar extends React.Component<Props> {
                             </ListItem>
                         </Link>
                         <Link to="/tower/pending" className={classes.link}>
-                            <ListItem className={classes.listItem} button={true} key="pending">
+                            <ListItem
+                                className={classes.listItem}
+                                classes={{ selected: classes.selected }}
+                                button={true}
+                                key="pending"
+                                onClick={this.handleClick('pending')}
+                                selected={key === 'pending'}
+
+                            >
                                 <ListItemIcon><AccessTime /></ListItemIcon>
                                 <ListItemText
                                     disableTypography={true}
@@ -198,7 +242,15 @@ class NavBar extends React.Component<Props> {
                             </ListItem>
                         </Link>
                         <Link to="/tower/activities" className={classes.link}>
-                            <ListItem className={classes.listItem} button={true} key="activities">
+                            <ListItem
+                                className={classes.listItem}
+                                classes={{ selected: classes.selected }}
+                                button={true}
+                                key="activities"
+                                onClick={this.handleClick('activities')}
+                                selected={key === 'activities'}
+
+                            >
                                 <ListItemIcon><TrendingUp /></ListItemIcon>
                                 <ListItemText
                                     disableTypography={true}
@@ -207,7 +259,14 @@ class NavBar extends React.Component<Props> {
                             </ListItem>
                         </Link>
                         <Link to="/tower" className={classes.link}>
-                            <ListItem className={classes.listItem} button={true} key="admin">
+                            <ListItem
+                                className={classes.listItem}
+                                classes={{ selected: classes.selected }}
+                                button={true}
+                                key="admin"
+                                onClick={this.handleClick('admin')}
+                                selected={key === 'admin'}
+                            >
                                 <ListItemIcon>
                                     {icons('admin')}
                                 </ListItemIcon>
@@ -221,7 +280,14 @@ class NavBar extends React.Component<Props> {
                     <Divider />
                     <List>
                         <Link to="/tower" className={classes.link}>
-                            <ListItem className={classes.listItem} button={true} key="orders">
+                            <ListItem
+                                className={classes.listItem}
+                                classes={{ selected: classes.selected }}
+                                button={true}
+                                key="orders"
+                                onClick={this.handleClick('orders')}
+                                selected={key === 'orders'}
+                            >
                                 <ListItemIcon>
                                     {icons('orders')}
                                 </ListItemIcon>
@@ -232,7 +298,14 @@ class NavBar extends React.Component<Props> {
                             </ListItem>
                         </Link>
                         <Link to="/tower" className={classes.link}>
-                            <ListItem className={classes.listItem} button={true} key="orderbooks">
+                            <ListItem
+                                className={classes.listItem}
+                                classes={{ selected: classes.selected }}
+                                button={true}
+                                key="orderbooks"
+                                onClick={this.handleClick('orderbooks')}
+                                selected={key === 'orderbooks'}
+                            >
                                 <ListItemIcon>
                                     {icons('orderbooks')}
                                 </ListItemIcon>
@@ -243,7 +316,14 @@ class NavBar extends React.Component<Props> {
                             </ListItem>
                         </Link>
                         <Link to="/tower/withdraws" className={classes.link}>
-                            <ListItem className={classes.listItem} button={true} key="withdrawRequests">
+                            <ListItem
+                                className={classes.listItem}
+                                classes={{ selected: classes.selected }}
+                                button={true}
+                                key="withdraws"
+                                onClick={this.handleClick('withdraws')}
+                                selected={key === 'withdraws'}
+                            >
                                 <ListItemIcon>
                                     {icons('withdrawal')}
                                 </ListItemIcon>
@@ -269,7 +349,14 @@ class NavBar extends React.Component<Props> {
 
     private handleLogout = () => {
         this.props.logout();
+        this.handleDrawerClose();
+        this.setState({ key: '' });
     };
+
+    private handleClick = (key: string) => () => {
+        this.setState({ key });
+    }
+
 }
 
 export const Navbar = withStyles(styles, { withTheme: true })(NavBar);
