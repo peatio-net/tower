@@ -59,6 +59,7 @@ export interface UserDataProps {
     goBack: (event: any) => void;
     pathname: string;
     currentUser: UserDataInterface;
+    alertPush: ({type, message}) => void;
 }
 
 const styles = (theme: Theme) => createStyles({
@@ -164,6 +165,7 @@ class UserDataComponent extends React.Component<Props> {
             goBack,
             pathname,
             currentUser,
+            alertPush,
         } = this.props;
 
         return (
@@ -182,6 +184,7 @@ class UserDataComponent extends React.Component<Props> {
                             <UserKYC
                                 user={user}
                                 editLabel={handleEditLabel}
+                                alertPush={alertPush}
                             />
                         </Paper>
                         <Paper style={{marginBottom: 24}}>

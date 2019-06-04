@@ -15,6 +15,7 @@ import {
 } from '../../components';
 import {
     addNewLabel,
+    alertPush,
     AppState,
     changeUserOTP,
     changeUserRole,
@@ -52,6 +53,7 @@ interface DispatchProps {
     deleteLabel: typeof deleteLabel;
     getUserData: typeof getUserData;
     getUserActivity: typeof getUserActivity;
+    alertPush: typeof alertPush;
 }
 
 interface OwnProps {
@@ -161,6 +163,7 @@ class UserInfoScreen extends React.Component<Props, UserInfoState> {
                             goBack={this.goBack}
                             pathname={location.pathname}
                             currentUser={this.props.currentUser}
+                            alertPush={this.props.alertPush}
                         />
                     ) : 'Loading'
                 }
@@ -288,7 +291,10 @@ class UserInfoScreen extends React.Component<Props, UserInfoState> {
             const { uid } = this.props.userData;
             this.props.changeUserOTP({uid: uid, otp: e.target.checked});
         } else {
-            alert('2FA can only be enabled by the user');
+            this.props.alertPush({
+                message: ['2FA can only be enabled by the user'],
+                type: 'error',
+            });
         }
     };
 
@@ -334,6 +340,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         deleteLabel:payload => dispatch(deleteLabel(payload)),
         getUserData: payload => dispatch(getUserData(payload)),
         getUserActivity: params => dispatch(getUserActivity(params)),
+        alertPush: params => dispatch(alertPush(params)),
     });
 
 export const UserInfoPage = connect(mapStateToProps, mapDispatchToProps)(UserInfoScreen);

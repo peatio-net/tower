@@ -62,6 +62,7 @@ interface StyleProps extends WithStyles<typeof styles> {
 export interface UserKYCProps {
     user: any;
     editLabel: (key: string, value: string, scope: string) => void;
+    alertPush: ({ message, type }) => void;
 }
 // tslint:enable:no-any
 
@@ -129,7 +130,10 @@ class UserKYCComponent extends React.Component<Props> {
         const { user } = this.props;
         const label = user.labels.find(item => item.key === key);
         if (!label) {
-            alert('Label doesn\'t exist');
+            this.props.alertPush({
+                message: ['Label doesn\'t exist'],
+                type: 'error',
+            });
         } else if (label.value === 'verified') {
             this.props.editLabel(key, 'rejected', label.scope);
         } else {

@@ -50,6 +50,7 @@ const defaults: UserDataProps = {
     goBack: jest.fn(),
     pathname: '',
     currentUser: {} as UserDataInterface,
+    alertPush: jest.fn(),
 };
 
 const history = createBrowserHistory();

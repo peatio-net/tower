@@ -5,6 +5,7 @@ import { UserKYC, UserKYCProps } from './index';
 const defaults: UserKYCProps = {
     user: { phones: [], profile: { country: 'US' } },
     editLabel: jest.fn(),
+    alertPush: jest.fn(),
 };
 
 describe('UserKYC component', () => {
