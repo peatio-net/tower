@@ -148,10 +148,17 @@ class ActivitiesScreen extends React.Component<Props, State> {
             classes,
         } = this.props;
         return (
-            <Paper>
-                {userActivity[0] && this.renderContent()}
-                {!userActivity.length && !loading && <Typography variant="caption" align="center" className={classes.emptyTable}>There is no data to show</Typography>}
-            </Paper>
+            <React.Fragment>
+                <SearchBarContainer
+                    selectedItems={this.selectedValues}
+                    handleSearchRequest={this.handleSearch}
+                    handleClearSearchRequest={this.handleClearSearchRequest}
+                />
+                <Paper style={{ marginTop: 25 }}>
+                    {userActivity[0] && this.renderContent()}
+                    {!userActivity.length && !loading && <Typography variant="caption" align="center" className={classes.emptyTable}>There is no data to show</Typography>}
+                </Paper>
+            </React.Fragment>
         );
     }
 
@@ -168,11 +175,6 @@ class ActivitiesScreen extends React.Component<Props, State> {
 
         return (
             <React.Fragment>
-                <SearchBarContainer
-                    selectedItems={this.selectedValues}
-                    handleSearchRequest={this.handleSearch}
-                    handleClearSearchRequest={this.handleClearSearchRequest}
-                />
                 <InfoTable
                     dataLength={total}
                     rows={this.activityRows}
