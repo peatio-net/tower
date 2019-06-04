@@ -2,6 +2,7 @@
 
 exports[`UserKYC component should render 1`] = `
 <UserKYCComponent
+  alertPush={[Function]}
   classes={
     Object {
       "formControl": "UserKYCComponent-formControl-2",

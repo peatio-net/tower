@@ -41,16 +41,45 @@ exports[`UserLabel component should render 1`] = `
       </WithStyles(Button)>
     </WithStyles(Grid)>
   </WithStyles(Grid)>
-  <WithStyles(Typography)
-    gutterBottom={true}
-    style={
-      Object {
-        "color": "#757575",
-      }
-    }
-    variant="h6"
+  <WithStyles(Grid)
+    container={true}
+    justify="flex-start"
+    spacing={16}
   >
-    No labels
-  </WithStyles(Typography)>
+    <WithStyles(Typography)
+      gutterBottom={true}
+      style={
+        Object {
+          "color": "#757575",
+          "marginLeft": 8,
+        }
+      }
+      variant="h6"
+    >
+      No labels
+    </WithStyles(Typography)>
+    <WithStyles(EditLabelModal)
+      editLabel={[Function]}
+      handleChangeLabelName={[Function]}
+      handleChangeLabelScope={[Function]}
+      handleChangeLabelValue={[Function]}
+      modalClose={[Function]}
+      name=""
+      open={false}
+      scope=""
+      value=""
+    />
+    <WithStyles(EditLabelModal)
+      editLabel={[Function]}
+      handleChangeLabelName={[Function]}
+      handleChangeLabelScope={[Function]}
+      handleChangeLabelValue={[Function]}
+      modalClose={[Function]}
+      name=""
+      open={false}
+      scope=""
+      value=""
+    />
+  </WithStyles(Grid)>
 </div>
 `;

@@ -13,11 +13,12 @@ exports[`Navbar test should render 1`] = `
       "drawerPaper": "NavBar-drawerPaper-7",
       "grow": "NavBar-grow-11",
       "hide": "NavBar-hide-5",
-      "link": "NavBar-link-13",
+      "link": "NavBar-link-14",
       "listItem": "NavBar-listItem-12",
       "menuButton": "NavBar-menuButton-4",
-      "navbarHidden": "NavBar-navbarHidden-14",
+      "navbarHidden": "NavBar-navbarHidden-15",
       "root": "NavBar-root-1",
+      "selected": "NavBar-selected-13",
     }
   }
   handleDrawerClose={[Function]}

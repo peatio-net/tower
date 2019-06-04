@@ -51,9 +51,9 @@ export class UserLabel extends React.Component<UserLabelProps> {
                         </Button>
                     </Grid>
                 </Grid>
-                <Grid container={true} justify={'flex-start'}>
+                <Grid container={true} justify={'flex-start'} spacing={16}>
                 {user && user.labels && user.labels.length === 0 ? (
-                    <Typography variant="h6" gutterBottom={true} style={{ color: '#757575' }}>
+                    <Typography variant="h6" gutterBottom={true} style={{ color: '#757575', marginLeft: 8 }}>
                         No labels
                     </Typography>
                     ) : this.renderContent()}
