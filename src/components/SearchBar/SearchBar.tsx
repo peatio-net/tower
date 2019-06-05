@@ -1,9 +1,12 @@
+import MomentUtils from '@date-io/moment';
 import {
     Card,
     CardContent,
+    createMuiTheme,
     createStyles,
     FormControl,
     MenuItem,
+    MuiThemeProvider,
     Select,
     TextField,
     Theme,
@@ -17,6 +20,8 @@ import {
     Search,
 } from '@material-ui/icons';
 import classNames from 'classnames';
+import {DatePicker, MuiPickersUtilsProvider} from 'material-ui-pickers';
+import {Moment} from 'moment';
 import * as React from 'react';
 
 const styles = (theme: Theme) => createStyles({
@@ -68,13 +73,20 @@ const styles = (theme: Theme) => createStyles({
         cursor: 'pointer',
     },
     addMinusIconBlock: {
-        display: 'inline-block',
-        position: 'absolute',
-        top: '5px',
+        display: 'flex',
+        alignItems: 'center',
+        marginRight: 15,
     },
     addMinusIcon: {
         color: '#979797',
         cursor: 'pointer',
+    },
+    searchTerms: {
+        display: 'flex',
+        justifyContent: 'space-between',
+    },
+    datePickerStart: {
+        marginRight: '15px',
     },
 });
 
@@ -99,9 +111,22 @@ interface OwnProps {
     handleDeleteItem?: (index: number) => void;
     handleClear?: () => void;
     handleSendRequest?: () => void;
+    startDate?: Moment | null;
+    endDate?: Moment | null;
+    handleStartDateChange?: (date: Moment) => void;
+    handleEndDateChange?: (date: Moment) => void;
 }
 
 type Props = OwnProps & StyleProps;
+
+const datePickerTheme = createMuiTheme({
+        palette: {
+            primary: {
+                main: '#309CEA',
+            },
+        },
+    },
+);
 
 class SearchBarComponent extends React.Component<Props> {
     public render() {
@@ -111,6 +136,8 @@ class SearchBarComponent extends React.Component<Props> {
             selectedValues,
             searchValue,
             index,
+            startDate,
+            endDate,
         } = this.props;
 
         return (
@@ -118,8 +145,8 @@ class SearchBarComponent extends React.Component<Props> {
                 <CardContent className={classes.cardContent}>
                     <FormControl className={classes.formControl} variant="outlined">
                         <div className={classes.container}>
-                            <div className={classes.block}>
-                                <div className={classes.block}>
+                            <div className={classes.searchTerms}>
+                                <div>
                                     <Select
                                         value={activeItem.value}
                                         onChange={e => this.handleChangeSelect(index, e.target.value)}
@@ -147,6 +174,32 @@ class SearchBarComponent extends React.Component<Props> {
                                         />)
                                     }
                                 </div>
+
+                                {index === 0 ? (
+                                    <MuiThemeProvider theme={datePickerTheme}>
+                                        <div>
+                                            <MuiPickersUtilsProvider utils={MomentUtils}>
+                                                <DatePicker
+                                                    value={startDate}
+                                                    onChange={this.handleStartDateChange}
+                                                    placeholder="Start date"
+                                                    className={classes.datePickerStart}
+                                                    format="DD-MM-YYYY"
+                                                />
+                                            </MuiPickersUtilsProvider>
+
+                                            <MuiPickersUtilsProvider utils={MomentUtils}>
+                                                <DatePicker
+                                                    value={endDate}
+                                                    onChange={this.handleEndDateChange}
+                                                    placeholder="End date"
+                                                    minDate={startDate || undefined}
+                                                    format="DD-MM-YYYY"
+                                                />
+                                            </MuiPickersUtilsProvider>
+                                        </div>
+                                    </MuiThemeProvider>
+                                ) : null}
                             </div>
                             {index === 0 ? (
                                 <div className={classNames(classes.block, classes.icons)}>
@@ -175,13 +228,21 @@ class SearchBarComponent extends React.Component<Props> {
 
     private handleChangeSelect = (index: number, value: string) => {
         this.props.handleChangeSelect(index, value);
-    }
+    };
 
     private handleChangeSearchValue = e => {
         const { index } = this.props;
 
         this.props.handleChangeSearchValue(index, e.target.value);
-    }
+    };
+
+    private handleStartDateChange = (date: Moment) => {
+        this.props.handleStartDateChange && this.props.handleStartDateChange(date);
+    };
+
+    private handleEndDateChange = (date: Moment) => {
+        this.props.handleEndDateChange && this.props.handleEndDateChange(date);
+    };
 }
 
 export const SearchBar = withStyles(styles, {withTheme: true})(SearchBarComponent);

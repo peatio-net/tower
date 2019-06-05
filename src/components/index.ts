@@ -9,4 +9,4 @@ export * from './UserData';
 export * from './UsersTable';
 export * from './WithdrawInfoComponent';
 export * from './WithdrawInfoTableComponent';
-export * from './SearchBar';
+export * from './SearchBar/SearchBar';

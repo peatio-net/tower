@@ -1,3 +1,4 @@
+import {Moment} from 'moment';
 import * as React from 'react';
 import { SearchBar, SelectItem } from '../../components';
 
@@ -12,6 +13,8 @@ interface SearchBarWrapperState {
     selectedMainItem: SelectItem;
     selectedMainItemValue: string;
     elems: SearchBarElementInterface[];
+    selectedStartDate?: Moment | null;
+    selectedEndDate?: Moment | null;
 }
 
 export interface SearchBarRequestInterface {
@@ -40,6 +43,8 @@ class SearchBarWrapper extends React.Component<SearchBarWrapperProps, SearchBarW
             selectedMainItem: props.selectedItems.length ? props.selectedItems[0] : defaultItems[0],
             selectedMainItemValue: '',
             elems: [],
+            selectedStartDate: null,
+            selectedEndDate: null,
         };
     }
 
@@ -57,6 +62,8 @@ class SearchBarWrapper extends React.Component<SearchBarWrapperProps, SearchBarW
             selectedItems,
             selectedMainItem,
             selectedMainItemValue,
+            selectedStartDate,
+            selectedEndDate,
         } = this.state;
 
         return (
@@ -71,6 +78,10 @@ class SearchBarWrapper extends React.Component<SearchBarWrapperProps, SearchBarW
                     handleAddItem={this.addItemElem}
                     handleClear={this.handleClear}
                     handleSendRequest={this.handleSendRequest}
+                    startDate={selectedStartDate}
+                    endDate={selectedEndDate}
+                    handleStartDateChange={this.handleStartDateChange}
+                    handleEndDateChange={this.handleEndDateChange}
                 />
                 {this.getSearchBars()}
             </React.Fragment>
@@ -217,16 +228,20 @@ class SearchBarWrapper extends React.Component<SearchBarWrapperProps, SearchBarW
             selectedMainItem: this.props.selectedItems[0],
             selectedMainItemValue: '',
             elems: [],
+            selectedStartDate: null,
+            selectedEndDate: null,
         });
 
         this.props.handleClearSearchRequest();
-    }
+    };
 
     private handleSendRequest = () => {
         const {
             selectedMainItem,
             selectedMainItemValue,
             elems,
+            selectedStartDate,
+            selectedEndDate,
         } = this.state;
 
         const firstItem = {
@@ -242,7 +257,31 @@ class SearchBarWrapper extends React.Component<SearchBarWrapperProps, SearchBarW
             };
         });
 
+        selectedStartDate && requestArray.push({
+            property: 'from', value: `${selectedStartDate.startOf('day').unix()}`,
+        });
+
+        selectedEndDate && requestArray.push({
+            property: 'to', value: `${selectedEndDate.endOf('day').unix()}`,
+        });
+
+        (selectedStartDate || selectedEndDate) && requestArray.push({
+            property: 'range', value: 'created',
+        });
+
         this.props.handleSearchRequest(requestArray);
+    };
+
+    private handleStartDateChange = (date: Moment) => {
+        this.setState({
+            selectedStartDate: date,
+        });
+    };
+
+    private handleEndDateChange = (date: Moment) => {
+        this.setState({
+            selectedEndDate: date,
+        });
     };
 }
 

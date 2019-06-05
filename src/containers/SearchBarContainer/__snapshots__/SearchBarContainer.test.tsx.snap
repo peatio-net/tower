@@ -10,11 +10,14 @@ exports[`SearchBarContainer test should render 1`] = `
         "value": "",
       }
     }
+    endDate={null}
     handleAddItem={[Function]}
     handleChangeSearchValue={[Function]}
     handleChangeSelect={[Function]}
     handleClear={[Function]}
+    handleEndDateChange={[Function]}
     handleSendRequest={[Function]}
+    handleStartDateChange={[Function]}
     index={0}
     searchValue=""
     selectedValues={
@@ -26,6 +29,7 @@ exports[`SearchBarContainer test should render 1`] = `
         },
       ]
     }
+    startDate={null}
   />
 </Fragment>
 `;
