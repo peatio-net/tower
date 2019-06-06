@@ -125,6 +125,9 @@ const datePickerTheme = createMuiTheme({
                 main: '#309CEA',
             },
         },
+        typography: {
+            useNextVariants: true,
+        },
     },
 );
 
