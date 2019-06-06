@@ -35,6 +35,7 @@ const styles = (theme: Theme) => createStyles({
     container: {
         display: 'flex',
         justifyContent: 'space-between',
+        width: '100%',
     },
     formControl: {
         display: 'flex',
@@ -84,9 +85,14 @@ const styles = (theme: Theme) => createStyles({
     searchTerms: {
         display: 'flex',
         justifyContent: 'space-between',
+        width: 'calc(100% - 141px)',
     },
     datePickerStart: {
         marginRight: '15px',
+    },
+    searchFields: {
+        display: 'flex',
+        alignItems: 'center',
     },
 });
 
@@ -149,60 +155,64 @@ class SearchBarComponent extends React.Component<Props> {
                     <FormControl className={classes.formControl} variant="outlined">
                         <div className={classes.container}>
                             <div className={classes.searchTerms}>
+                                <div className={classes.formControl}>
+                                    <div className={classes.searchFields}>
+                                        <Select
+                                            value={activeItem.value}
+                                            onChange={e => this.handleChangeSelect(index, e.target.value)}
+                                            className={classes.select}
+                                            classes={{ icon: classes.icon }}
+                                        >
+                                            {selectedValues.map((el, i) => <MenuItem key={i} disabled={el.checked} value={el.value}>{el.label}</MenuItem>)}
+                                        </Select>
+                                        <TextField
+                                            className={classes.textField}
+                                            placeholder={`Enter ${activeItem.label}`}
+                                            value={searchValue}
+                                            onChange={this.handleChangeSearchValue}
+                                        />
+                                    </div>
+                                    <div className={classes.addMinusIconBlock}>
+                                        {index === 0 ? (
+                                            <AddCircleOutline
+                                                onClick={this.props.handleAddItem}
+                                                className={classes.addMinusIcon}
+                                            />) : (
+                                            <RemoveCircleOutline
+                                                className={classes.addMinusIcon}
+                                                onClick={this.handleDeleteItem}
+                                            />)
+                                        }
+                                    </div>
+                                </div>
+
                                 <div>
-                                    <Select
-                                        value={activeItem.value}
-                                        onChange={e => this.handleChangeSelect(index, e.target.value)}
-                                        className={classes.select}
-                                        classes={{ icon: classes.icon }}
-                                    >
-                                        {selectedValues.map((el, i) => <MenuItem key={i} disabled={el.checked} value={el.value}>{el.label}</MenuItem>)}
-                                    </Select>
-                                    <TextField
-                                        className={classes.textField}
-                                        placeholder={`Enter ${activeItem.label}`}
-                                        value={searchValue}
-                                        onChange={this.handleChangeSearchValue}
-                                    />
-                                </div>
-                                <div className={classes.addMinusIconBlock}>
                                     {index === 0 ? (
-                                        <AddCircleOutline
-                                            onClick={this.props.handleAddItem}
-                                            className={classes.addMinusIcon}
-                                        />) : (
-                                        <RemoveCircleOutline
-                                            className={classes.addMinusIcon}
-                                            onClick={this.handleDeleteItem}
-                                        />)
-                                    }
+                                        <MuiThemeProvider theme={datePickerTheme}>
+                                            <div>
+                                                <MuiPickersUtilsProvider utils={MomentUtils}>
+                                                    <DatePicker
+                                                        value={startDate}
+                                                        onChange={this.handleStartDateChange}
+                                                        placeholder="Start date"
+                                                        className={classes.datePickerStart}
+                                                        format="DD-MM-YYYY"
+                                                    />
+                                                </MuiPickersUtilsProvider>
+
+                                                <MuiPickersUtilsProvider utils={MomentUtils}>
+                                                    <DatePicker
+                                                        value={endDate}
+                                                        onChange={this.handleEndDateChange}
+                                                        placeholder="End date"
+                                                        minDate={startDate || undefined}
+                                                        format="DD-MM-YYYY"
+                                                    />
+                                                </MuiPickersUtilsProvider>
+                                            </div>
+                                        </MuiThemeProvider>
+                                    ) : null}
                                 </div>
-
-                                {index === 0 ? (
-                                    <MuiThemeProvider theme={datePickerTheme}>
-                                        <div>
-                                            <MuiPickersUtilsProvider utils={MomentUtils}>
-                                                <DatePicker
-                                                    value={startDate}
-                                                    onChange={this.handleStartDateChange}
-                                                    placeholder="Start date"
-                                                    className={classes.datePickerStart}
-                                                    format="DD-MM-YYYY"
-                                                />
-                                            </MuiPickersUtilsProvider>
-
-                                            <MuiPickersUtilsProvider utils={MomentUtils}>
-                                                <DatePicker
-                                                    value={endDate}
-                                                    onChange={this.handleEndDateChange}
-                                                    placeholder="End date"
-                                                    minDate={startDate || undefined}
-                                                    format="DD-MM-YYYY"
-                                                />
-                                            </MuiPickersUtilsProvider>
-                                        </div>
-                                    </MuiThemeProvider>
-                                ) : null}
                             </div>
                             {index === 0 ? (
                                 <div className={classNames(classes.block, classes.icons)}>
