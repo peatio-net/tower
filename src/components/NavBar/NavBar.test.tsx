@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
-import { Navbar } from './';
+import { Navbar } from './NavBar';
 
 const defaultProps = {
     logout: jest.fn(),

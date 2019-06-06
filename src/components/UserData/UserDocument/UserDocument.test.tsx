@@ -1,6 +1,6 @@
 import {shallow} from 'enzyme';
 import * as React from 'react';
-import { TableHeaderItemInterface } from '../index';
+import { TableHeaderItemInterface } from '../UserData';
 import { UserDocument, UserDocumentProps } from './index';
 
 const defaults: UserDocumentProps = {

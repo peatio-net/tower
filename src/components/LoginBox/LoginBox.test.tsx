@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
-import { LoginBox } from './';
+import { LoginBox } from './LoginBox';
 
 const defaultProps = {
     email: '',

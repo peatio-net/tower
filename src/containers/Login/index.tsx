@@ -13,7 +13,7 @@ import {
     MapStateToProps,
 } from 'react-redux';
 import { LoginBox } from '../../components';
-import {Footer} from '../../components/Footer';
+import {Footer} from '../../components/Footer/Footer';
 import {
     AppState,
     login,

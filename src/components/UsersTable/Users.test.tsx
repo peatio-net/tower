@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
-import { UsersTable } from '.';
+import { UsersTable } from './UsersTable';
 
 const defaultProps = {
     dataLength: 0,

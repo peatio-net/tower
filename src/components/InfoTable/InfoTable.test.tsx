@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
-import { InfoTable } from './';
+import { InfoTable } from './InfoTable';
 
 const defaultProps = {
     dataLength: 0,

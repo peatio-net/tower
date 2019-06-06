@@ -5,13 +5,12 @@ import {
     Router,
 } from 'react-router-dom';
 import {UserDataInterface} from '../../modules/auth';
-
+import { UserActivities } from './UserActivities';
 import {
     TableHeaderItemInterface,
     UserData,
     UserDataProps,
-} from './index';
-import { UserActivities } from './UserActivities';
+} from './UserData';
 import { UserDataHeader } from './UserDataHeader';
 import { UserDocument } from './UserDocument';
 import { UserKYC } from './UserKYC';

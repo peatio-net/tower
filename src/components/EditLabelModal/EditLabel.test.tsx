@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
-import { EditLabel } from './';
+import { EditLabel } from './EditLabelModal';
 
 const defaultProps = {
     modalClose: jest.fn(),

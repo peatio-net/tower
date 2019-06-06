@@ -1,7 +1,7 @@
 import {shallow} from 'enzyme';
 import * as React from 'react';
 import { UserActivities, UserActivityProps } from '.';
-import { TableHeaderItemInterface } from '..';
+import { TableHeaderItemInterface } from '../UserData';
 
 const defaults: UserActivityProps = {
     rows: {} as TableHeaderItemInterface[],

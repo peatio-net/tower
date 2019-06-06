@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
-import { SearchHeader } from './';
+import { SearchHeader } from './SearchHeader';
 
 const defaultProps = {
     data: [],

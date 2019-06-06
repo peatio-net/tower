@@ -1,7 +1,7 @@
 import { Typography } from '@material-ui/core';
 import * as React from 'react';
-import { InfoTable } from '../../InfoTable';
-import { TableHeaderItemInterface } from '../index';
+import { InfoTable } from '../../InfoTable/InfoTable';
+import { TableHeaderItemInterface } from '../UserData';
 
 export interface UserActivityProps {
     // tslint:disable:no-any

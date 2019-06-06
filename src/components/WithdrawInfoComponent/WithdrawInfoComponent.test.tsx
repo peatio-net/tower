@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
-import { WithdrawInfoComponent } from './';
+import { WithdrawInfoComponent } from './WithdrawInfoComponent';
 
 const defaultProps = {
     accountNumber: 0,

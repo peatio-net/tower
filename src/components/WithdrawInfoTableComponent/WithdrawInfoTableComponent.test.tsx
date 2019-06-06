@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
-import { WithdrawInfoTableComponent } from './';
+import { WithdrawInfoTableComponent } from './WithdrawInfoTableComponent';
 
 const defaultProps = {
     dataLength: 0,
