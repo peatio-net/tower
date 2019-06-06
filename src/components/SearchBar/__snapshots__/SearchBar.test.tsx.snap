@@ -21,6 +21,7 @@ exports[`SearchBar test should render 1`] = `
       "formControl": "SearchBarComponent-formControl-4",
       "icon": "SearchBarComponent-icon-7",
       "icons": "SearchBarComponent-icons-9",
+      "searchFields": "SearchBarComponent-searchFields-17",
       "searchTerms": "SearchBarComponent-searchTerms-15",
       "select": "SearchBarComponent-select-6",
       "sideIconClear": "SearchBarComponent-sideIconClear-11",

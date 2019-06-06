@@ -9,6 +9,7 @@ import {
     Activities,
     Dashboard,
     Login,
+    Orders,
     UserDirectory,
     UserInfo,
     WithdrawInfo,
@@ -111,6 +112,20 @@ class Router extends React.Component<RouterProps> {
                     exact={true}
                     path="/tower/withdraws"
                     component={WithdrawList}
+                />
+                <PrivateRoute
+                    loading={userLoading}
+                    isLogged={isCurrentSession}
+                    exact={true}
+                    path="/tower/orders"
+                    component={Orders}
+                />
+                <PrivateRoute
+                    loading={userLoading}
+                    isLogged={isCurrentSession}
+                    exact={true}
+                    path="/tower/orderbooks"
+                    component={Orders}
                 />
                 <PrivateRoute
                     loading={userLoading}

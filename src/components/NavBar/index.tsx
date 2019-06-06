@@ -279,7 +279,7 @@ class NavBar extends React.Component<Props, NavBarState> {
                     </List>
                     <Divider />
                     <List>
-                        <Link to="/tower" className={classes.link}>
+                        <Link to="/tower/orders" className={classes.link}>
                             <ListItem
                                 className={classes.listItem}
                                 classes={{ selected: classes.selected }}
@@ -297,7 +297,7 @@ class NavBar extends React.Component<Props, NavBarState> {
                                 />
                             </ListItem>
                         </Link>
-                        <Link to="/tower" className={classes.link}>
+                        <Link to="/tower/orderbooks" className={classes.link}>
                             <ListItem
                                 className={classes.listItem}
                                 classes={{ selected: classes.selected }}
