@@ -3,6 +3,7 @@ export interface Config {
     applogicUrl: string;
     tablePageLimit: number;
     msAlertDisplayTime: string;
+    minutesUntilAutoLogout: string;
 }
 
 export const defaultConfig: Config = {
@@ -10,6 +11,7 @@ export const defaultConfig: Config = {
     authUrl: '',
     msAlertDisplayTime: '5000',
     tablePageLimit: 100,
+    minutesUntilAutoLogout: '5',
 };
 
 export const Tower = {
@@ -29,3 +31,4 @@ export const applogicUrl = () => Tower.config.applogicUrl;
 export const authUrl = () => Tower.config.authUrl;
 export const msAlertDisplayTime = () => Tower.config.msAlertDisplayTime;
 export const tablePageLimit = () => Tower.config.tablePageLimit;
+export const minutesUntilAutoLogout = () => Tower.config.minutesUntilAutoLogout;

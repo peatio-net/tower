@@ -3,4 +3,5 @@ window.env = {
     authUrl: 'http://www.app.local/api/v2/barong',
     msAlertDisplayTime: '5000',
     tablePageLimit: 50,
+    minutesUntilAutoLogout: '5',
 };

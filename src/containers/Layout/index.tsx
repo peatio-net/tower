@@ -46,19 +46,20 @@ interface Props extends WithStyles<typeof styles> {
     theme: Theme;
     children: React.ReactNode;
     logout: () => void;
+    handleDrawerOpen: () => void;
+    handleDrawerClose: () => void;
     loggedIn: boolean;
+    open: boolean;
 }
 
 class LayoutComponent extends React.Component<Props, object> {
-    public state = {
-        open: false,
-    };
-
     public render() {
         const {
             classes,
             children,
             loggedIn,
+            handleDrawerOpen,
+            handleDrawerClose,
         } = this.props;
 
         return (
@@ -67,11 +68,11 @@ class LayoutComponent extends React.Component<Props, object> {
                 <Navbar
                     loggedIn={loggedIn}
                     logout={this.handleLogout}
-                    open={this.state.open}
-                    handleDrawerOpen={this.handleDrawerOpen}
-                    handleDrawerClose={this.handleDrawerClose}
+                    open={this.props.open}
+                    handleDrawerOpen={handleDrawerOpen}
+                    handleDrawerClose={handleDrawerClose}
                 />
-                <main className={classNames(classes.content, {[classes.contentShift]: this.state.open})}>
+                <main className={classNames(classes.content, {[classes.contentShift]: this.props.open})}>
                     <div className={classes.toolbar} />
                     {children}
                 </main>
@@ -82,13 +83,6 @@ class LayoutComponent extends React.Component<Props, object> {
 
     private handleLogout = () => {
         this.props.logout();
-    };
-    private handleDrawerOpen = () => {
-        this.setState({ open: true });
-    };
-
-    private handleDrawerClose = () => {
-        this.setState({ open: false });
     };
 }
 

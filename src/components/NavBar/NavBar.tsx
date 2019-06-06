@@ -349,14 +349,11 @@ class NavBar extends React.Component<Props, NavBarState> {
 
     private handleLogout = () => {
         this.props.logout();
-        this.handleDrawerClose();
-        this.setState({ key: '' });
     };
 
     private handleClick = (key: string) => () => {
         this.setState({ key });
-    }
-
+    };
 }
 
 export const Navbar = withStyles(styles, { withTheme: true })(NavBar);

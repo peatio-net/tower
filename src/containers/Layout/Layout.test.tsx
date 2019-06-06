@@ -5,7 +5,10 @@ import { Layout } from './';
 const defaultProps = {
     children: <div>Children</div>,
     logout: jest.fn(),
+    handleDrawerOpen: jest.fn(),
+    handleDrawerClose: jest.fn(),
     loggedIn: false,
+    open: false,
 };
 
 describe('Layout test', () => {

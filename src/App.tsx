@@ -35,6 +35,10 @@ interface OwnProps {
 type Props = DispatchProps & OwnProps & ReduxProps;
 
 class AppLayout extends React.Component<Props> {
+    public state = {
+        open: false,
+    };
+
     public componentDidMount() {
         this.props.getCurrentUser();
     }
@@ -46,9 +50,20 @@ class AppLayout extends React.Component<Props> {
         return (
             <GuardWrapper>
                 <Router history={history}>
-                    <Layout logout={this.userLogout} loggedIn={isCurrentSession}>
+                    <Layout
+                        logout={this.userLogout}
+                        loggedIn={isCurrentSession}
+                        handleDrawerOpen={this.handleDrawerOpen}
+                        handleDrawerClose={this.handleDrawerClose}
+                        open={this.state.open}
+                    >
                         <Alerts />
-                        <AppRouter userLoading={isUserLoading} isCurrentSession={isCurrentSession} />
+                        <AppRouter
+                            userLoading={isUserLoading}
+                            isCurrentSession={isCurrentSession}
+                            logout={this.userLogout}
+                            user={user}
+                        />
                     </Layout>
                 </Router>
             </GuardWrapper>
@@ -57,6 +72,15 @@ class AppLayout extends React.Component<Props> {
 
     private userLogout = () => {
         this.props.logout();
+        this.handleDrawerClose();
+    };
+
+    private handleDrawerOpen = () => {
+        this.setState({ open: true });
+    };
+
+    private handleDrawerClose = () => {
+        this.setState({ open: false });
     };
 }
 

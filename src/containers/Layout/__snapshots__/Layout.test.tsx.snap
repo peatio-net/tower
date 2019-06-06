@@ -10,8 +10,11 @@ exports[`Layout test should render 1`] = `
       "toolbar": "LayoutComponent-toolbar-2",
     }
   }
+  handleDrawerClose={[Function]}
+  handleDrawerOpen={[Function]}
   loggedIn={false}
   logout={[Function]}
+  open={false}
   theme={
     Object {
       "breakpoints": Object {

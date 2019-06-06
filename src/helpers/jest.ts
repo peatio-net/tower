@@ -9,6 +9,7 @@ const mockConfig: Config = {
     authUrl: '/api/v2/barong',
     msAlertDisplayTime: '3000',
     tablePageLimit: 50,
+    minutesUntilAutoLogout: '1',
 };
 
 export const setupMockStore = (appMiddleware: Middleware, log = false) => configureMockStore([appMiddleware]);
