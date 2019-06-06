@@ -31,9 +31,10 @@ interface DispatchProps {
 
 const styles = (theme: Theme) => createStyles({
     wrapper: {
-        position: 'absolute',
+        position: 'fixed',
         right: 10,
         top: 10,
+        zIndex: 10000,
     },
 });
 
