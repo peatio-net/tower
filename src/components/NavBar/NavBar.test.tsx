@@ -8,6 +8,9 @@ const defaultProps = {
     handleDrawerOpen: jest.fn(),
     handleDrawerClose: jest.fn(),
     loggedIn: false,
+    location: {
+        pathname: '',
+    },
 };
 
 describe('Navbar test', () => {

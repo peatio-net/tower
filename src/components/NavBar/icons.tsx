@@ -1,9 +1,14 @@
 import { SvgIcon } from '@material-ui/core';
+import {
+    AccessTime,
+    People,
+    TrendingUp,
+} from '@material-ui/icons';
 import * as React from 'react';
 
 export const icons = (name: string) => {
     switch (name) {
-        case 'dashboard':
+        case '/tower':
             return (
                 <SvgIcon viewBox="0 0 24 24">
                     <path
@@ -14,7 +19,19 @@ export const icons = (name: string) => {
                     />
                 </SvgIcon>
             );
-        case 'admin':
+        case '/tower/users':
+            return (
+                <People />
+            );
+        case '/tower/pending':
+            return (
+                <AccessTime />
+            );
+        case '/tower/activities':
+            return (
+                <TrendingUp />
+            );
+        case '/tower/admin-activities':
             return (
                 <SvgIcon viewBox="0 0 24 24">
                     <path
@@ -25,7 +42,7 @@ export const icons = (name: string) => {
                     />
                 </SvgIcon>
             );
-        case 'orders':
+        case '/tower/orders':
             return (
                 <SvgIcon viewBox="0 0 24 24">
                     <path
@@ -36,7 +53,7 @@ export const icons = (name: string) => {
                     />
                 </SvgIcon>
             );
-        case 'orderbooks':
+        case '/tower/orderbooks':
             return (
                 <SvgIcon viewBox="0 0 24 24" >
                     <path
@@ -47,7 +64,7 @@ export const icons = (name: string) => {
                     />
                 </SvgIcon>
             );
-        case 'withdrawal':
+        case '/tower/withdraws':
             return (
                 <SvgIcon viewBox="0 0 24 24" >
                     <path

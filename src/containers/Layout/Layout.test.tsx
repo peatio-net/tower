@@ -9,6 +9,9 @@ const defaultProps = {
     handleDrawerClose: jest.fn(),
     loggedIn: false,
     open: false,
+    location: {
+        pathname: '',
+    },
 };
 
 describe('Layout test', () => {

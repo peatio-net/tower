@@ -16,13 +16,9 @@ import {
     withStyles,
 } from '@material-ui/core';
 import {
-    AccessTime,
     ChevronLeft,
     ChevronRight,
-    Dashboard,
     Menu,
-    People,
-    TrendingUp,
 } from '@material-ui/icons';
 import classNames from 'classnames';
 import * as React from 'react';
@@ -122,6 +118,9 @@ interface Props extends WithStyles<typeof styles> {
     handleDrawerOpen: () => void;
     handleDrawerClose: () => void;
     loggedIn: boolean;
+    location?: {
+        pathname: string;
+    };
 }
 
 interface NavBarState {
@@ -129,6 +128,17 @@ interface NavBarState {
 }
 
 class NavBar extends React.Component<Props, NavBarState> {
+    public NavBarItems = [
+        { key: '/tower', value: 'DashBoard' },
+        { key: '/tower/users', value: 'User directory' },
+        { key: '/tower/pending', value: 'Pending Documents' },
+        { key: '/tower/activities', value: 'User Activities' },
+        { key: '/tower/admin-activities', value: 'Admin Activities' },
+        { key: '/tower/orders', value: 'Orders' },
+        { key: '/tower/orderbooks', value: 'Orderbooks' },
+        { key: '/tower/withdraws', value: 'Withdraw requests' },
+    ];
+
     constructor(props: Props) {
         super(props);
 
@@ -139,13 +149,12 @@ class NavBar extends React.Component<Props, NavBarState> {
 
     public componentDidMount() {
         this.setState({
-            key: 'dashboard',
+            key: this.props.location && this.props.location.pathname || '',
         });
     }
 
     public render() {
         const { classes, loggedIn } = this.props;
-        const { key } = this.state;
 
         return (
             <div>
@@ -184,155 +193,15 @@ class NavBar extends React.Component<Props, NavBarState> {
                     </div>
                     <Divider />
                     <List>
-                        <Link to="/tower" className={classes.link}>
-                            <ListItem
-                                className={classes.listItem}
-                                classes={{ selected: classes.selected }}
-                                button={true}
-                                key="dashboard"
-                                onClick={this.handleClick('dashboard')}
-                                selected={key === 'dashboard'}
-                            >
-                                <ListItemIcon>
-                                    <Dashboard />
-                                </ListItemIcon>
-                                <ListItemText
-                                    disableTypography={true}
-                                    primary={<Typography variant="body2">Dashboard</Typography>}
-                                />
-                            </ListItem>
-                        </Link>
+                        {this.renderList(this.NavBarItems.slice(0, 1))}
                     </List>
                     <Divider />
                     <List>
-                        <Link to="/tower/users" className={classes.link}>
-                            <ListItem
-                                className={classes.listItem}
-                                classes={{ selected: classes.selected }}
-                                button={true}
-                                key="users"
-                                onClick={this.handleClick('users')}
-                                selected={key === 'users'}
-
-                            >
-                                <ListItemIcon>
-                                    <People />
-                                </ListItemIcon>
-                                <ListItemText
-                                    disableTypography={true}
-                                    primary={<Typography variant="body2">User directory</Typography>}
-                                />
-                            </ListItem>
-                        </Link>
-                        <Link to="/tower/pending" className={classes.link}>
-                            <ListItem
-                                className={classes.listItem}
-                                classes={{ selected: classes.selected }}
-                                button={true}
-                                key="pending"
-                                onClick={this.handleClick('pending')}
-                                selected={key === 'pending'}
-
-                            >
-                                <ListItemIcon><AccessTime /></ListItemIcon>
-                                <ListItemText
-                                    disableTypography={true}
-                                    primary={<Typography variant="body2">Pending documents</Typography>}
-                                />
-                            </ListItem>
-                        </Link>
-                        <Link to="/tower/activities" className={classes.link}>
-                            <ListItem
-                                className={classes.listItem}
-                                classes={{ selected: classes.selected }}
-                                button={true}
-                                key="activities"
-                                onClick={this.handleClick('activities')}
-                                selected={key === 'activities'}
-
-                            >
-                                <ListItemIcon><TrendingUp /></ListItemIcon>
-                                <ListItemText
-                                    disableTypography={true}
-                                    primary={<Typography variant="body2">User activities</Typography>}
-                                />
-                            </ListItem>
-                        </Link>
-                        <Link to="/tower" className={classes.link}>
-                            <ListItem
-                                className={classes.listItem}
-                                classes={{ selected: classes.selected }}
-                                button={true}
-                                key="admin"
-                                onClick={this.handleClick('admin')}
-                                selected={key === 'admin'}
-                            >
-                                <ListItemIcon>
-                                    {icons('admin')}
-                                </ListItemIcon>
-                                <ListItemText
-                                    disableTypography={true}
-                                    primary={<Typography variant="body2">Admin activities</Typography>}
-                                />
-                            </ListItem>
-                        </Link>
+                        {this.renderList(this.NavBarItems.slice(1, 5))}
                     </List>
                     <Divider />
                     <List>
-                        <Link to="/tower/orders" className={classes.link}>
-                            <ListItem
-                                className={classes.listItem}
-                                classes={{ selected: classes.selected }}
-                                button={true}
-                                key="orders"
-                                onClick={this.handleClick('orders')}
-                                selected={key === 'orders'}
-                            >
-                                <ListItemIcon>
-                                    {icons('orders')}
-                                </ListItemIcon>
-                                <ListItemText
-                                    disableTypography={true}
-                                    primary={<Typography variant="body2">Orders</Typography>}
-                                />
-                            </ListItem>
-                        </Link>
-                        <Link to="/tower/orderbooks" className={classes.link}>
-                            <ListItem
-                                className={classes.listItem}
-                                classes={{ selected: classes.selected }}
-                                button={true}
-                                key="orderbooks"
-                                onClick={this.handleClick('orderbooks')}
-                                selected={key === 'orderbooks'}
-                            >
-                                <ListItemIcon>
-                                    {icons('orderbooks')}
-                                </ListItemIcon>
-                                <ListItemText
-                                    disableTypography={true}
-                                    primary={<Typography variant="body2">Orderbooks</Typography>}
-                                />
-                            </ListItem>
-                        </Link>
-                        <Link to="/tower/withdraws" className={classes.link}>
-                            <ListItem
-                                className={classes.listItem}
-                                classes={{ selected: classes.selected }}
-                                button={true}
-                                key="withdraws"
-                                onClick={this.handleClick('withdraws')}
-                                selected={key === 'withdraws'}
-                            >
-                                <ListItemIcon>
-                                    {icons('withdrawal')}
-                                </ListItemIcon>
-                                <ListItemText
-                                    disableTypography={true}
-                                    primary={<Typography variant="body2">Withdraw requests</Typography>}
-                                />
-                            </ListItem>
-                        </Link>
+                        {this.renderList(this.NavBarItems.slice(5, 8))}
                     </List>
                 </Drawer>
             </div>
@@ -354,6 +223,32 @@ class NavBar extends React.Component<Props, NavBarState> {
     private handleClick = (key: string) => () => {
         this.setState({ key });
     };
+
+    private renderList = list => {
+        const { classes } = this.props;
+        const { key } = this.state;
+
+        return list.map(item => (
+            <Link to={item.key} className={classes.link} key={item.key}>
+                <ListItem
+                    className={classes.listItem}
+                    classes={{ selected: classes.selected }}
+                    button={true}
+                    key={item.key}
+                    onClick={this.handleClick(item.key)}
+                    selected={key === item.key}
+                >
+                    <ListItemIcon>
+                        {icons(item.key)}
+                    </ListItemIcon>
+                    <ListItemText
+                        disableTypography={true}
+                        primary={<Typography variant="body2">{item.value}</Typography>}
+                    />
+                </ListItem>
+            </Link>
+        ));
+    }
 }
 
 export const Navbar = withStyles(styles, { withTheme: true })(NavBar);

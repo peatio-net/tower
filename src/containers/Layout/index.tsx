@@ -42,7 +42,7 @@ const styles = (theme: Theme) => createStyles({
     },
 });
 
-interface Props extends WithStyles<typeof styles> {
+interface OwnProps extends WithStyles<typeof styles> {
     theme: Theme;
     children: React.ReactNode;
     logout: () => void;
@@ -50,7 +50,12 @@ interface Props extends WithStyles<typeof styles> {
     handleDrawerClose: () => void;
     loggedIn: boolean;
     open: boolean;
+    location?: {
+        pathname: string;
+    };
 }
+
+type Props = OwnProps;
 
 class LayoutComponent extends React.Component<Props, object> {
     public render() {
@@ -71,6 +76,7 @@ class LayoutComponent extends React.Component<Props, object> {
                     open={this.props.open}
                     handleDrawerOpen={handleDrawerOpen}
                     handleDrawerClose={handleDrawerClose}
+                    location={location}
                 />
                 <main className={classNames(classes.content, {[classes.contentShift]: this.props.open})}>
                     <div className={classes.toolbar} />

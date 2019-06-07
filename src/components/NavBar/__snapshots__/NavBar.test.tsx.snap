@@ -23,6 +23,11 @@ exports[`Navbar test should render 1`] = `
   }
   handleDrawerClose={[Function]}
   handleDrawerOpen={[Function]}
+  location={
+    Object {
+      "pathname": "",
+    }
+  }
   loggedIn={false}
   logout={[Function]}
   open={false}
