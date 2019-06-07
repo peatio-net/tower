@@ -14,6 +14,7 @@ import {
     logout,
     selectCurrentUser,
     selectLoadingCurrentUser,
+    selectUserLoggedIn,
     UserInterface,
 } from './modules';
 import { AppRouter } from './router';
@@ -21,6 +22,7 @@ import { AppRouter } from './router';
 interface ReduxProps {
     user?: UserInterface;
     isUserLoading: boolean;
+    loggedIn: boolean;
 }
 
 interface DispatchProps {
@@ -44,15 +46,14 @@ class AppLayout extends React.Component<Props> {
     }
 
     public render() {
-        const { history, user, isUserLoading } = this.props;
-        const isCurrentSession = user ? true : false;
+        const { history, user, isUserLoading, loggedIn } = this.props;
 
         return (
             <GuardWrapper>
                 <Router history={history}>
                     <Layout
                         logout={this.userLogout}
-                        loggedIn={isCurrentSession}
+                        loggedIn={loggedIn}
                         handleDrawerOpen={this.handleDrawerOpen}
                         handleDrawerClose={this.handleDrawerClose}
                         open={this.state.open}
@@ -60,7 +61,7 @@ class AppLayout extends React.Component<Props> {
                         <Alerts />
                         <AppRouter
                             userLoading={isUserLoading}
-                            isCurrentSession={isCurrentSession}
+                            isCurrentSession={loggedIn}
                             logout={this.userLogout}
                             user={user}
                         />
@@ -87,6 +88,7 @@ class AppLayout extends React.Component<Props> {
 const mapStateToProps: MapStateToProps<ReduxProps, {}, AppState> = (state: AppState): ReduxProps => ({
     user: selectCurrentUser(state),
     isUserLoading: selectLoadingCurrentUser(state),
+    loggedIn: selectUserLoggedIn(state),
 });
 
 
