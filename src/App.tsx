@@ -38,11 +38,17 @@ type Props = DispatchProps & OwnProps & ReduxProps;
 
 class AppLayout extends React.Component<Props> {
     public state = {
-        open: false,
+        open: true,
     };
 
     public componentDidMount() {
         this.props.getCurrentUser();
+    }
+
+    public componentDidUpdate(prev: Props) {
+        if (prev.loggedIn !== this.props.loggedIn && this.props.loggedIn) {
+            this.setState({ open: true });
+        }
     }
 
     public render() {
@@ -90,7 +96,6 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, AppState> = (state: AppSt
     isUserLoading: selectLoadingCurrentUser(state),
     loggedIn: selectUserLoggedIn(state),
 });
-
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
     logout: () => dispatch(logout()),
