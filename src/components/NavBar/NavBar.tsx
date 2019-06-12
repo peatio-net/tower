@@ -129,14 +129,14 @@ interface NavBarState {
 
 class NavBar extends React.Component<Props, NavBarState> {
     public NavBarItems = [
-        { key: '/tower', value: 'DashBoard' },
+        { key: '/tower', value: 'Dashboard' },
         { key: '/tower/users', value: 'User directory' },
         { key: '/tower/pending', value: 'Pending Documents' },
         { key: '/tower/activities', value: 'User Activities' },
         { key: '/tower/admin-activities', value: 'Admin Activities' },
         { key: '/tower/orders', value: 'Orders' },
         { key: '/tower/orderbooks', value: 'Orderbooks' },
-        { key: '/tower/withdraws', value: 'Withdraw requests' },
+        { key: '/tower/withdraws', value: 'Withdrawal requests' },
     ];
 
     constructor(props: Props) {
