@@ -112,26 +112,47 @@ class ActivitiesScreen extends React.Component<Props, State> {
 
     private selectedValues = [
         {
-            value: 'uid',
             label: 'UID',
+            value: 'uid',
             checked: false,
         },
         {
-            value: 'action',
-            label: 'Action',
-            checked: false,
-        },
-        {
-            value: 'topic',
-            label: 'Topic',
-            checked: false,
-        },
-        {
-            value: 'email',
             label: 'Email',
+            value: 'email',
+            checked: false,
+        },
+        {
+            label: 'Role',
+            value: 'role',
+            checked: false,
+        },
+        {
+            label: 'First name',
+            value: 'first_name',
+            checked: false,
+        },
+        {
+            label: 'Last name',
+            value: 'last_name',
+            checked: false,
+        },
+        {
+            label: 'Country',
+            value: 'country',
+            checked: false,
+        },
+        {
+            label: 'Level',
+            value: 'level',
+            checked: false,
+        },
+        {
+            label: 'State',
+            value: 'state',
             checked: false,
         },
     ];
+
 
     public componentDidMount() {
         const {

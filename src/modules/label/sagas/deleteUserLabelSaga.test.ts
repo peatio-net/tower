@@ -24,7 +24,7 @@ describe('DeleteLabel saga', () => {
     beforeEach(() => {
         mockAxios = setupMockAxios();
         sagaMiddleware = createSagaMiddleware();
-        store = setupMockStore(sagaMiddleware, false)();
+        store = setupMockStore(sagaMiddleware, true)();
         sagaMiddleware.run(rootSaga);
     });
 
@@ -33,9 +33,9 @@ describe('DeleteLabel saga', () => {
     });
 
     const fakeCredentials = {
-        uid: '',
-        key: '',
-        scope: '',
+        uid: '12',
+        key: '12',
+        scope: '12',
     };
 
     const mockDeleteLabel = () => {

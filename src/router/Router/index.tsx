@@ -116,6 +116,12 @@ class Router extends React.Component<RouterProps> {
                     component={DocumentReview}
                 />
                 <PrivateRoute
+                    isLogged={isCurrentSession}
+                    exact={true}
+                    path="/tower/pending/:uid"
+                    component={UserInfo}
+                />
+                <PrivateRoute
                     loading={userLoading}
                     isLogged={isCurrentSession}
                     exact={true}

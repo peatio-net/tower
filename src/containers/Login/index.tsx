@@ -13,7 +13,6 @@ import {
     MapStateToProps,
 } from 'react-redux';
 import { LoginBox } from '../../components';
-import {Footer} from '../../components/Footer/Footer';
 import {
     AppState,
     login,
@@ -24,7 +23,6 @@ const styles = (theme: Theme) => createStyles({
     root: {
         display: 'flex',
         flexDirection: 'column',
-        minHeight: '100vh',
     },
     main: {
         width: 'auto',
@@ -99,7 +97,6 @@ class LoginScreen extends React.Component<Props, LoginState> {
                         />
                     </Paper>
                 </main>
-                <Footer/>
             </div>
         );
     }

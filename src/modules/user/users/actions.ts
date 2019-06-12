@@ -24,6 +24,26 @@ export interface UserProfile {
     updated_at?: string;
 }
 
+export interface UserLabel {
+    uid: string;
+    key: string;
+    value: string;
+    scope: string;
+    created_at?: string;
+    updated_at?: string;
+}
+
+export interface UserDocument {
+    upload: {
+        url: string;
+    };
+    doc_type: string;
+    doc_number: string;
+    doc_expire: string;
+    created_at?: string;
+    updated_at?: string;
+}
+
 export interface UserInterface {
     created_at?: string;
     email: string;
@@ -35,6 +55,8 @@ export interface UserInterface {
     uid: string;
     updated_at?: string;
     profile?: UserProfile;
+    documents?: UserDocument[];
+    labels?: UserLabel[];
 }
 
 export interface GetUsersFetch {

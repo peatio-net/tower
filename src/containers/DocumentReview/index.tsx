@@ -15,27 +15,29 @@ import {
     CheckBoxOutlineBlank,
     CheckCircle,
 } from '@material-ui/icons';
+import { History } from 'history';
 import * as React from 'react';
 import {connect, MapDispatchToPropsFunction, MapStateToProps} from 'react-redux';
 import {RouteComponentProps, withRouter} from 'react-router';
 import {Link} from 'react-router-dom';
+import { SearchBarContainer, SearchBarRequestInterface } from '../';
 import {
     tablePageLimit,
 } from '../../api/config';
 import {
+    convertToObj,
     localeDate,
 } from '../../helpers';
 import {
     AppState,
     deleteLabel,
     editLabel,
+    selectPendingTotal,
     selectPendingUsers,
-    selectUsersTotal,
     UserInterface,
 } from '../../modules';
 import {logout} from '../../modules/auth';
 import {getUsersWithPendingDocuments} from '../../modules/user';
-
 
 interface DispatchProps {
     logout: typeof logout;
@@ -47,6 +49,13 @@ interface DispatchProps {
 interface ReduxProps {
     users: UserInterface[];
     total: number;
+}
+
+interface RouterProps {
+    history: History;
+    location: {
+        pathname: string;
+    };
 }
 
 const styles = () => (createStyles({
@@ -87,6 +96,9 @@ const styles = () => (createStyles({
         alignItems: 'center',
         justifyContent: 'flex-end',
     },
+    emptyTable: {
+        padding: 15,
+    },
 }));
 
 interface StyleProps extends WithStyles<typeof styles> {
@@ -97,9 +109,14 @@ interface State {
     selectAll: boolean;
     page: number;
     rowsPerPage: number;
+    activeSelectItem: {
+        value: string;
+        label: string;
+    };
+    request: SearchBarRequestInterface[];
 }
 
-type Props = RouteComponentProps & DispatchProps & ReduxProps & StyleProps;
+type Props = RouteComponentProps & DispatchProps & ReduxProps & StyleProps & RouterProps;
 
 class DocumentReviewComponent extends React.Component<Props, State> {
     constructor(props: Props) {
@@ -110,8 +127,57 @@ class DocumentReviewComponent extends React.Component<Props, State> {
             selectAll: false,
             page: 0,
             rowsPerPage: tablePageLimit(),
+            activeSelectItem: this.selectedValues[0],
+            request: [{
+                property: '',
+                value: '',
+            }],
         };
     }
+
+    private selectedValues = [
+        {
+            label: 'UID',
+            value: 'uid',
+            checked: false,
+        },
+        {
+            label: 'Email',
+            value: 'email',
+            checked: false,
+        },
+        {
+            label: 'Role',
+            value: 'role',
+            checked: false,
+        },
+        {
+            label: 'First name',
+            value: 'first_name',
+            checked: false,
+        },
+        {
+            label: 'Last name',
+            value: 'last_name',
+            checked: false,
+        },
+        {
+            label: 'Country',
+            value: 'country',
+            checked: false,
+        },
+        {
+            label: 'Level',
+            value: 'level',
+            checked: false,
+        },
+        {
+            label: 'State',
+            value: 'state',
+            checked: false,
+        },
+    ];
+
 
     public componentDidMount(): void {
         this.props.getUsers({
@@ -120,17 +186,43 @@ class DocumentReviewComponent extends React.Component<Props, State> {
         });
     }
 
+
+    public componentDidUpdate(prev: Props) {
+        if (prev.total !== this.props.total) {
+            this.filterSelected();
+        }
+    }
+
+
     public render() {
-        const {users, classes, total} = this.props;
+        const { users, classes } = this.props;
+
+        return (
+            <React.Fragment>
+                <SearchBarContainer
+                    selectedItems={this.selectedValues}
+                    handleSearchRequest={this.handleSearch}
+                    handleClearSearchRequest={this.handleClearSearchRequest}
+                />
+                <Paper style={{ marginTop: 25 }}>
+                    {users[0] && this.renderContent()}
+                    {!users.length && <Typography variant="caption" align="center" className={classes.emptyTable}>There is no data to show</Typography>}
+                </Paper>
+            </React.Fragment>
+        );
+    }
+
+    private renderContent = () => {
         const {
             page,
             rowsPerPage,
             selectAll,
             selectedUsers,
         } = this.state;
+        const { users, classes, total, location } = this.props;
 
         return (
-            <Paper>
+            <React.Fragment>
                 <Typography variant="h6" className={classes.header}>
                     Pending documents
                     <div style={{display: 'flex', minWidth: 80, justifyContent: 'space-between'}}>
@@ -164,14 +256,14 @@ class DocumentReviewComponent extends React.Component<Props, State> {
                                         {this.getIcon(selectedUsers.filter(x => x === user.uid).length > 0, this.handleClick(user.uid))}
                                     </TableCell>
                                     <TableCell>
-                                        <Link to={`/tower/users/${user.uid}`} className={classes.link}>{user.email}</Link>
+                                        <Link to={`${location.pathname}/${user.uid}`} className={classes.link}>{user.email}</Link>
                                     </TableCell>
                                     <TableCell>{user.profile && `${user.profile.first_name} ${user.profile.last_name}`}</TableCell>
                                     <TableCell>{user.profile && user.profile.country}</TableCell>
                                     <TableCell style={{ textAlign: 'right' }}>{user.created_at && localeDate(user.created_at, 'shortDate')}</TableCell>
                                     <TableCell>
                                         <div className={classes.attachments}>
-                                            1 <AttachFile className={classes.greyIcon} />
+                                            {user && user.documents && user.documents.length || 0} <AttachFile className={classes.greyIcon} />
                                         </div>
                                     </TableCell>
                                 </TableRow>
@@ -196,7 +288,7 @@ class DocumentReviewComponent extends React.Component<Props, State> {
                         </TableRow>
                     </TableBody>
                 </Table>
-            </Paper>
+            </React.Fragment>
         );
     }
 
@@ -208,22 +300,65 @@ class DocumentReviewComponent extends React.Component<Props, State> {
 
     // tslint:disable-next-line:no-any
     private handleChangePage = (event: any, page: number) => {
-        this.setState({page});
-        this.props.getUsers({
-            limit: this.state.rowsPerPage,
-            page: page + 1,
-        });
+        this.setState({ page });
+        this.handleGetRequestData(this.state.rowsPerPage, page);
     };
 
     // tslint:disable-next-line:no-any
     private handleChangeRowsPerPage = (event: any) => {
-        this.setState({
-            rowsPerPage: event.target.value,
-        });
+        this.setState({ rowsPerPage: event.target.value });
+        this.handleGetRequestData(event.target.value, this.state.page);
+    };
+
+    private handleGetRequestData = (limit: number, page: number) => {
+        const { request } = this.state;
+        const requestParams = request ? convertToObj(request) : '';
+
         this.props.getUsers({
-            limit: event.target.value,
-            page: this.state.page + 1,
+            limit: limit,
+            page: page + 1,
+            ...requestParams,
         });
+    };
+
+    private handleSearch = (requestData: SearchBarRequestInterface[]) => {
+        this.setState({ request: requestData });
+        const params = convertToObj(requestData);
+
+        this.props.getUsers({
+            limit: this.state.rowsPerPage,
+            page: 1,
+            ...params,
+        });
+    }
+
+    private filterSelected = () => {
+        const { users } = this.props;
+        const { selectedUsers } = this.state;
+        let selectedList: string[] = [];
+
+        users && users.map((user: UserInterface) => {
+            selectedList.push(selectedUsers.find(x => x === user.uid) || '');
+        });
+
+        selectedList = selectedList.filter(i => i !== '');
+
+        const isAll = selectedList.length === this.props.users.length;
+
+        this.setState({
+            selectedUsers: selectedList,
+            selectAll: isAll,
+        });
+    }
+
+    private handleClearSearchRequest = () => {
+        this.setState({
+            request: [{
+                property: '',
+                value: '',
+            }],
+        });
+        this.props.getUsers({ limit: this.state.rowsPerPage, page: 1 });
     };
 
     private handleClick = (key: string) => () => {
@@ -239,8 +374,11 @@ class DocumentReviewComponent extends React.Component<Props, State> {
             selectedList.push(key);
         }
 
+        const isAll = selectedList.length === this.props.users.length;
+
         this.setState({
             selectedUsers: selectedList,
+            selectAll: isAll,
         });
     };
 
@@ -261,8 +399,13 @@ class DocumentReviewComponent extends React.Component<Props, State> {
 
     private approveSelected = () => {
         const { selectedUsers } = this.state;
+
         selectedUsers.map(user =>  {
             this.props.editLabel({ uid: user, value: 'verified', key: 'document', scope: 'private' });
+        });
+
+        this.setState({
+            selectedUsers: [],
         });
     };
 
@@ -271,14 +414,17 @@ class DocumentReviewComponent extends React.Component<Props, State> {
         selectedUsers.map(user => {
             this.props.deleteLabel({ uid: user, key: 'document', scope: 'private' });
         });
-    };
 
+        this.setState({
+            selectedUsers: [],
+        });
+    };
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, AppState> =
     (state: AppState): ReduxProps => ({
         users: selectPendingUsers(state),
-        total: selectUsersTotal(state),
+        total: selectPendingTotal(state),
     });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
@@ -289,4 +435,5 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         editLabel: payload => dispatch(editLabel(payload)),
     });
 
-export const DocumentReview = withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(withRouter(DocumentReviewComponent)));
+// tslint:disable-next-line:no-any
+export const DocumentReview = withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(withRouter(DocumentReviewComponent as any)));
