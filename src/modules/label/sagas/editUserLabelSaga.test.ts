@@ -33,7 +33,7 @@ describe('EditLabel saga', () => {
     });
 
     const mockEditLabel = () => {
-        mockAxios.onPut('/admin/users/labels').reply(200);
+        mockAxios.onPost('/admin/users/labels/update').reply(200);
     };
 
     const fakeCredentials = {

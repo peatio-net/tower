@@ -12,7 +12,7 @@ const requestOptions: RequestOptions = {
 
 export function* changeUserOTPSaga(action: ChangeUserOTPFetch) {
     try {
-        yield call(API.put(requestOptions), `/admin/users`, action.payload);
+        yield call(API.post(requestOptions), `/admin/users/update`, action.payload);
         yield put(getUserData({uid: action.payload.uid}));
     } catch (error) {
         yield put(alertPush({

@@ -22,6 +22,8 @@ export class UserDataHeader extends React.Component<UserDataHeaderProps> {
             'User Directory' :
             pathname.includes('/tower/pending') ?
             'Pending Documents' :
+            pathname.includes('/tower/admin-activities') ?
+            'Admin Activities' :
             'User Activities';
 
         return (

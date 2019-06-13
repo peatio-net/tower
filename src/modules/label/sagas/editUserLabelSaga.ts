@@ -13,7 +13,7 @@ const requestOptions: RequestOptions = {
 
 export function* editUserLabelSaga(action: EditUserLabelFetch) {
     try {
-        yield call(API.put(requestOptions), `/admin/users/labels`, action.payload);
+        yield call(API.post(requestOptions), `/admin/users/labels/update`, action.payload);
         yield put(getUserData({uid: action.payload.uid}));
 
         const {key, value} = action.payload;

@@ -7,6 +7,7 @@ import {
 import { minutesUntilAutoLogout } from '../../api/config';
 import {
     Activities,
+    AdminActivities,
     Dashboard,
     DocumentReview,
     Login,
@@ -127,6 +128,20 @@ class Router extends React.Component<RouterProps> {
                     exact={true}
                     path="/tower/activities"
                     component={Activities}
+                />
+                <PrivateRoute
+                    loading={userLoading}
+                    isLogged={isCurrentSession}
+                    exact={true}
+                    path="/tower/admin-activities"
+                    component={AdminActivities}
+                />
+                <PrivateRoute
+                    loading={userLoading}
+                    isLogged={isCurrentSession}
+                    exact={true}
+                    path="/tower/admin-activities/:uid"
+                    component={UserInfo}
                 />
                 <PrivateRoute
                     loading={userLoading}

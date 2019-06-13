@@ -23,6 +23,9 @@ import {
 import {metricsReducer, MetricsState} from './metrics';
 import {rootMetricsSaga} from './metrics/sagas';
 import {
+    adminActivityReducer,
+    AdminActivityState,
+    rootAdminActivitySaga,
     rootGetUserDataSaga,
     rootUserActivitySaga,
     rootUsersSaga,
@@ -59,6 +62,7 @@ export * from './withdrawInfo';
 export * from './withdrawUserHistory';
 
 export interface AppState {
+    adminActivity: AdminActivityState;
     alert: AlertState;
     auth: AuthState;
     changeUserState: ChangeUserState;
@@ -80,6 +84,7 @@ const usersDataReducer = combineReducers({
 });
 
 export const appReducer = combineReducers({
+    adminActivity: adminActivityReducer,
     alert: alertReducer,
     auth: authReducer,
     changeUserState: changeUserReducer,
@@ -95,6 +100,7 @@ export const appReducer = combineReducers({
 export function* rootSaga() {
     yield all([
         call(rootLabelSaga),
+        call(rootAdminActivitySaga),
         call(rootAuthSaga),
         call(rootChangeUserSaga),
         call(rootGetUserDataSaga),

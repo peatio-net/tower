@@ -11,19 +11,15 @@ import {
     WithStyles,
     withStyles,
 } from '@material-ui/core';
-import {
-    AttachFile,
-} from '@material-ui/icons';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import {
-    convertToOtp,
     getUserBrowser,
     getUserOS,
     localeDate,
 } from '../../helpers';
 
-interface InfoTableProps {
+interface ActivityTableProps {
     dataLength: number;
     rows: Array<{ key: string; alignRight: boolean; label: string; }>;
     // tslint:disable-next-line:no-any
@@ -111,7 +107,7 @@ interface StyleProps extends WithStyles<typeof styles> {
     theme: Theme;
 }
 
-type Props = StyleProps & InfoTableProps;
+type Props = StyleProps & ActivityTableProps;
 
 class TableComponent extends React.Component<Props> {
 
@@ -153,16 +149,13 @@ class TableComponent extends React.Component<Props> {
                                             {rows.map((row: any, index: number) => {
                                                 return (
                                                     <TableCell key={index} component="td" align={row.alignRight ? 'right' : 'left'} >
-                                                        { row.key === 'email' ? (<Link to={`${location && location.pathname}/${n.uid}`} className={classes.link}>{n.email}</Link>)
-                                                            : row.key === 'user_email' ? (<Link to={`${location && location.pathname}/${n.user && n.user.uid}`} className={classes.link}>{n.user && n.user.email}</Link>)
-                                                            : row.key === 'otp' ? (convertToOtp(n.otp) === 'true' ? '2FA' : '-')
-                                                            : row.key === 'upload' ? (<a target="_blank" href={n.upload.url} className={classes.attachment}>1 <AttachFile className={classes.greyIcon} /></a>)
-                                                            : row.key === 'created_at' || row.key === 'validated_at' || row.key === 'updated_at' ? localeDate(n[row.key], 'fullDate')
+                                                        { row.key === 'admin_email' ? (<Link to={`${location && location.pathname}/${n.admin && n.admin.uid}`} className={classes.link}>{n.admin && n.admin.email}</Link>)
+                                                            : row.key === 'created_at' ? localeDate(n[row.key], 'fullDate')
                                                             : row.key === 'browser' ? getUserBrowser(n.user_agent)
                                                             : row.key === 'os' ? getUserOS(n.user_agent)
                                                             : row.key === 'result' ? this.getColored(n.result)
-                                                            : row.key === 'user_role' ? n.user && n.user.role
-                                                            : row.key === 'doc_expire' ? localeDate(n[row.key], 'date')
+                                                            : row.key === 'admin_role' ? n.admin && n.admin.role
+                                                            : row.key === 'target' ? (<Link to={`${location && location.pathname}/${n.target && n.target.uid}`} className={classes.link}>{n.target && n.target.email}</Link>)
                                                             : n[row.key]}
                                                     </TableCell>
                                                 );})
@@ -229,4 +222,4 @@ class TableComponent extends React.Component<Props> {
     };
 }
 
-export const InfoTable = withStyles(styles, { withTheme: true })(TableComponent);
+export const AdminActivityTable = withStyles(styles, { withTheme: true })(TableComponent);
