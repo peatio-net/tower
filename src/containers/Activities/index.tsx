@@ -122,33 +122,8 @@ class ActivitiesScreen extends React.Component<Props, State> {
             checked: false,
         },
         {
-            label: 'Role',
-            value: 'role',
-            checked: false,
-        },
-        {
-            label: 'First name',
-            value: 'first_name',
-            checked: false,
-        },
-        {
-            label: 'Last name',
-            value: 'last_name',
-            checked: false,
-        },
-        {
-            label: 'Country',
-            value: 'country',
-            checked: false,
-        },
-        {
-            label: 'Level',
-            value: 'level',
-            checked: false,
-        },
-        {
-            label: 'State',
-            value: 'state',
+            label: 'Action',
+            value: 'action',
             checked: false,
         },
     ];
