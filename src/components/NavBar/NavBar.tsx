@@ -128,6 +128,10 @@ interface NavBarState {
 }
 
 class NavBar extends React.Component<Props, NavBarState> {
+    public state = {
+        key: '',
+    };
+
     public NavBarItems = [
         { key: '/tower', value: 'Dashboard' },
         { key: '/tower/users', value: 'User directory' },
@@ -139,17 +143,10 @@ class NavBar extends React.Component<Props, NavBarState> {
         { key: '/tower/withdraws', value: 'Withdrawal requests' },
     ];
 
-    constructor(props: Props) {
-        super(props);
-
-        this.state = {
-            key: '',
-        };
-    }
-
     public componentDidMount() {
+        const { location } = this.props;
         this.setState({
-            key: this.props.location && this.props.location.pathname || '',
+            key: location && location.pathname || '',
         });
     }
 

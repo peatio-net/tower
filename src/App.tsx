@@ -38,11 +38,17 @@ type Props = DispatchProps & OwnProps & ReduxProps;
 
 class AppLayout extends React.Component<Props> {
     public state = {
-        open: true,
+        open: false,
     };
 
     public componentDidMount() {
         this.props.getCurrentUser();
+
+        if (this.props.loggedIn) {
+            this.setState({
+                open: true,
+            });
+        }
     }
 
     public componentDidUpdate(prev: Props) {
