@@ -137,10 +137,10 @@ class NavBar extends React.Component<Props, NavBarState> {
         { key: '/tower/users', value: 'User directory' },
         { key: '/tower/pending', value: 'Pending Documents' },
         { key: '/tower/activities', value: 'User Activities' },
-        { key: '/tower/admin-activities', value: 'Admin Activities' },
-        { key: '/tower/orders', value: 'Orders' },
-        { key: '/tower/orderbooks', value: 'Orderbooks' },
-        { key: '/tower/withdraws', value: 'Withdrawal requests' },
+        // { key: '/tower/admin-activities', value: 'Admin Activities' },
+        // { key: '/tower/orders', value: 'Orders' },
+        // { key: '/tower/orderbooks', value: 'Orderbooks' },
+        // { key: '/tower/withdraws', value: 'Withdrawal requests' },
     ];
 
     public componentDidMount() {
