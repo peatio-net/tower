@@ -6,6 +6,7 @@ exports[`Navbar test should render 1`] = `
     Object {
       "appBar": "NavBar-appBar-2",
       "appBarShift": "NavBar-appBarShift-3",
+      "button": "NavBar-button-14",
       "content": "NavBar-content-9",
       "contentShift": "NavBar-contentShift-10",
       "drawer": "NavBar-drawer-6",
@@ -13,10 +14,10 @@ exports[`Navbar test should render 1`] = `
       "drawerPaper": "NavBar-drawerPaper-7",
       "grow": "NavBar-grow-11",
       "hide": "NavBar-hide-5",
-      "link": "NavBar-link-14",
+      "link": "NavBar-link-15",
       "listItem": "NavBar-listItem-12",
       "menuButton": "NavBar-menuButton-4",
-      "navbarHidden": "NavBar-navbarHidden-15",
+      "navbarHidden": "NavBar-navbarHidden-16",
       "root": "NavBar-root-1",
       "selected": "NavBar-selected-13",
     }

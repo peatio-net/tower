@@ -103,6 +103,9 @@ const styles = (theme: Theme) => createStyles({
     selected: {
         backgroundColor: 'rgba(48, 156, 234, 0.1) !important',
     },
+    button: {
+        color: '#309CEA',
+    },
     link: {
         textDecoration: 'none',
     },
@@ -229,7 +232,7 @@ class NavBar extends React.Component<Props, NavBarState> {
             <Link to={item.key} className={classes.link} key={item.key}>
                 <ListItem
                     className={classes.listItem}
-                    classes={{ selected: classes.selected }}
+                    classes={{ selected: classes.selected, button: classes.button }}
                     button={true}
                     key={item.key}
                     onClick={this.handleClick(item.key)}
