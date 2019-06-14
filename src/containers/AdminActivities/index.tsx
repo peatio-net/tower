@@ -134,7 +134,7 @@ class AdminActivitiesScreen extends React.Component<Props, State> {
         },
         {
             label: 'Target UID',
-            value: 'target_uuid',
+            value: 'target_uid',
             checked: false,
         },
     ];
