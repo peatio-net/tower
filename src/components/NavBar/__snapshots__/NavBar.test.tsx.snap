@@ -24,6 +24,7 @@ exports[`Navbar test should render 1`] = `
   }
   handleDrawerClose={[Function]}
   handleDrawerOpen={[Function]}
+  isSuperAdmin={false}
   location={
     Object {
       "pathname": "",

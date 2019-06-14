@@ -12,6 +12,7 @@ const defaultProps = {
     location: {
         pathname: '',
     },
+    isSuperAdmin: false,
 };
 
 describe('Layout test', () => {

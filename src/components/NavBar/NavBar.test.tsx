@@ -11,6 +11,7 @@ const defaultProps = {
     location: {
         pathname: '',
     },
+    isSuperAdmin: false,
 };
 
 describe('Navbar test', () => {

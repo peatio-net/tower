@@ -47,6 +47,25 @@ const PrivateRoute: React.SFC<any> = ({ component: CustomComponent, loading, isL
     );
 };
 
+// tslint:disable-next-line
+const SuperAdminRoute: React.SFC<any> = ({ component: CustomComponent, loading, isLogged, user, ...rest }) => {
+    if (loading) {
+        return renderLoading();
+    }
+
+    const renderCustomerComponent = props => <CustomComponent {...props} />;
+
+    if (isLogged && user && user.role === 'superadmin') {
+        return <Route {...rest} render={renderCustomerComponent} />;
+    }
+
+    return (
+        <Route {...rest}>
+            <Redirect to={'/tower/login'} />
+        </Route>
+    );
+};
+
 //tslint:disable-next-line no-any
 const PublicRoute: React.FunctionComponent<any> = ({ component: CustomComponent, loading, isLogged, ...rest }) => {
     if (loading) {
@@ -99,7 +118,7 @@ class Router extends React.Component<RouterProps> {
     }
 
     public render() {
-        const { isCurrentSession, userLoading } = this.props;
+        const { isCurrentSession, userLoading, user } = this.props;
 
         return (
             <Switch>
@@ -129,19 +148,21 @@ class Router extends React.Component<RouterProps> {
                     path="/tower/activities"
                     component={Activities}
                 />
-                <PrivateRoute
+                <SuperAdminRoute
                     loading={userLoading}
                     isLogged={isCurrentSession}
                     exact={true}
                     path="/tower/admin-activities"
                     component={AdminActivities}
+                    user={user}
                 />
-                <PrivateRoute
+                <SuperAdminRoute
                     loading={userLoading}
                     isLogged={isCurrentSession}
                     exact={true}
                     path="/tower/admin-activities/:uid"
                     component={UserInfo}
+                    user={user}
                 />
                 <PrivateRoute
                     loading={userLoading}

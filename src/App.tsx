@@ -69,6 +69,7 @@ class AppLayout extends React.Component<Props> {
                         handleDrawerOpen={this.handleDrawerOpen}
                         handleDrawerClose={this.handleDrawerClose}
                         open={this.state.open}
+                        isSuperAdmin={user && user.role === 'superadmin' || false}
                     >
                         <Alerts />
                         <AppRouter

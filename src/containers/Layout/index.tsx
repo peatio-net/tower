@@ -53,6 +53,7 @@ interface OwnProps extends WithStyles<typeof styles> {
     location?: {
         pathname: string;
     };
+    isSuperAdmin: boolean;
 }
 
 type Props = OwnProps;
@@ -65,6 +66,7 @@ class LayoutComponent extends React.Component<Props, object> {
             loggedIn,
             handleDrawerOpen,
             handleDrawerClose,
+            isSuperAdmin,
         } = this.props;
 
         return (
@@ -77,6 +79,7 @@ class LayoutComponent extends React.Component<Props, object> {
                     handleDrawerOpen={handleDrawerOpen}
                     handleDrawerClose={handleDrawerClose}
                     location={location}
+                    isSuperAdmin={isSuperAdmin}
                 />
                 <main className={classNames(classes.content, {[classes.contentShift]: this.props.open})}>
                     <div className={classes.toolbar} />

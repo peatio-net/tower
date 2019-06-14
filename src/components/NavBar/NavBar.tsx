@@ -124,6 +124,7 @@ interface Props extends WithStyles<typeof styles> {
     location?: {
         pathname: string;
     };
+    isSuperAdmin: boolean;
 }
 
 interface NavBarState {
@@ -140,10 +141,13 @@ class NavBar extends React.Component<Props, NavBarState> {
         { key: '/tower/users', value: 'User directory' },
         { key: '/tower/pending', value: 'Pending Documents' },
         { key: '/tower/activities', value: 'User Activities' },
-        { key: '/tower/admin-activities', value: 'Admin Activities' },
         // { key: '/tower/orders', value: 'Orders' },
         // { key: '/tower/orderbooks', value: 'Orderbooks' },
         // { key: '/tower/withdraws', value: 'Withdrawal requests' },
+    ];
+
+    public SuperAdminItems = [
+        { key: '/tower/admin-activities', value: 'Admin Activities' },
     ];
 
     public componentDidMount() {
@@ -154,7 +158,7 @@ class NavBar extends React.Component<Props, NavBarState> {
     }
 
     public render() {
-        const { classes, loggedIn } = this.props;
+        const { classes, loggedIn, isSuperAdmin } = this.props;
 
         return (
             <div>
@@ -198,6 +202,7 @@ class NavBar extends React.Component<Props, NavBarState> {
                     <Divider />
                     <List>
                         {this.renderList(this.NavBarItems.slice(1, 5))}
+                        {isSuperAdmin && this.renderList(this.SuperAdminItems)}
                     </List>
                     <Divider />
                     <List>
