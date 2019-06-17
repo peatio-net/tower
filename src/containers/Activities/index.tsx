@@ -103,6 +103,7 @@ class ActivitiesScreen extends React.Component<Props, State> {
         { key: 'created_at', alignRight: false, label: 'Date' },
         { key: 'user_email', alignRight: false, label: 'Email' },
         { key: 'user_role', alignRight: false, label: 'Role' },
+        { key: 'topic', alignRight: true, label: 'Topic' },
         { key: 'action', alignRight: false, label: 'Action' },
         { key: 'result', alignRight: false, label: 'Result' },
         { key: 'user_ip', alignRight: true, label: 'IP' },
@@ -124,6 +125,11 @@ class ActivitiesScreen extends React.Component<Props, State> {
         {
             label: 'Action',
             value: 'action',
+            checked: false,
+        },
+        {
+            label: 'Topic',
+            value: 'topic',
             checked: false,
         },
     ];

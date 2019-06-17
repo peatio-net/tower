@@ -108,6 +108,7 @@ class AdminActivitiesScreen extends React.Component<Props, State> {
         { key: 'created_at', alignRight: false, label: 'Date' },
         { key: 'admin_email', alignRight: false, label: 'Email' },
         { key: 'admin_role', alignRight: false, label: 'Role' },
+        { key: 'topic', alignRight: false, label: 'Topic' },
         { key: 'action', alignRight: false, label: 'Action' },
         { key: 'result', alignRight: false, label: 'Result' },
         { key: 'target', alignRight: true, label: 'Target' },
@@ -130,6 +131,11 @@ class AdminActivitiesScreen extends React.Component<Props, State> {
         {
             label: 'Action',
             value: 'action',
+            checked: false,
+        },
+        {
+            label: 'Topic',
+            value: 'topic',
             checked: false,
         },
         {
