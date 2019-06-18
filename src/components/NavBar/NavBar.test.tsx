@@ -8,9 +8,7 @@ const defaultProps = {
     handleDrawerOpen: jest.fn(),
     handleDrawerClose: jest.fn(),
     loggedIn: false,
-    location: {
-        pathname: '',
-    },
+    pathname: '',
     isSuperAdmin: false,
 };
 

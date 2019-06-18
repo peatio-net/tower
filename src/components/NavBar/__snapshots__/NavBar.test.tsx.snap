@@ -25,14 +25,10 @@ exports[`Navbar test should render 1`] = `
   handleDrawerClose={[Function]}
   handleDrawerOpen={[Function]}
   isSuperAdmin={false}
-  location={
-    Object {
-      "pathname": "",
-    }
-  }
   loggedIn={false}
   logout={[Function]}
   open={false}
+  pathname=""
   theme={
     Object {
       "breakpoints": Object {

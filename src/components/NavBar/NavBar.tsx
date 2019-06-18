@@ -121,9 +121,7 @@ interface Props extends WithStyles<typeof styles> {
     handleDrawerOpen: () => void;
     handleDrawerClose: () => void;
     loggedIn: boolean;
-    location?: {
-        pathname: string;
-    };
+    pathname: string;
     isSuperAdmin: boolean;
 }
 
@@ -151,10 +149,18 @@ class NavBar extends React.Component<Props, NavBarState> {
     ];
 
     public componentDidMount() {
-        const { location } = this.props;
+        const { pathname } = this.props;
         this.setState({
-            key: location && location.pathname || '',
+            key: pathname || '/tower',
         });
+    }
+
+    public componentWillReceiveProps(next: Props) {
+        if (next.pathname !== this.props.pathname) {
+            this.setState({
+                key: next.pathname,
+            });
+        }
     }
 
     public render() {

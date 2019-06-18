@@ -78,7 +78,7 @@ class LayoutComponent extends React.Component<Props, object> {
                     open={this.props.open}
                     handleDrawerOpen={handleDrawerOpen}
                     handleDrawerClose={handleDrawerClose}
-                    location={location}
+                    pathname={location && location.pathname}
                     isSuperAdmin={isSuperAdmin}
                 />
                 <main className={classNames(classes.content, {[classes.contentShift]: this.props.open})}>
