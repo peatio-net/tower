@@ -82,6 +82,7 @@ class SearchBarWrapper extends React.Component<SearchBarWrapperProps, SearchBarW
                     endDate={selectedEndDate}
                     handleStartDateChange={this.handleStartDateChange}
                     handleEndDateChange={this.handleEndDateChange}
+                    handleEnterPress={this.handleEnterPress}
                 />
                 {this.getSearchBars()}
             </React.Fragment>
@@ -105,6 +106,7 @@ class SearchBarWrapper extends React.Component<SearchBarWrapperProps, SearchBarW
                     searchValue={item.selectedValueData}
                     handleChangeSearchValue={this.handleChangeInputValue}
                     handleDeleteItem={this.handleDeleteItem}
+                    handleEnterPress={this.handleEnterPress}
                 />
             );
         });
@@ -215,6 +217,13 @@ class SearchBarWrapper extends React.Component<SearchBarWrapperProps, SearchBarW
                     elems: newElems,
                 });
             }
+        }
+    };
+
+    private handleEnterPress = (event: React.KeyboardEvent<HTMLDivElement>) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            this.handleSendRequest();
         }
     };
 

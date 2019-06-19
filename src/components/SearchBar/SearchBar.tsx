@@ -121,6 +121,7 @@ interface OwnProps {
     endDate?: Moment | null;
     handleStartDateChange?: (date: Moment) => void;
     handleEndDateChange?: (date: Moment) => void;
+    handleEnterPress: (event: React.KeyboardEvent<HTMLDivElement>)  => void;
 }
 
 type Props = OwnProps & StyleProps;
@@ -170,6 +171,7 @@ class SearchBarComponent extends React.Component<Props> {
                                             placeholder={`Enter ${activeItem.label}`}
                                             value={searchValue}
                                             onChange={this.handleChangeSearchValue}
+                                            onKeyPress={this.handleEnterPress}
                                         />
                                     </div>
                                     <div className={classes.addMinusIconBlock}>
@@ -197,6 +199,7 @@ class SearchBarComponent extends React.Component<Props> {
                                                         placeholder="Start date"
                                                         className={classes.datePickerStart}
                                                         format="DD-MM-YYYY"
+                                                        onKeyPress={this.handleEnterPress}
                                                     />
                                                 </MuiPickersUtilsProvider>
 
@@ -207,6 +210,7 @@ class SearchBarComponent extends React.Component<Props> {
                                                         placeholder="End date"
                                                         minDate={startDate || undefined}
                                                         format="DD-MM-YYYY"
+                                                        onKeyPress={this.handleEnterPress}
                                                     />
                                                 </MuiPickersUtilsProvider>
                                             </div>
@@ -247,6 +251,10 @@ class SearchBarComponent extends React.Component<Props> {
         const { index } = this.props;
 
         this.props.handleChangeSearchValue(index, e.target.value);
+    };
+
+    private handleEnterPress = (event: React.KeyboardEvent<HTMLDivElement>) => {
+        this.props.handleEnterPress(event);
     };
 
     private handleStartDateChange = (date: Moment) => {

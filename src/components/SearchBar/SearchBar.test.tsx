@@ -13,6 +13,7 @@ const defaultProps = {
     handleChangeSelect: jest.fn(),
     searchValue: '',
     handleChangeSearchValue: jest.fn(),
+    handleEnterPress: jest.fn(),
 };
 
 describe('SearchBar test', () => {

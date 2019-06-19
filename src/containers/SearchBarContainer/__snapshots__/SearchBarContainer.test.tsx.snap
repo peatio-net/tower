@@ -16,6 +16,7 @@ exports[`SearchBarContainer test should render 1`] = `
     handleChangeSelect={[Function]}
     handleClear={[Function]}
     handleEndDateChange={[Function]}
+    handleEnterPress={[Function]}
     handleSendRequest={[Function]}
     handleStartDateChange={[Function]}
     index={0}
