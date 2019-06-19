@@ -72,6 +72,7 @@ class EditLabelModal extends React.Component<Props> {
             <Modal
                 open={this.props.open}
                 onClose={this.handleClose}
+                onKeyPress={this.handleEnterPress(name, value, scope)}
             >
                 <Grid container={true} direction={'column'} className={classes.paper}>
                     <Grid item={true}>
@@ -163,6 +164,13 @@ class EditLabelModal extends React.Component<Props> {
 
     private handleClose = () => {
         this.props.modalClose();
+    };
+
+    private handleEnterPress = (key: string, value: string, scope: string) => (event: React.KeyboardEvent<HTMLDivElement>) => {
+        if (event.key === 'Enter' && key.length && value.length) {
+            event.preventDefault();
+            this.editLabel(key, value, scope);
+        }
     };
 
     private editLabel = (key: string, value: string, scope: string) => {

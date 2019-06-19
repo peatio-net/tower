@@ -28,6 +28,7 @@ exports[`UserLabel component should render 1`] = `
       item={true}
     >
       <WithStyles(Button)
+        disableFocusRipple={true}
         onClick={[Function]}
       >
         <pure(AddCircleOutlineIcon)

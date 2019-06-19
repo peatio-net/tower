@@ -46,7 +46,7 @@ export class UserLabel extends React.Component<UserLabelProps> {
                         Labels
                     </Typography>
                     <Grid item={true}>
-                        <Button onClick={e => this.openAddLabelModal()}>
+                        <Button onClick={e => this.openAddLabelModal()} disableFocusRipple={true}>
                             <AddCircleOutline style={{ color: '#979797', opacity: 0.6 }} />
                         </Button>
                     </Grid>
