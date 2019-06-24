@@ -1,4 +1,5 @@
 import {
+    Button,
     createStyles,
     Table,
     TableBody,
@@ -11,8 +12,10 @@ import {
     WithStyles,
     withStyles,
 } from '@material-ui/core';
+import { InfoOutlined } from '@material-ui/icons';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import { InfoPopper } from '../';
 import {
     getUserBrowser,
     getUserOS,
@@ -53,14 +56,6 @@ const styles = (theme: Theme) => (createStyles({
         textDecoration: 'none',
         letterSpacing: '0.4px',
     },
-    attachment: {
-        color: 'rgba(0, 0, 0, 0.87)',
-        cursor: 'pointer',
-        textDecoration: 'none',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-    },
     label: {
         letterSpacing: '0.15px',
         padding: '16px',
@@ -94,12 +89,18 @@ const styles = (theme: Theme) => (createStyles({
     banned: {
         color: '#E23328',
     },
-    greyIcon: {
-        cursor: 'pointer',
+    closed: {
         color: '#979797',
+    },
+    open: {
+        color: '#309CEA',
     },
     cell: {
         padding: '4px 0px',
+    },
+    info: {
+        cursor: 'pointer',
+        textAlign: 'center',
     },
 }));
 
@@ -107,9 +108,21 @@ interface StyleProps extends WithStyles<typeof styles> {
     theme: Theme;
 }
 
+interface State {
+    anchorEl: HTMLElement | null;
+    selectIndex: number;
+}
+
 type Props = StyleProps & ActivityTableProps;
 
-class TableComponent extends React.Component<Props> {
+class TableComponent extends React.Component<Props, State> {
+    constructor(props) {
+        super(props);
+        this.state = {
+          anchorEl: null,
+          selectIndex: 0,
+        };
+      }
 
     public render() {
         const {
@@ -119,8 +132,8 @@ class TableComponent extends React.Component<Props> {
         } = this.props;
         return (
             <div className={classes.root}>
-                    {label && (<Typography variant="h6" gutterBottom={true} className={classes.label}>{label}</Typography>)}
-                    {data.length ? this.renderContent() : <Typography variant="caption" align="center" className={classes.emptyTable}>There is no data to show</Typography>}
+                {label && (<Typography variant="h6" gutterBottom={true} className={classes.label}>{label}</Typography>)}
+                {data.length ? this.renderContent() : <Typography variant="caption" align="center" className={classes.emptyTable}>There is no data to show</Typography>}
             </div>
         );
     }
@@ -135,6 +148,7 @@ class TableComponent extends React.Component<Props> {
             rows,
             location,
         } = this.props;
+        const { anchorEl, selectIndex } = this.state;
 
         return (
             <div className={classes.root}>
@@ -160,6 +174,11 @@ class TableComponent extends React.Component<Props> {
                                                     </TableCell>
                                                 );})
                                             }
+                                            <TableCell component="td" className={classes.info}>
+                                                <Button variant="text" onClick={this.handleClick(i)}>
+                                                    <InfoOutlined className={open ? classes.open : classes.closed}/>
+                                                </Button>
+                                            </TableCell>
                                         </TableRow>
                                     );
                                 }) // tslint:enable:no-any
@@ -184,6 +203,12 @@ class TableComponent extends React.Component<Props> {
                         classes={{ selectIcon: classes.selectIcon }}
                     />
                 ) : null}
+                <InfoPopper
+                    anchorEl={anchorEl}
+                    open={Boolean(anchorEl)}
+                    handleClose={this.handleClose}
+                    data={data[selectIndex].data}
+                />
             </div>
         );
     }
@@ -195,6 +220,14 @@ class TableComponent extends React.Component<Props> {
 
     private handleChangeRowsPerPage = event => {
         this.props.handleChangeRowsPerPage && this.props.handleChangeRowsPerPage(event.target.value);
+    };
+
+    private handleClick = i => (event: React.MouseEvent<HTMLElement>) => {
+        this.setState({ selectIndex: i, anchorEl: event.currentTarget });
+    };
+
+    private handleClose = () => {
+        this.setState({ anchorEl: null });
     };
 
     private getHeaderForTable = () => {
@@ -209,6 +242,7 @@ class TableComponent extends React.Component<Props> {
                             </Typography>
                         </TableCell>
                     ), this)}
+                    <TableCell align="center"/>
                 </TableRow>
             </TableHead>
         );

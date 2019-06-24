@@ -208,7 +208,7 @@ class AdminActivitiesScreen extends React.Component<Props, State> {
         this.setState({ data: data });
         const obj = convertToObj(data);
         this.props.getAdminActivity({ page: 1, limit: tablePageLimit(), ...obj });
-    }
+    };
 
     private handleClearSearchRequest = () => {
         this.setState({
@@ -219,7 +219,7 @@ class AdminActivitiesScreen extends React.Component<Props, State> {
             currentPage: 0,
         });
         this.props.getAdminActivity({ page: this.state.currentPage + 1, limit: tablePageLimit() });
-    }
+    };
 
     private handleChangePage = (page: number) => {
         this.setState({ currentPage: page });
@@ -236,7 +236,7 @@ class AdminActivitiesScreen extends React.Component<Props, State> {
 
     private handleGetUserActivity = (limit: number, page: number) => {
         this.props.getAdminActivity({ limit, page: page + 1 });
-    }
+    };
 }
 
 const mapStateToProps = (state: AppState): ReduxProps => ({

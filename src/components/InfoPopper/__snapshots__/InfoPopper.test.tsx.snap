@@ -1,33 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`InfoTable test should render 1`] = `
-<TableComponent
+exports[`InfoPopper test should render 1`] = `
+<PopperComponent
+  anchorEl={null}
   classes={
     Object {
-      "active": "TableComponent-active-10",
-      "banned": "TableComponent-banned-11",
-      "cell": "TableComponent-cell-14",
-      "closed": "TableComponent-closed-12",
-      "content": "TableComponent-content-7",
-      "emptyTable": "TableComponent-emptyTable-8",
-      "headers": "TableComponent-headers-6",
-      "info": "TableComponent-info-15",
-      "label": "TableComponent-label-5",
-      "link": "TableComponent-link-4",
-      "open": "TableComponent-open-13",
-      "root": "TableComponent-root-1",
-      "selectIcon": "TableComponent-selectIcon-9",
-      "table": "TableComponent-table-2",
-      "tableWrapper": "TableComponent-tableWrapper-3",
+      "info": "PopperComponent-info-2",
+      "popper": "PopperComponent-popper-1",
+      "title": "PopperComponent-title-3",
     }
   }
   data={Array []}
-  dataLength={0}
-  handleChangePage={[Function]}
-  handleChangeRowsPerPage={[Function]}
-  page={1}
-  rows={Array []}
-  rowsPerPage={1}
+  handleClose={[Function]}
+  open={false}
   theme={
     Object {
       "breakpoints": Object {

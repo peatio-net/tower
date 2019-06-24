@@ -23,10 +23,15 @@ interface UserInterface {
     state: string;
 }
 
+export interface DataInterface {
+    key: string;
+    value: string;
+}
+
 export interface AdminActivityDataInterface {
     action: string;
     created_at: string;
-    data: null;
+    data: DataInterface[];
     result: string;
     topic: string;
     admin: UserInterface;

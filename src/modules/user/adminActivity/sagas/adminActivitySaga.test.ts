@@ -28,7 +28,35 @@ describe('Admin activity', () => {
             {
                 action: 'login',
                 created_at: '2019-01-22T15:08:36.000Z',
-                data: null,
+                data: '{"path":"api/v2/barong/resource/users/me"}',
+                result: 'succeed',
+                topic: 'session',
+                admin: {
+                    email: 'admin@barong.io',
+                    level: 3,
+                    otp: false,
+                    state: 'active',
+                    uid: 'ID873B710D88',
+                    role: 'admin',
+                },
+                target: {
+                    email: 'admin@barong.io',
+                    level: 3,
+                    otp: false,
+                    state: 'active',
+                    uid: 'ID873B710D88',
+                    role: 'admin',
+                },
+                user_ip: '195.214.197.210',
+                user_agent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36',
+            },
+        ];
+
+        const parsedPayload = [
+            {
+                action: 'login',
+                created_at: '2019-01-22T15:08:36.000Z',
+                data: [{ key: 'path', value: 'api/v2/barong/resource/users/me' }],
                 result: 'succeed',
                 topic: 'session',
                 admin: {
@@ -54,7 +82,7 @@ describe('Admin activity', () => {
 
         const fakeHeaders = { total: 1 };
 
-        const fakeSuccessPayloadFirstPage = { list: payload, page: 1, total: fakeHeaders.total };
+        const fakeSuccessPayloadFirstPage = { list: parsedPayload, page: 1, total: fakeHeaders.total };
         const fakeFetchPayloadFirstPage = { page: 1, limit: 2 };
 
         const mockAdminActivityFetch = () => {

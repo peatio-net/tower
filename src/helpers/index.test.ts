@@ -1,8 +1,10 @@
 import {
     buildQueryString,
+    capitalize,
     convertToOtp,
     convertToUTCTime,
     findPhone,
+    jsonToArray,
 } from './';
 import {metricsToChartData} from './metricsToChartData';
 
@@ -89,5 +91,21 @@ describe('Helpers', () => {
         expect(buildQueryString({ page: 2, limit: 5, uid: 'ID873B710D88' })).toBe('page=2&limit=5&uid=ID873B710D88');
         expect(buildQueryString({ page: 2, limit: 5, uid: 'ID873B710D88' })).toBe('page=2&limit=5&uid=ID873B710D88');
         expect(buildQueryString({ page: 1, limit: 50, uid: 'ID873B710D88', role: 'admin' })).toBe('page=1&limit=50&uid=ID873B710D88&role=admin');
+    });
+
+    it('capitalize', () => {
+        expect(capitalize('tower')).toEqual('Tower');
+        expect(capitalize('')).toEqual('');
+        expect(capitalize(' ')).toEqual(' ');
+    });
+
+    it('jsonToArray', () => {
+        expect(jsonToArray('{"path":"api/v2/barong/resource/users/me"}')).toEqual([{ key: 'path', value: 'api/v2/barong/resource/users/me' }]);
+        expect(jsonToArray('{"page":"1","limit":"50","path":"api/v2/barong/admin/activities/admin"}')).toEqual([
+            { key: 'page', value: '1' },
+            { key: 'limit', value: '50' },
+            { key: 'path', value: 'api/v2/barong/admin/activities/admin' },
+        ]);
+        expect(jsonToArray('')).toEqual([]);
     });
 });
