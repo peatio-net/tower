@@ -25,28 +25,6 @@ describe('Users actions', () => {
         expect(actions.getUsersData(payload)).toEqual(expectedAction);
     });
 
-    it('should check getCurrentUser action creator', () => {
-        const expectedAction = { type: 'GET_CURRENT_USER_FETCH' };
-        expect(actions.getCurrentUser()).toEqual(expectedAction);
-    });
-
-    it('should check getCurrentUserData action creator', () => {
-        const payload = {
-            created_at: '',
-            email: '',
-            id: 0,
-            level: 0,
-            otp: false,
-            role: '',
-            state: '',
-            uid: '',
-            updated_at: '',
-        };
-        const expectedAction = { type: 'GET_CURRENT_USER_DATA', payload };
-        expect(actions.getCurrentUserData(payload)).toEqual(expectedAction);
-    });
-
-
     it('should check getDataByFilter action creator', () => {
         const payload = {
             field: '',

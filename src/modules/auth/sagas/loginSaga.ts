@@ -1,6 +1,5 @@
 import { call, put } from 'redux-saga/effects';
 import {
-    loginData,
     LoginFetch,
     logout,
     signInRequire2FA,
@@ -16,7 +15,6 @@ export function* loginSaga(action: LoginFetch) {
     try {
         const user = yield call(API.post(requestOptions), '/identity/sessions', action.payload);
         if (['admin', 'superadmin', 'accountant', 'compliance', 'support'].includes(user.data.role)) {
-            yield put(loginData(user.data));
             yield put(getCurrentUserData(user.data));
         } else {
             yield put(logout());

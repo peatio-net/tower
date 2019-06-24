@@ -45,34 +45,6 @@ describe('Users reducer', () => {
         expect(usersReducer(initialUsersState, actions.getDataByFilter(payload))).toEqual(expectedState);
     });
 
-    it('should handle GET_CURRENT_USER_FETCH', () => {
-        const expectedState = {
-            ...initialUsersState,
-            loadingCurrentUser: true,
-        };
-        expect(usersReducer(initialUsersState, actions.getCurrentUser())).toEqual(expectedState);
-    });
-
-    it('should handle GET_CURRENT_USER_DATA', () => {
-        const fakeUser = {
-            created_at: '',
-            email: '',
-            id: 0,
-            level: 0,
-            otp: false,
-            role: '',
-            state: '',
-            uid: '',
-            updated_at: '',
-        };
-        const expectedState = {
-            ...initialUsersState,
-            loadingCurrentUser: false,
-            currentUser: fakeUser,
-        };
-        expect(usersReducer(initialUsersState, actions.getCurrentUserData(fakeUser))).toEqual(expectedState);
-    });
-
     it('should handle GET_USERS_BY_LABELS_FETCH', () => {
         const expectedState = {
             ...initialUsersState,

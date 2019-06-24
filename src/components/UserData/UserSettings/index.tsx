@@ -13,7 +13,7 @@ import {
     withStyles,
 } from '@material-ui/core';
 import * as React from 'react';
-import {UserDataInterface} from '../../../modules/auth';
+import { CurrentUserInterface } from '../../../modules';
 
 const styles = (theme: Theme) => createStyles({
     paper: {
@@ -51,7 +51,7 @@ export interface UserSettingsProps {
     handleChangeUserState: (e: any) => void;
     handleChangeRole: (e: any) => void;
     handleChangeUserOTP: (e: any) => void;
-    currentUser: UserDataInterface;
+    currentUser: CurrentUserInterface;
 }
 // tslint:enable:no-any
 

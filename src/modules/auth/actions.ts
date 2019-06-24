@@ -1,19 +1,8 @@
 import {
-    LOGIN_DATA,
     LOGIN_FETCH,
-    LOGOUT_DATA,
     LOGOUT_FETCH,
     SIGN_IN_REQUIRE_2FA,
 } from '../constants';
-
-interface UserDataInterface {
-    email: string;
-    level: number;
-    otp: boolean;
-    role: string;
-    state: string;
-    uid: string;
-}
 
 export interface LoginFetch {
     type: typeof LOGIN_FETCH;
@@ -22,11 +11,6 @@ export interface LoginFetch {
         password: string,
         otp_code?: string,
     };
-}
-
-export interface LoginData {
-    type: typeof LOGIN_DATA;
-    payload: UserDataInterface;
 }
 
 export interface SignInRequire2FA {
@@ -40,23 +24,12 @@ export interface LogoutFetch {
     type: typeof LOGOUT_FETCH;
 }
 
-export interface LogoutData {
-    type: typeof LOGOUT_DATA;
-}
-
 export type AuthAction = LoginFetch
-    | LoginData
     | SignInRequire2FA
-    | LogoutFetch
-    | LogoutData;
+    | LogoutFetch;
 
 export const login = (payload: LoginFetch['payload']): LoginFetch => ({
     type: LOGIN_FETCH,
-    payload,
-});
-
-export const loginData = (payload: LoginData['payload']): LoginData => ({
-    type: LOGIN_DATA,
     payload,
 });
 
@@ -67,8 +40,4 @@ export const signInRequire2FA = (payload: SignInRequire2FA['payload']): SignInRe
 
 export const logout = (): LogoutFetch => ({
     type: LOGOUT_FETCH,
-});
-
-export const logoutData = (): LogoutData => ({
-    type: LOGOUT_DATA,
 });

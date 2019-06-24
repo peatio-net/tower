@@ -7,7 +7,7 @@ import {
     withStyles,
 } from '@material-ui/core';
 import * as React from 'react';
-import {UserDataInterface} from '../../modules/auth';
+import { CurrentUserInterface } from '../../modules';
 import { UserActivities } from './UserActivities';
 import { UserDataHeader } from './UserDataHeader';
 import { UserDocument } from './UserDocument';
@@ -58,7 +58,7 @@ export interface UserDataProps {
     // tslint:disable-next-line:no-any
     goBack: (event: any) => void;
     pathname: string;
-    currentUser: UserDataInterface;
+    currentUser: CurrentUserInterface;
     alertPush: ({type, message}) => void;
 }
 

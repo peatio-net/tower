@@ -20,18 +20,18 @@ import {
     changeUserOTP,
     changeUserRole,
     changeUserState,
+    CurrentUserInterface,
     deleteLabel,
     editLabel,
     getUserActivity,
     getUserData,
+    selectCurrentUser,
     selectTotalNumber,
-    selectUser,
     selectUserActivity,
     selectUserActivityCurrentPage,
     selectUserActivityLoading,
     selectUserData,
     UserActivityDataInterface,
-    UserDataInterface,
 } from '../../modules';
 
 interface ReduxProps {
@@ -41,7 +41,7 @@ interface ReduxProps {
     total: number;
     page: number;
     userActivity: UserActivityDataInterface[];
-    currentUser: UserDataInterface;
+    currentUser: CurrentUserInterface;
 }
 
 interface DispatchProps {
@@ -327,7 +327,7 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, AppState> =
         loading: selectUserActivityLoading(state),
         total: selectTotalNumber(state),
         page: selectUserActivityCurrentPage(state),
-        currentUser: selectUser(state),
+        currentUser: selectCurrentUser(state),
     });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =

@@ -1,20 +1,21 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga } from '../../';
+import {
+    alertData,
+    alertDelete,
+    alertPush,
+    currentUserReset,
+    rootSaga,
+} from '../../';
 import {
     mockNetworkError,
     setupMockAxios,
     setupMockStore,
 } from '../../../helpers';
 import {
-    alertData,
-    alertDelete,
-    alertPush,
-} from '../../alert';
-import {
     logout,
-    logoutData,
+    signInRequire2FA,
 } from '../actions';
 
 describe('Login saga', () => {
@@ -39,7 +40,8 @@ describe('Login saga', () => {
 
     const expectedActionsFetch = [
         logout(),
-        logoutData(),
+        currentUserReset(),
+        signInRequire2FA({ require2fa: false }),
     ];
 
     const expectedActionsNetworkError = [

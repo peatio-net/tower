@@ -25,7 +25,10 @@ import {rootMetricsSaga} from './metrics/sagas';
 import {
     adminActivityReducer,
     AdminActivityState,
+    currentUserReducer,
+    CurrentUserState,
     rootAdminActivitySaga,
+    rootCurrentUsersSaga,
     rootGetUserDataSaga,
     rootUserActivitySaga,
     rootUsersSaga,
@@ -71,6 +74,7 @@ export interface AppState {
     usersData: {
         selectedUser: UserDataState;
         users: UsersState;
+        currentUser: CurrentUserState,
     };
     metrics: MetricsState;
     withdrawList: WithdrawsListState;
@@ -81,6 +85,7 @@ export interface AppState {
 const usersDataReducer = combineReducers({
     selectedUser: userDataReducer,
     users: usersReducer,
+    currentUser: currentUserReducer,
 });
 
 export const appReducer = combineReducers({
@@ -111,5 +116,6 @@ export function* rootSaga() {
         call(rootGetWithdrawListSaga),
         call(rootGetWithdrawInfoSaga),
         call(rootGetWithdrawUserHistorySaga),
+        call(rootCurrentUsersSaga),
     ]);
 }

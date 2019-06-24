@@ -6,11 +6,6 @@ describe('Auth actions', () => {
         expect(actions.logout()).toEqual(expectedAction);
     });
 
-    it('should check logoutData action creator', () => {
-        const expectedAction = { type: 'LOGOUT_DATA' };
-        expect(actions.logoutData()).toEqual(expectedAction);
-    });
-
     it('should check login action creator', () => {
         const payload = {
             email: 'john.barong@gmail.com',
@@ -21,15 +16,8 @@ describe('Auth actions', () => {
     });
 
     it('should check signInRequire2FA action creator', () => {
-        const payload = {
-            email: 'admin@barong.io',
-            uid: 'ID26C901376F',
-            role: 'admin',
-            level: 3,
-            otp: false,
-            state: 'active',
-        };
-        const expectedAction = { type: 'LOGIN_DATA', payload };
-        expect(actions.loginData(payload)).toEqual(expectedAction);
+        const payload = { require2fa: true };
+        const expectedAction = { type: 'SIGN_IN_REQUIRE_2FA', payload };
+        expect(actions.signInRequire2FA(payload)).toEqual(expectedAction);
     });
 });

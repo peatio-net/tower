@@ -12,10 +12,7 @@ import {
     alertDelete,
     alertPush,
 } from '../../alert';
-import {
-    login,
-    loginData,
-} from '../actions';
+import { login } from '../actions';
 
 describe('Login saga', () => {
     let store: MockStoreEnhanced;
@@ -53,7 +50,6 @@ describe('Login saga', () => {
 
     const expectedActionsFetch = [
         login(fakeCredentials),
-        loginData(fakeUser),
     ];
 
     const expectedActionsNetworkError = [

@@ -15,7 +15,6 @@ import {
 import {
     getCurrentUser,
     getCurrentUserData,
-    getCurrentUserError,
 } from '../actions';
 
 describe('GetCurrentUser saga', () => {
@@ -57,7 +56,6 @@ describe('GetCurrentUser saga', () => {
 
     const expectedActionsNetworkError = [
         getCurrentUser(),
-        getCurrentUserError(),
         alertPush({
             code: 500,
             message: ['Server error'],

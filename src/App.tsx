@@ -13,8 +13,8 @@ import {
     getCurrentUser,
     logout,
     selectCurrentUser,
+    selectCurrentUserLoggedIn,
     selectLoadingCurrentUser,
-    selectUserLoggedIn,
     UserInterface,
 } from './modules';
 import { AppRouter } from './router';
@@ -101,7 +101,7 @@ class AppLayout extends React.Component<Props> {
 const mapStateToProps: MapStateToProps<ReduxProps, {}, AppState> = (state: AppState): ReduxProps => ({
     user: selectCurrentUser(state),
     isUserLoading: selectLoadingCurrentUser(state),
-    loggedIn: selectUserLoggedIn(state),
+    loggedIn: selectCurrentUserLoggedIn(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
