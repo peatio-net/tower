@@ -33,7 +33,7 @@ describe('ChangeUserRole saga', () => {
     });
 
     const mockChangeUserRole = () => {
-        mockAxios.onPost('/admin/users/update').reply(200);
+        mockAxios.onPost('/admin/users/role').reply(200);
     };
 
     const fakeCredentials = {

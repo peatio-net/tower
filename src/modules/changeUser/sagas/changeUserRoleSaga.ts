@@ -12,7 +12,7 @@ const requestOptions: RequestOptions = {
 
 export function* changeUserRoleSaga(action: ChangeUserRoleFetch) {
     try {
-        yield call(API.post(requestOptions), `/admin/users/update`, action.payload);
+        yield call(API.post(requestOptions), `/admin/users/role`, action.payload);
         yield put(getUserData({uid: action.payload.uid}));
     } catch (error) {
         yield put(alertPush({
