@@ -23,4 +23,10 @@ describe('CurrentUser actions', () => {
         const expectedAction = { type: 'CURRENT_USER_RESET' };
         expect(actions.currentUserReset()).toEqual(expectedAction);
     });
+
+    it('should check getCurrentUserError action creator', () => {
+        const expectedAction = { type: 'GET_CURRENT_USER_ERROR' };
+        expect(actions.getCurrentUserError()).toEqual(expectedAction);
+    });
+
 });

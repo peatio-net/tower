@@ -1,6 +1,7 @@
 import {
     CURRENT_USER_RESET,
     GET_CURRENT_USER_DATA,
+    GET_CURRENT_USER_ERROR,
     GET_CURRENT_USER_FETCH,
 } from '../../constants';
 
@@ -17,6 +18,10 @@ export interface GetCurrentUserFetch {
     type: typeof GET_CURRENT_USER_FETCH;
 }
 
+export interface GetCurrentUserError {
+    type: typeof GET_CURRENT_USER_ERROR;
+}
+
 export interface CurrentUserReset {
     type: typeof CURRENT_USER_RESET;
 }
@@ -26,14 +31,18 @@ export interface GetCurrentUserData {
     payload: CurrentUserInterface;
 }
 
-
 export type CurrentUserAction =
     | GetCurrentUserFetch
     | GetCurrentUserData
+    | GetCurrentUserError
     | CurrentUserReset;
 
 export const getCurrentUser = (): GetCurrentUserFetch => ({
     type: GET_CURRENT_USER_FETCH,
+});
+
+export const getCurrentUserError = (): GetCurrentUserError => ({
+    type: GET_CURRENT_USER_ERROR,
 });
 
 export const getCurrentUserData = (payload: GetCurrentUserData['payload']): GetCurrentUserData => ({

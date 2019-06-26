@@ -26,4 +26,13 @@ describe('CurrentUser reducer', () => {
         };
         expect(currentUserReducer(initialCurrentUserState, actions.getCurrentUserData(fakeUser))).toEqual(expectedState);
     });
+
+    it('should handle GET_CURRENT_USER_ERROR', () => {
+        const expectedState = {
+            ...initialCurrentUserState,
+            loading: false,
+        };
+        expect(currentUserReducer(initialCurrentUserState, actions.getCurrentUserError())).toEqual(expectedState);
+    });
+
 });

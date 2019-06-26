@@ -59,7 +59,7 @@ const errors = {
 
     'record.not_found': 'Record is not found',
     'jwt.decode_and_verify': 'Failed to decode and verify JWT',
-    'authz.invalid_session': 'Failed to decode cookies',
+    'authz.invalid_session': 'Unauthorized',
     'authz.user_not_active': 'User is not active',
     'authz.invalid_signature': 'API Key header \'signature\' is invalid',
     'authz.apikey_not_active': 'API Key state is \'inactive',

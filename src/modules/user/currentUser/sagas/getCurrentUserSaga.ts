@@ -1,6 +1,7 @@
 import { call, put } from 'redux-saga/effects';
 import {
     getCurrentUserData,
+    getCurrentUserError,
     GetCurrentUserFetch,
 } from '../../';
 import { alertPush } from '../../../';
@@ -16,6 +17,7 @@ export function* getCurrentUserSaga(action: GetCurrentUserFetch) {
         const user = yield call(API.get(requestOptions), '/resource/users/me');
         yield put(getCurrentUserData(user.data));
     } catch (error) {
+        yield put(getCurrentUserError());
         yield put(alertPush({message: error.message, code: error.code, type: 'error'}));
     }
 }
