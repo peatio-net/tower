@@ -130,6 +130,7 @@ class Router extends React.Component<RouterProps> {
                     component={UserDirectory}
                 />
                 <PrivateRoute
+                    loading={userLoading}
                     isLogged={isCurrentSession}
                     exact={true}
                     path="/tower/pending"
@@ -217,7 +218,7 @@ class Router extends React.Component<RouterProps> {
                     path="/tower/login"
                     component={Login}
                 />
-                <Route path="**" render={() => <Redirect to="/tower/"/>}/>
+                <Route path="**"><Redirect to="/tower/"/></Route>
             </Switch>
         );
     }

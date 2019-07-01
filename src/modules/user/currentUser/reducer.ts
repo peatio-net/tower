@@ -15,7 +15,7 @@ export interface CurrentUserState {
 }
 
 export const initialCurrentUserState: CurrentUserState = {
-    loading: false,
+    loading: true,
     user: {
         email: '',
         level: 0,
