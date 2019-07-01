@@ -6,6 +6,7 @@ exports[`DocumentReview test should render 1`] = `
     Object {
       "attachments": "Connect-withRouter-DocumentReviewComponent---attachments-8",
       "blueIcon": "Connect-withRouter-DocumentReviewComponent---blueIcon-6",
+      "button": "Connect-withRouter-DocumentReviewComponent---button-10",
       "emptyTable": "Connect-withRouter-DocumentReviewComponent---emptyTable-9",
       "greenIcon": "Connect-withRouter-DocumentReviewComponent---greenIcon-4",
       "greyIcon": "Connect-withRouter-DocumentReviewComponent---greyIcon-3",

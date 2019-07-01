@@ -50,6 +50,11 @@ const defaults: UserDataProps = {
     pathname: '',
     currentUser: {} as CurrentUserInterface,
     alertPush: jest.fn(),
+    handleOpenDocumentCarousel: jest.fn(),
+    handleCloseDocumentCarousel: jest.fn(),
+    openDocumentCarousel: false,
+    documentIndex: 0,
+    handleNavigateDocumentCarousel: jest.fn(),
 };
 
 const history = createBrowserHistory();

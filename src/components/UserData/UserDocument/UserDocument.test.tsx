@@ -7,6 +7,7 @@ const defaults: UserDocumentProps = {
     user: {},
     documentsRows: {} as TableHeaderItemInterface[],
     classes: '',
+    handleOpenDocumentCarousel: jest.fn(),
 };
 
 describe('UserDocument component', () => {

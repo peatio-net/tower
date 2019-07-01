@@ -7,6 +7,7 @@ import {
     withStyles,
 } from '@material-ui/core';
 import * as React from 'react';
+import { DocumentCarousel } from '../';
 import { CurrentUserInterface } from '../../modules';
 import { UserActivities } from './UserActivities';
 import { UserDataHeader } from './UserDataHeader';
@@ -60,6 +61,11 @@ export interface UserDataProps {
     pathname: string;
     currentUser: CurrentUserInterface;
     alertPush: ({type, message}) => void;
+    handleOpenDocumentCarousel: (index: number) => void;
+    handleCloseDocumentCarousel: () => void;
+    openDocumentCarousel: boolean;
+    documentIndex: number;
+    handleNavigateDocumentCarousel: (index: number) => void;
 }
 
 const styles = (theme: Theme) => createStyles({
@@ -166,6 +172,11 @@ class UserDataComponent extends React.Component<Props> {
             pathname,
             currentUser,
             alertPush,
+            handleCloseDocumentCarousel,
+            handleOpenDocumentCarousel,
+            openDocumentCarousel,
+            documentIndex,
+            handleNavigateDocumentCarousel,
         } = this.props;
 
         return (
@@ -225,7 +236,16 @@ class UserDataComponent extends React.Component<Props> {
                                 user={user}
                                 documentsRows={documentsRows}
                                 classes={classes}
+                                handleOpenDocumentCarousel={handleOpenDocumentCarousel}
                             />
+                            {openDocumentCarousel &&
+                                <DocumentCarousel
+                                    documents={user.documents}
+                                    documentIndex={documentIndex}
+                                    handleClose={handleCloseDocumentCarousel}
+                                    handleNavigate={handleNavigateDocumentCarousel}
+                                />
+                            }
                         </Paper>
                     </Grid>
                     <Grid item={true} xs={12} lg={12}>

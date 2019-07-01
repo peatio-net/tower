@@ -9,11 +9,12 @@ export interface UserDocumentProps {
     classes: any;
     // tslint:enable:no-any
     documentsRows: TableHeaderItemInterface[];
+    handleOpenDocumentCarousel: (index: number) => void;
 }
 
 export class UserDocument extends React.Component<UserDocumentProps> {
     public render() {
-        const {user, classes} = this.props;
+        const {user, classes, handleOpenDocumentCarousel} = this.props;
         const content = user && user.documents && user.documents.length ? (
             <InfoTable
                 dataLength={this.props.documentsRows.length}
@@ -21,6 +22,7 @@ export class UserDocument extends React.Component<UserDocumentProps> {
                 data={user.documents}
                 rowsPerPage={user.documents.length}
                 hidePagination={true}
+                handleOpen={handleOpenDocumentCarousel}
             />) : (
             <Typography variant="h6" gutterBottom={true} style={{ color: '#757575', paddingLeft: 26, paddingBottom: 26}}>
                 No documents

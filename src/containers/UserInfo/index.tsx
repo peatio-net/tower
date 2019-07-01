@@ -68,11 +68,13 @@ interface OwnProps {
 interface UserInfoState {
     openAddLabelModal: boolean;
     openEditLabelModal: boolean;
+    openDocumentCarousel: boolean;
     nameLabel: string;
     valueLabel: string;
     scopeLabel: string;
     page: number;
     rowsPerPage: number;
+    documentIndex: number;
 }
 
 type Props = ReduxProps & DispatchProps & RouteProps & OwnProps;
@@ -84,11 +86,13 @@ class UserInfoScreen extends React.Component<Props, UserInfoState> {
         this.state = {
             openAddLabelModal: false,
             openEditLabelModal: false,
+            openDocumentCarousel: false,
             nameLabel: '',
             valueLabel: '',
             scopeLabel: 'private',
             page: 0,
             rowsPerPage: tablePageLimit(),
+            documentIndex: 0,
         };
     }
 
@@ -121,11 +125,13 @@ class UserInfoScreen extends React.Component<Props, UserInfoState> {
         const {
             openAddLabelModal,
             openEditLabelModal,
+            openDocumentCarousel,
             nameLabel,
             valueLabel,
             scopeLabel,
             page,
             rowsPerPage,
+            documentIndex,
         } = this.state;
 
         return (
@@ -164,6 +170,11 @@ class UserInfoScreen extends React.Component<Props, UserInfoState> {
                             pathname={location.pathname}
                             currentUser={this.props.currentUser}
                             alertPush={this.props.alertPush}
+                            handleCloseDocumentCarousel={this.handleCloseDocumentCarousel}
+                            handleOpenDocumentCarousel={this.handleOpenDocumentCarousel}
+                            openDocumentCarousel={openDocumentCarousel}
+                            documentIndex={documentIndex}
+                            handleNavigateDocumentCarousel={this.handleNavigateDocumentCarousel}
                         />
                     ) : 'Loading'
                 }
@@ -187,6 +198,18 @@ class UserInfoScreen extends React.Component<Props, UserInfoState> {
         this.setState({
             openAddLabelModal: true,
         });
+    };
+
+    private handleOpenDocumentCarousel = (index: number) => {
+        this.setState({ openDocumentCarousel: true, documentIndex: index });
+    };
+
+    private handleCloseDocumentCarousel = () => {
+        this.setState({ openDocumentCarousel: false });
+    };
+
+    private handleNavigateDocumentCarousel = (index: number) => {
+        this.setState({ documentIndex: index });
     };
 
     private handleOpenEditLabelModal = (key: string, value: string, scope: string) => {

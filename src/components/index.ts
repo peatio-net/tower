@@ -12,3 +12,4 @@ export * from './WithdrawInfoTableComponent/WithdrawInfoTableComponent';
 export * from './SearchBar/SearchBar';
 export * from './AdminActivityTable/AdminActivityTable';
 export * from './InfoPopper/InfoPopper';
+export * from './DocumentCarousel';

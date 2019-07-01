@@ -1,5 +1,6 @@
 import {
     createStyles,
+    IconButton,
     Paper,
     Table,
     TableBody,
@@ -24,6 +25,7 @@ import { SearchBarContainer, SearchBarRequestInterface } from '../';
 import {
     tablePageLimit,
 } from '../../api/config';
+import { DocumentCarousel } from '../../components';
 import {
     convertToObj,
     localeDate,
@@ -99,6 +101,18 @@ const styles = () => (createStyles({
     emptyTable: {
         padding: 15,
     },
+    button: {
+        '&:hover': {
+            backgroundColor: '#ffffff',
+          },
+        '&:active': {
+            boxShadow: 'none',
+            backgroundColor: '#ffffff',
+        },
+        '&:focus': {
+            boxShadow: 'none',
+        },
+    },
 }));
 
 interface StyleProps extends WithStyles<typeof styles> {
@@ -114,6 +128,9 @@ interface State {
         label: string;
     };
     request: SearchBarRequestInterface[];
+    documentIndex: number;
+    openDocumentCarousel: boolean;
+    userUID: string;
 }
 
 type Props = RouteComponentProps & DispatchProps & ReduxProps & StyleProps & RouterProps;
@@ -132,6 +149,9 @@ class DocumentReviewComponent extends React.Component<Props, State> {
                 property: '',
                 value: '',
             }],
+            documentIndex: 0,
+            openDocumentCarousel: false,
+            userUID: '',
         };
     }
 
@@ -218,6 +238,8 @@ class DocumentReviewComponent extends React.Component<Props, State> {
             rowsPerPage,
             selectAll,
             selectedUsers,
+            openDocumentCarousel,
+            documentIndex,
         } = this.state;
         const { users, classes, total, location } = this.props;
 
@@ -263,7 +285,7 @@ class DocumentReviewComponent extends React.Component<Props, State> {
                                     <TableCell style={{ textAlign: 'right' }}>{user.created_at && localeDate(user.created_at, 'shortDate')}</TableCell>
                                     <TableCell>
                                         <div className={classes.attachments}>
-                                            {user && user.documents && user.documents.length || 0} <AttachFile className={classes.greyIcon} />
+                                            {user && user.documents && user.documents.length || 0} {this.renderAttachments(user)}
                                         </div>
                                     </TableCell>
                                 </TableRow>
@@ -288,6 +310,15 @@ class DocumentReviewComponent extends React.Component<Props, State> {
                         </TableRow>
                     </TableBody>
                 </Table>
+
+                {openDocumentCarousel &&
+                    <DocumentCarousel
+                        documents={this.getUserDocuments()}
+                        documentIndex={documentIndex}
+                        handleClose={this.handleCloseDocumentCarousel}
+                        handleNavigate={this.handleNavigateDocumentCarousel}
+                    />
+                }
             </React.Fragment>
         );
     }
@@ -419,6 +450,45 @@ class DocumentReviewComponent extends React.Component<Props, State> {
             selectedUsers: [],
         });
     };
+
+    private renderAttachments = (user: UserInterface) => {
+        const { classes } = this.props;
+        return (
+            <IconButton
+                onClick={this.handleOpenDocumentCarousel(user.uid)}
+                disabled={!(user && user.documents && user.documents.length)}
+                disableRipple={true}
+                disableTouchRipple={true}
+                className={classes.button}
+            >
+                <AttachFile className={classes.greyIcon} />
+            </IconButton>
+        );
+    };
+
+    private handleOpenDocumentCarousel = (uid: string) => () => {
+        this.setState({
+            openDocumentCarousel: true,
+            documentIndex: 0,
+            userUID: uid,
+        });
+    };
+
+    private handleCloseDocumentCarousel = () => {
+        this.setState({ openDocumentCarousel: false });
+    };
+
+    private handleNavigateDocumentCarousel = (index: number) => {
+        this.setState({ documentIndex: index });
+    };
+
+    private getUserDocuments = () => {
+        const { userUID } = this.state;
+        const { users } = this.props;
+        const selectedUser = users && users.find(user => user.uid === userUID);
+
+        return selectedUser && selectedUser.documents || [];
+    }
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, AppState> =

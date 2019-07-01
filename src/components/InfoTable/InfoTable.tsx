@@ -37,6 +37,7 @@ interface InfoTableProps {
     location?: {
         pathname: string;
     };
+    handleOpen?: (index: number) => void;
 }
 
 const styles = (theme: Theme) => (createStyles({
@@ -123,8 +124,8 @@ class TableComponent extends React.Component<Props> {
         } = this.props;
         return (
             <div className={classes.root}>
-                    {label && (<Typography variant="h6" gutterBottom={true} className={classes.label}>{label}</Typography>)}
-                    {data.length ? this.renderContent() : <Typography variant="caption" align="center" className={classes.emptyTable}>There is no data to show</Typography>}
+                {label && (<Typography variant="h6" gutterBottom={true} className={classes.label}>{label}</Typography>)}
+                {data.length ? this.renderContent() : <Typography variant="caption" align="center" className={classes.emptyTable}>There is no data to show</Typography>}
             </div>
         );
     }
@@ -156,7 +157,7 @@ class TableComponent extends React.Component<Props> {
                                                         { row.key === 'email' ? (<Link to={`${location && location.pathname}/${n.uid}`} className={classes.link}>{n.email}</Link>)
                                                             : row.key === 'user_email' ? (<Link to={`${location && location.pathname}/${n.user && n.user.uid}`} className={classes.link}>{n.user && n.user.email}</Link>)
                                                             : row.key === 'otp' ? (convertToOtp(n.otp) === 'true' ? '2FA' : '-')
-                                                            : row.key === 'upload' ? (<a target="_blank" href={n.upload.url} className={classes.attachment}>1 <AttachFile className={classes.greyIcon} /></a>)
+                                                            : row.key === 'upload' ? (<span className={classes.attachment}>1 <AttachFile onClick={this.handleOpenCarousel(i)} className={classes.greyIcon} /></span>)
                                                             : row.key === 'created_at' || row.key === 'validated_at' || row.key === 'updated_at' ? localeDate(n[row.key], 'fullDate')
                                                             : row.key === 'browser' ? getUserBrowser(n.user_agent)
                                                             : row.key === 'os' ? getUserOS(n.user_agent)
@@ -203,6 +204,11 @@ class TableComponent extends React.Component<Props> {
     private handleChangeRowsPerPage = event => {
         this.props.handleChangeRowsPerPage && this.props.handleChangeRowsPerPage(event.target.value);
     };
+
+    private handleOpenCarousel = (i: number) => () => {
+        const { handleOpen } = this.props;
+        handleOpen && handleOpen(i);
+    }
 
     private getHeaderForTable = () => {
         const { classes } = this.props;
