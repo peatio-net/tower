@@ -5,6 +5,7 @@ import {
     convertToUTCTime,
     findPhone,
     jsonToArray,
+    parseList,
 } from './';
 import {metricsToChartData} from './metricsToChartData';
 
@@ -107,5 +108,12 @@ describe('Helpers', () => {
             { key: 'path', value: 'api/v2/barong/admin/activities/admin' },
         ]);
         expect(jsonToArray('')).toEqual([]);
+    });
+
+    it('parseString', () => {
+        expect(parseList('tower,tower')).toEqual('tower, tower');
+        expect(parseList('tower, tower')).toEqual('tower, tower');
+        expect(parseList('tower')).toEqual('tower');
+        expect(parseList(' ')).toEqual(' ');
     });
 });

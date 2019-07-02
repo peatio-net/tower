@@ -13,3 +13,4 @@ export * from './timezone';
 export * from './convertToObj';
 export * from './jsonToArray';
 export * from './capitalize';
+export * from './parseList';

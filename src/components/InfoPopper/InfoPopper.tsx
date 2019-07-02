@@ -47,7 +47,7 @@ const PopperComponent: React.FunctionComponent<Props> = props => {
     } = props;
 
     const renderData = () => (
-        data.length ?
+        data && data.length ?
             data.map((i: DataInterface, index: number) => {
                 return (
                     <div key={index} className={classes.info}>
@@ -55,7 +55,7 @@ const PopperComponent: React.FunctionComponent<Props> = props => {
                         <Typography variant="body1">{i.value}</Typography>
                     </div>
                 );}) :
-             <Typography variant="caption" align="center" >There is no data to show</Typography>
+            <Typography variant="caption" align="center" >There is no data to show</Typography>
     );
 
     const id = open ? 'simple-popper' : undefined;

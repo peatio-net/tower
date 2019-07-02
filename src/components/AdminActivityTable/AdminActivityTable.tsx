@@ -1,6 +1,6 @@
 import {
-    Button,
     createStyles,
+    IconButton,
     Table,
     TableBody,
     TableCell,
@@ -20,6 +20,7 @@ import {
     getUserBrowser,
     getUserOS,
     localeDate,
+    parseList,
 } from '../../helpers';
 
 interface ActivityTableProps {
@@ -89,18 +90,16 @@ const styles = (theme: Theme) => (createStyles({
     banned: {
         color: '#E23328',
     },
-    closed: {
-        color: '#979797',
-    },
-    open: {
+    icon: {
+        cursor: 'pointer',
         color: '#309CEA',
     },
     cell: {
-        padding: '4px 0px',
+        padding: '4px 16px',
     },
     info: {
-        cursor: 'pointer',
         textAlign: 'center',
+        padding: '4px 16px',
     },
 }));
 
@@ -162,7 +161,7 @@ class TableComponent extends React.Component<Props, State> {
                                         <TableRow key={i}>
                                             {rows.map((row: any, index: number) => {
                                                 return (
-                                                    <TableCell key={index} component="td" align={row.alignRight ? 'right' : 'left'} >
+                                                    <TableCell key={index} component="td" align={row.alignRight ? 'right' : 'left'} className={classes.cell}>
                                                         { row.key === 'admin_email' ? (<Link to={`${location && location.pathname}/${n.admin && n.admin.uid}`} className={classes.link}>{n.admin && n.admin.email}</Link>)
                                                             : row.key === 'created_at' ? localeDate(n[row.key], 'fullDate')
                                                             : row.key === 'browser' ? getUserBrowser(n.user_agent)
@@ -170,14 +169,15 @@ class TableComponent extends React.Component<Props, State> {
                                                             : row.key === 'result' ? this.getColored(n.result)
                                                             : row.key === 'admin_role' ? n.admin && n.admin.role
                                                             : row.key === 'target' ? (<Link to={`${location && location.pathname}/${n.target && n.target.uid}`} className={classes.link}>{n.target && n.target.email}</Link>)
+                                                            : row.key === 'user_ip' ? parseList(n.user_ip)
                                                             : n[row.key]}
                                                     </TableCell>
                                                 );})
                                             }
                                             <TableCell component="td" className={classes.info}>
-                                                <Button variant="text" onClick={this.handleClick(i)}>
-                                                    <InfoOutlined className={open ? classes.open : classes.closed}/>
-                                                </Button>
+                                                <IconButton onClick={this.handleClick(i)}>
+                                                    <InfoOutlined className={classes.icon} />
+                                                </IconButton>
                                             </TableCell>
                                         </TableRow>
                                     );
@@ -236,13 +236,13 @@ class TableComponent extends React.Component<Props, State> {
             <TableHead>
                 <TableRow>
                     {this.props.rows.map((row: {key: string, alignRight: boolean, label: string}) => (
-                        <TableCell key={row.key} align={row.alignRight ? 'right' : 'left'}>
+                        <TableCell key={row.key} align={row.alignRight ? 'right' : 'left'} className={classes.cell}>
                             <Typography variant="subtitle2" gutterBottom={true} className={classes.headers}>
                                 {row.label}
                             </Typography>
                         </TableCell>
                     ), this)}
-                    <TableCell align="center"/>
+                    <TableCell className={classes.info}/>
                 </TableRow>
             </TableHead>
         );
