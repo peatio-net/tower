@@ -1,3 +1,4 @@
+import { getCode } from 'country-list';
 import {Moment} from 'moment';
 import * as React from 'react';
 import { SearchBar, SelectItem } from '../../components';
@@ -260,10 +261,17 @@ class SearchBarWrapper extends React.Component<SearchBarWrapperProps, SearchBarW
         };
 
         const requestArray = [...elems, firstItem].map(item => {
-            return {
-                property: item.selectedSearchValue.value,
-                value: item.selectedValueData,
-            };
+            if (item.selectedSearchValue.value === 'country' && getCode(item.selectedValueData) !== undefined) {
+                return {
+                    property: item.selectedSearchValue.value,
+                    value: getCode(item.selectedValueData),
+                };
+            } else {
+                return {
+                    property: item.selectedSearchValue.value,
+                    value: item.selectedValueData,
+                };
+            }
         });
 
         selectedStartDate && requestArray.push({
