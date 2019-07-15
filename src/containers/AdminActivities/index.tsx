@@ -97,10 +97,7 @@ class AdminActivitiesScreen extends React.Component<Props, State> {
             currentLimit: tablePageLimit(),
             searchValue: '',
             activeSelectItem: this.selectedValues[0],
-            data: [{
-                property: '',
-                value: '',
-            }],
+            data: [],
         };
     }
 
@@ -205,20 +202,13 @@ class AdminActivitiesScreen extends React.Component<Props, State> {
     };
 
     private handleSearch = (data: SearchBarRequestInterface[]) => {
-        this.setState({ data: data });
-        const obj = convertToObj(data);
-        this.props.getAdminActivity({ page: 1, limit: tablePageLimit(), ...obj });
+        this.setState({ data });
+        this.props.getAdminActivity({ page: 1, limit: this.state.currentLimit, ...convertToObj(data) });
     };
 
     private handleClearSearchRequest = () => {
-        this.setState({
-            data: [{
-                property: '',
-                value: '',
-            }],
-            currentPage: 0,
-        });
-        this.props.getAdminActivity({ page: this.state.currentPage + 1, limit: tablePageLimit() });
+        this.setState({ data: [], currentPage: 0 });
+        this.props.getAdminActivity({ page: this.state.currentPage + 1, limit: this.state.currentLimit });
     };
 
     private handleChangePage = (page: number) => {
@@ -235,7 +225,8 @@ class AdminActivitiesScreen extends React.Component<Props, State> {
     };
 
     private handleGetUserActivity = (limit: number, page: number) => {
-        this.props.getAdminActivity({ limit, page: page + 1 });
+        const { data } = this.state;
+        this.props.getAdminActivity({ limit, page: page + 1, ...convertToObj(data) });
     };
 }
 
