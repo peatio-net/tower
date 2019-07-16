@@ -29,7 +29,7 @@ describe('AdminActivity reducer', () => {
             },
             user_ip: '195.214.197.210',
             user_agent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36',
-            data: [{ key: 'path', value: 'api/v2/barong/resource/users/me' }],
+            data: [{ type: 'key', value: 'path'}, {type: 'value', value: 'api/v2/barong/resource/users/me' }],
         },
     ];
 

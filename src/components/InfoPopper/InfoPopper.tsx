@@ -3,13 +3,10 @@ import {
     Paper,
     Popover,
     Theme,
-    Typography,
     WithStyles,
     withStyles,
 } from '@material-ui/core';
 import * as React from 'react';
-import { capitalize } from '../../helpers';
-import { DataInterface } from '../../modules';
 
 const styles = (theme: Theme) => createStyles({
     popper: {
@@ -32,7 +29,7 @@ interface PopperProps {
     anchorEl: HTMLElement | null;
     open: boolean;
     handleClose: () => void;
-    data: DataInterface[];
+    data: JSX.Element;
 }
 
 type Props = StyleProps & PopperProps;
@@ -45,18 +42,6 @@ const PopperComponent: React.FunctionComponent<Props> = props => {
         data,
         classes,
     } = props;
-
-    const renderData = () => (
-        data && data.length ?
-            data.map((i: DataInterface, index: number) => {
-                return (
-                    <div key={index} className={classes.info}>
-                        <Typography variant="body2" className={classes.title}>{capitalize(i.key)}</Typography>
-                        <Typography variant="body1">{i.value}</Typography>
-                    </div>
-                );}) :
-            <Typography variant="caption" align="center" >There is no data to show</Typography>
-    );
 
     const id = open ? 'simple-popper' : undefined;
 
@@ -76,7 +61,7 @@ const PopperComponent: React.FunctionComponent<Props> = props => {
             }}
             className={classes.popper}
         >
-            <Paper>{renderData()}</Paper>
+            <Paper className={classes.info}>{data}</Paper>
         </Popover>
         );
 };

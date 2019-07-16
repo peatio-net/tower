@@ -14,10 +14,13 @@ exports[`InfoTable test should render 1`] = `
       "info": "TableComponent-info-14",
       "label": "TableComponent-label-5",
       "link": "TableComponent-link-4",
+      "popper": "TableComponent-popper-16",
       "root": "TableComponent-root-1",
       "selectIcon": "TableComponent-selectIcon-9",
       "table": "TableComponent-table-2",
       "tableWrapper": "TableComponent-tableWrapper-3",
+      "title": "TableComponent-title-15",
+      "value": "TableComponent-value-17",
     }
   }
   data={Array []}

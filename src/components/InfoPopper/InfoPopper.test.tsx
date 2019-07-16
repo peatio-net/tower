@@ -6,7 +6,7 @@ const defaultProps = {
     anchorEl: null,
     open: false,
     handleClose: jest.fn(),
-    data: [],
+    data: <div />,
 };
 
 describe('InfoPopper test', () => {

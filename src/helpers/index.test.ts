@@ -100,20 +100,22 @@ describe('Helpers', () => {
         expect(capitalize(' ')).toEqual(' ');
     });
 
-    it('jsonToArray', () => {
-        expect(jsonToArray('{"path":"api/v2/barong/resource/users/me"}')).toEqual([{ key: 'path', value: 'api/v2/barong/resource/users/me' }]);
-        expect(jsonToArray('{"page":"1","limit":"50","path":"api/v2/barong/admin/activities/admin"}')).toEqual([
-            { key: 'page', value: '1' },
-            { key: 'limit', value: '50' },
-            { key: 'path', value: 'api/v2/barong/admin/activities/admin' },
-        ]);
-        expect(jsonToArray('')).toEqual([]);
-    });
-
     it('parseString', () => {
         expect(parseList('tower,tower')).toEqual('tower, tower');
         expect(parseList('tower, tower')).toEqual('tower, tower');
         expect(parseList('tower')).toEqual('tower');
         expect(parseList(' ')).toEqual(' ');
+    });
+
+    it('jsonToArray', () => {
+        expect(jsonToArray({ path: 'api/v2/barong/resource/users/me' })).toEqual([{ type: 'key', value: 'path' }, { type: 'value', value: 'api/v2/barong/resource/users/me' }]);
+        expect(jsonToArray({ page: '1', limit: { perPage: '10' }})).toEqual([
+            { type: 'key', value: 'page' },
+            { type: 'value', value: '1' },
+            { type: 'key', value: 'limit' },
+            { type: 'key', value: 'perPage'},
+            { type: 'value', value: '10'},
+        ]);
+        expect(jsonToArray(JSON.parse('{}'))).toEqual([]);
     });
 });

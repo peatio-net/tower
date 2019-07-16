@@ -24,7 +24,7 @@ interface UserInterface {
 }
 
 export interface DataInterface {
-    key: string;
+    type: string;
     value: string;
 }
 

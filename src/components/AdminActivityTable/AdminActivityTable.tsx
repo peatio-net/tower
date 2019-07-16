@@ -17,11 +17,13 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { InfoPopper } from '../';
 import {
+    capitalize,
     getUserBrowser,
     getUserOS,
     localeDate,
     parseList,
 } from '../../helpers';
+import { DataInterface } from '../../modules';
 
 interface ActivityTableProps {
     dataLength: number;
@@ -100,6 +102,15 @@ const styles = (theme: Theme) => (createStyles({
     info: {
         textAlign: 'center',
         padding: '4px 16px',
+    },
+    title: {
+        opacity: 0.54,
+    },
+    popper: {
+        padding: '8px 10px',
+    },
+    value: {
+        paddingBottom: 8,
     },
 }));
 
@@ -207,7 +218,7 @@ class TableComponent extends React.Component<Props, State> {
                     anchorEl={anchorEl}
                     open={Boolean(anchorEl)}
                     handleClose={this.handleClose}
-                    data={data[selectIndex].data}
+                    data={this.renderData(data[selectIndex].data)}
                 />
             </div>
         );
@@ -253,6 +264,21 @@ class TableComponent extends React.Component<Props, State> {
         return state === 'active' || state === 'succeed' ?
             <span className={classes.active}>{state}</span>
             : <span className={classes.banned}>{state}</span>;
+    };
+
+    private renderData = list => {
+        const { classes } = this.props;
+
+        if (!list.length) {
+            return <Typography variant="caption" align="center">There is no data to show</Typography>;
+        } else {
+            return list.map((i: DataInterface, index: number) => (
+                    i.type === 'key' ?
+                        <Typography variant="body2" className={classes.title} key={index}>{capitalize(i.value)}</Typography> :
+                        <Typography variant="body1" className={classes.value} key={index}>{i.value}</Typography>
+                    ),
+                );
+        }
     };
 }
 

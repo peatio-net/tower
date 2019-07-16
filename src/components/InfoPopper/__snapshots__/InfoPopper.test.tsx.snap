@@ -10,7 +10,7 @@ exports[`InfoPopper test should render 1`] = `
       "title": "PopperComponent-title-3",
     }
   }
-  data={Array []}
+  data={<div />}
   handleClose={[Function]}
   open={false}
   theme={

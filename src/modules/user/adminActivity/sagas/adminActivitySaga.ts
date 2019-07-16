@@ -17,7 +17,7 @@ export function* adminActivitySaga(action: AdminActivityFetch) {
         const { data, headers } = yield call(API.get(requestOptions), `/admin/activities/admin?${params}`);
 
         for (const i of data) {
-            i.data = jsonToArray(i.data);
+            i.data = jsonToArray(JSON.parse(i.data) || {});
         }
 
         yield put(adminActivityData({ list: data, page, total: headers.total }));
