@@ -269,15 +269,15 @@ class TableComponent extends React.Component<Props, State> {
     private renderData = list => {
         const { classes } = this.props;
 
-        if (!list.length) {
-            return <Typography variant="caption" align="center">There is no data to show</Typography>;
-        } else {
+        if (list && list.length > 0) {
             return list.map((i: DataInterface, index: number) => (
-                    i.type === 'key' ?
-                        <Typography variant="body2" className={classes.title} key={index}>{capitalize(i.value)}</Typography> :
-                        <Typography variant="body1" className={classes.value} key={index}>{i.value}</Typography>
-                    ),
-                );
+                i.type === 'key' ?
+                    <Typography variant="body2" className={classes.title} key={index}>{capitalize(i.value)}</Typography> :
+                    <Typography variant="body1" className={classes.value} key={index}>{i.value}</Typography>
+                ),
+            );
+        } else {
+            return <Typography variant="caption" align="center">There is no data to show</Typography>;
         }
     };
 }
