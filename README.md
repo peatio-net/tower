@@ -1,3 +1,5 @@
+**Please note, that this project is deprecated and moved to https://github.com/openware/opendax**
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
