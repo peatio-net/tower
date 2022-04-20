@@ -1,4 +1,4 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is now deprecated please visit: [OpenDAX Trading platform](https://www.openware.com/product/opendax)
 
 ## Available Scripts
 
